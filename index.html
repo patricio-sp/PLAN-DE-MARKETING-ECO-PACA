@@ -1,0 +1,405 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Plaka Sec - Antihumedad y Deco</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+      @font-face {
+        font-family: 'LucideIcons';
+        src: url(https://cdn.jsdelivr.net/npm/lucide-static@latest/font/Lucide.ttf) format('truetype');
+      }
+      .lucide {
+        font-family: 'LucideIcons';
+        font-size: 1.25rem;
+        line-height: 1;
+      }
+      body {
+        font-family: 'Inter', sans-serif;
+      }
+      html {
+        scroll-behavior: smooth;
+      }
+      /* Hide page content sections by default */
+      .page-content {
+        display: none;
+      }
+      /* Style for the currently active page */
+      .page-content.active {
+        display: block;
+      }
+      /* Custom colors */
+      tailwind.config = {
+        theme: {
+          extend: {
+            colors: {
+              'plaka-blue': '#25A1B8',
+              'plaka-green': '#6DC5A0',
+              'plaka-violet': '#C4A9E8',
+            }
+          }
+        }
+      }
+    </style>
+</head>
+<body class="bg-gray-50 text-gray-800">
+
+    <header class="bg-white shadow-md sticky top-0 z-50">
+        <nav class="container mx-auto px-6 py-3 flex justify-between items-center">
+            <a href="#" onclick="showPage('home'); return false;">
+                 
+                <img src="./path/to/your/logo.png" alt="Logo PLAKA SEC ANTIHUMEDAD Y DECO" class="h-12 md:h-14" onerror="this.alt='PLAKA SEC Logo'; this.style.display='none'; const textLogo = document.createElement('a'); textLogo.href='#'; textLogo.className='text-2xl font-bold text-teal-600'; textLogo.textContent='PLAKA SEC'; textLogo.onclick=function(){showPage('home'); return false;}; this.parentNode.replaceChild(textLogo, this);">
+            </a>
+            <div class="hidden md:flex space-x-6">
+                <a href="#" onclick="showPage('home', '#productos'); return false;" class="text-gray-600 hover:text-teal-600 transition duration-300">Productos</a>
+                <a href="#" onclick="showPage('home', '#nosotros'); return false;" class="text-gray-600 hover:text-teal-600 transition duration-300">Nosotros</a>
+                <a href="#" onclick="showPage('home', '#contacto'); return false;" class="text-gray-600 hover:text-teal-600 transition duration-300">Contacto</a>
+            </div>
+            <button id="mobile-menu-button" class="md:hidden text-gray-700 focus:outline-none">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path></svg>
+            </button>
+        </nav>
+        <div id="mobile-menu" class="hidden md:hidden bg-white shadow-lg absolute top-16 left-0 right-0 z-40">
+            <a href="#" onclick="showPage('home', '#productos'); closeMobileMenu(); return false;" class="block px-6 py-3 text-gray-600 hover:bg-teal-50 hover:text-teal-600 transition duration-300">Productos</a>
+            <a href="#" onclick="showPage('home', '#nosotros'); closeMobileMenu(); return false;" class="block px-6 py-3 text-gray-600 hover:bg-teal-50 hover:text-teal-600 transition duration-300">Nosotros</a>
+            <a href="#" onclick="showPage('home', '#contacto'); closeMobileMenu(); return false;" class="block px-6 py-3 text-gray-600 hover:bg-teal-50 hover:text-teal-600 transition duration-300">Contacto</a>
+        </div>
+    </header>
+
+    <div id="page-home" class="page-content">
+        <section class="bg-gradient-to-r from-teal-600 to-emerald-500 text-white py-20 md:py-32">
+            <div class="container mx-auto px-6 text-center">
+                <h1 class="text-4xl md:text-6xl font-bold mb-4 leading-tight">Transforma tus Espacios con Estilo</h1>
+                <p class="text-lg md:text-xl mb-8 text-teal-100">Descubre nuestra amplia gama de revestimientos de alta calidad.</p>
+                <a href="#productos" onclick="showPage('home', '#productos'); return false;" class="bg-white text-violet-600 font-semibold py-3 px-8 rounded-lg shadow-md hover:bg-gray-100 transition duration-300 text-lg">Ver Productos</a>
+            </div>
+        </section>
+
+        <section id="productos" class="py-16 md:py-24 bg-white">
+            <div class="container mx-auto px-6">
+                <h2 class="text-3xl md:text-4xl font-bold text-center text-gray-800 mb-12">Nuestras Categorías</h2>
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+                    
+                    <div class="bg-gray-50 rounded-lg shadow-lg overflow-hidden transform hover:scale-105 transition duration-300 flex flex-col">
+                        <img src="https://placehold.co/600x400/a7f3d0/047857?text=Placas+Antihumedad" alt="Imagen de Placas Antihumedad" class="w-full h-48 object-cover" onerror="this.src='https://placehold.co/600x400/e0e0e0/a0a0a0?text=Imagen+no+disponible'">
+                        <div class="p-6 flex flex-col flex-grow">
+                            <h3 class="text-xl font-semibold mb-2 text-gray-700">Placas Antihumedad</h3>
+                            <p class="text-gray-600 text-sm mb-4 flex-grow">Solución definitiva y estética para problemas de humedad.</p>
+                            <a href="#antihumedad" onclick="showPage('antihumedad'); return false;" class="text-teal-600 hover:underline font-medium mt-auto">Ver Productos</a>
+                        </div>
+                    </div>
+                  
+                    <div class="bg-gray-50 rounded-lg shadow-lg overflow-hidden transform hover:scale-105 transition duration-300 flex flex-col">
+                        <img src="https://placehold.co/600x400/d1d5db/6b7280?text=Placa+Símil+Piedra" alt="Imagen de Placa Símil Piedra" class="w-full h-48 object-cover" onerror="this.src='https://placehold.co/600x400/e0e0e0/a0a0a0?text=Imagen+no+disponible'">
+                        <div class="p-6 flex flex-col flex-grow">
+                            <h3 class="text-xl font-semibold mb-2 text-gray-700">Placas Símil Piedra</h3>
+                            <p class="text-gray-600 text-sm mb-4 flex-grow">Añade un toque rústico y elegante a tus ambientes.</p>
+                            <a href="#piedra" onclick="showPage('piedra'); return false;" class="text-teal-600 hover:underline font-medium mt-auto">Ver Productos</a>
+                        </div>
+                    </div>
+                   
+                    <div class="bg-gray-50 rounded-lg shadow-lg overflow-hidden transform hover:scale-105 transition duration-300 flex flex-col">
+                        <img src="https://placehold.co/600x400/9ca3af/4b5563?text=Piso+Flotante" alt="Imagen de Piso Flotante" class="w-full h-48 object-cover" onerror="this.src='https://placehold.co/600x400/e0e0e0/a0a0a0?text=Imagen+no+disponible'">
+                        <div class="p-6 flex flex-col flex-grow">
+                            <h3 class="text-xl font-semibold mb-2 text-gray-700">Pisos Flotantes</h3>
+                            <p class="text-gray-600 text-sm mb-4 flex-grow">Renueva tus suelos de forma rápida y sencilla.</p>
+                            <a href="#pisos" onclick="showPage('pisos'); return false;" class="text-teal-600 hover:underline font-medium mt-auto">Ver Productos</a>
+                        </div>
+                    </div>
+                   
+                    <div class="bg-gray-50 rounded-lg shadow-lg overflow-hidden transform hover:scale-105 transition duration-300 flex flex-col">
+                        <img src="https://placehold.co/600x400/6b7280/374151?text=Cielo+Raso" alt="Imagen de Cielo Raso" class="w-full h-48 object-cover" onerror="this.src='https://placehold.co/600x400/e0e0e0/a0a0a0?text=Imagen+no+disponible'">
+                        <div class="p-6 flex flex-col flex-grow">
+                            <h3 class="text-xl font-semibold mb-2 text-gray-700">Cielos Rasos</h3>
+                            <p class="text-gray-600 text-sm mb-4 flex-grow">Soluciones prácticas y decorativas para techos.</p>
+                            <a href="#cielos" onclick="showPage('cielos'); return false;" class="text-teal-600 hover:underline font-medium mt-auto">Ver Productos</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="nosotros" class="py-16 md:py-24 bg-violet-50">
+             <div class="container mx-auto px-6 flex flex-col md:flex-row items-center gap-12">
+                <div class="md:w-1/2">
+                    <h2 class="text-3xl md:text-4xl font-bold text-gray-800 mb-6">Sobre Nosotros</h2>
+                    <p class="text-gray-600 mb-4 leading-relaxed">En PLAKA SEC, nos dedicamos a ofrecer soluciones innovadoras y de alta calidad...</p>
+                    <p class="text-gray-600 mb-4 leading-relaxed">Nuestra misión es ayudarte a crear espacios únicos y funcionales...</p>
+                    <div class="flex flex-wrap gap-x-4 gap-y-2 mt-6">
+                        <div class="flex items-center text-emerald-600">
+                             <span class="lucide mr-2">&#xe05e;</span><span>Calidad Garantizada</span>
+                        </div>
+                        <div class="flex items-center text-emerald-600">
+                             <span class="lucide mr-2">&#xe40c;</span><span>Instalación Profesional</span>
+                        </div>
+                        <div class="flex items-center text-emerald-600">
+                             <span class="lucide mr-2">&#xe0b0;</span><span>Asesoramiento Experto</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="md:w-1/2">
+                    <img src="https://placehold.co/600x400/c4b5fd/5b21b6?text=Equipo+PLAKA+SEC" alt="Imagen del equipo de PLAKA SEC" class="rounded-lg shadow-xl w-full" onerror="this.src='https://placehold.co/600x400/e0e0e0/a0a0a0?text=Imagen+no+disponible'">
+                </div>
+            </div>
+        </section>
+
+        <section id="contacto" class="py-16 md:py-24 bg-white">
+            <div class="container mx-auto px-6">
+                <h2 class="text-3xl md:text-4xl font-bold text-center text-gray-800 mb-12">Contáctanos</h2>
+                <div class="max-w-3xl mx-auto bg-gray-50 p-8 rounded-lg shadow-lg">
+                    <p class="text-center text-gray-600 mb-8">¿Tienes alguna pregunta o necesitas un presupuesto? Completa el formulario o llámanos.</p>
+                    <form action="#" method="POST">
+                         <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+                            <div>
+                                <label for="name" class="block text-gray-700 font-medium mb-2">Nombre</label>
+                                <input type="text" id="name" name="name" required class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-teal-500 focus:border-teal-500 outline-none transition duration-200">
+                            </div>
+                            <div>
+                                <label for="email" class="block text-gray-700 font-medium mb-2">Correo Electrónico</label>
+                                <input type="email" id="email" name="email" required class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-teal-500 focus:border-teal-500 outline-none transition duration-200">
+                            </div>
+                        </div>
+                        <div class="mb-6">
+                            <label for="subject" class="block text-gray-700 font-medium mb-2">Asunto</label>
+                            <input type="text" id="subject" name="subject" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-teal-500 focus:border-teal-500 outline-none transition duration-200">
+                        </div>
+                        <div class="mb-6">
+                            <label for="message" class="block text-gray-700 font-medium mb-2">Mensaje</label>
+                            <textarea id="message" name="message" rows="5" required class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-teal-500 focus:border-teal-500 outline-none transition duration-200 resize-none"></textarea>
+                        </div>
+                        <div class="text-center">
+                            <button type="submit" class="bg-teal-600 text-white font-semibold py-3 px-8 rounded-lg shadow-md hover:bg-teal-700 transition duration-300 text-lg" <a href="mailto:ventas@plakasec.com.ar">Enviarme un Mensaje</a>
+                        </div>
+                    </form>
+                    <div class="mt-12 text-center text-gray-600">
+                        <p class="mb-2">O contáctanos directamente:</p>
+                        <p><span class="lucide mr-1 align-middle text-teal-600">&#xe48c;</span> Teléfono: <a href="tel:+541112345678" class="text-teal-600 hover:underline">+54 11 6047 9929</a></p>
+                        <p><span class="lucide mr-1 align-middle text-teal-600">&#xe12f;</span> Email: <a href="mailto:info@plakasec.com" class="text-teal-600 hover:underline">info@plakasec.com</a></p>
+                        <p><span class="lucide mr-1 align-middle text-teal-600">&#xe4e0;</span> Dirección: Carmona 62, Adrogue, Buenos Aires, Argentina</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <footer class="bg-gray-800 text-gray-300 py-8">
+             <div class="container mx-auto px-6 text-center">
+                <p>&copy; 2025 PLAKA SEC. Todos los derechos reservados.</p>
+                <div class="mt-4 flex justify-center space-x-4">
+                    <a href="#" class="text-gray-400 hover:text-white transition duration-300"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#" class="text-gray-400 hover:text-white transition duration-300"><i class="fab fa-instagram"></i></a>
+                    <a href="#" class="text-gray-400 hover:text-white transition duration-300"><i class="fab fa-whatsapp"></i></a>
+                </div>
+            </div>
+        </footer>
+    </div> <div id="page-antihumedad" class="page-content container mx-auto px-6 py-16 md:py-24">
+        <button onclick="showPage('home'); return false;" class="mb-8 inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-teal-600 hover:bg-teal-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-teal-500">
+            <span class="lucide mr-2">&#xe015;</span> {/* Arrow Left Icon */}
+            Volver a Categorías
+        </button>
+        <h2 class="text-3xl md:text-4xl font-bold text-gray-800 mb-12">Placas Antihumedad</h2>
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            {/* Item 1 - IMAGE UPDATED */}
+            <div class="bg-white rounded-lg shadow-md overflow-hidden">
+                <img src="https://i.postimg.cc/VN2xWQ9p/1-20241226-110317-0000.png" alt="Placa Antihumedad - Modelo 1 (Actualizar nombre)" class="w-full h-48 object-cover" onerror="this.src='https://placehold.co/600x400/e0e0e0/a0a0a0?text=Imagen+no+disponible'">
+                <div class="p-4">
+                    {/* !! ACTUALIZAR nombre y descripción !! */}
+                    <h3 class="text-lg font-semibold mb-1">Modelo Antihumedad 1 (Actualizar)</h3>
+                    <p class="text-sm text-gray-600 mb-3">Descripción detallada del producto antihumedad modelo 1 (Actualizar).</p>
+                    <a href="#contacto" onclick="showPage('home', '#contacto'); return false;" class="text-teal-600 hover:underline font-medium text-sm">Consultar Precio</a>
+                </div>
+            </div>
+             {/* Item 2 - IMAGE UPDATED */}
+            <div class="bg-white rounded-lg shadow-md overflow-hidden">
+                <img src="https://i.postimg.cc/7JCNJtmc/3-20241226-110318-0002.png" alt="Placa Antihumedad - Modelo 2 (Actualizar nombre)" class="w-full h-48 object-cover" onerror="this.src='https://placehold.co/600x400/e0e0e0/a0a0a0?text=Imagen+no+disponible'">
+                <div class="p-4">
+                     {/* !! ACTUALIZAR nombre y descripción !! */}
+                    <h3 class="text-lg font-semibold mb-1">Modelo Antihumedad 2 (Actualizar)</h3>
+                    <p class="text-sm text-gray-600 mb-3">Descripción detallada del producto antihumedad modelo 2 (Actualizar).</p>
+                     <a href="#contacto" onclick="showPage('home', '#contacto'); return false;" class="text-teal-600 hover:underline font-medium text-sm">Consultar Precio</a>
+                </div>
+            </div>
+             {/* Item 3 - IMAGE UPDATED */}
+            <div class="bg-white rounded-lg shadow-md overflow-hidden">
+                 {/* Imagen actualizada con el tercer enlace proporcionado */}
+                <img src="https://i.postimg.cc/D4dw6njb/3-20241226-110318-0002.png" alt="Placa Antihumedad - Modelo 3 (Actualizar nombre)" class="w-full h-48 object-cover" onerror="this.src='https://placehold.co/600x400/e0e0e0/a0a0a0?text=Imagen+no+disponible'">
+                <div class="p-4">
+                    {/* !! ACTUALIZAR nombre y descripción !! */}
+                    <h3 class="text-lg font-semibold mb-1">Modelo Antihumedad 3 (Actualizar)</h3>
+                    <p class="text-sm text-gray-600 mb-3">Descripción detallada del producto antihumedad modelo 3 (Actualizar).</p>
+                     <a href="#contacto" onclick="showPage('home', '#contacto'); return false;" class="text-teal-600 hover:underline font-medium text-sm">Consultar Precio</a>
+                </div>
+            </div>
+             {/* Placeholder Item 4 */}
+            <div class="bg-white rounded-lg shadow-md overflow-hidden">
+                <img src="https://placehold.co/600x400/10b981/052e16?text=Modelo+Antihumedad+4" alt="Modelo Antihumedad 4" class="w-full h-48 object-cover" onerror="this.src='https://placehold.co/600x400/e0e0e0/a0a0a0?text=Imagen+no+disponible'">
+                <div class="p-4">
+                    <h3 class="text-lg font-semibold mb-1">Modelo Antihumedad 4</h3>
+                    <p class="text-sm text-gray-600 mb-3">Descripción detallada del producto antihumedad modelo 4.</p>
+                     <a href="#contacto" onclick="showPage('home', '#contacto'); return false;" class="text-teal-600 hover:underline font-medium text-sm">Consultar Precio</a>
+                </div>
+            </div>
+            {/* Add more product cards as needed */}
+        </div>
+    </div> <div id="page-piedra" class="page-content container mx-auto px-6 py-16 md:py-24">
+         <button onclick="showPage('home'); return false;" class="mb-8 inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-teal-600 hover:bg-teal-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-teal-500">
+            <span class="lucide mr-2">&#xe015;</span> Volver a Categorías
+        </button>
+        <h2 class="text-3xl md:text-4xl font-bold text-gray-800 mb-12">Placas Símil Piedra</h2>
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            {/* Placeholder Item 1 */}
+            <div class="bg-white rounded-lg shadow-md overflow-hidden">
+                <img src="https://placehold.co/600x400/d1d5db/6b7280?text=Piedra+Modelo+A" alt="Piedra Modelo A" class="w-full h-48 object-cover" onerror="this.src='https://placehold.co/600x400/e0e0e0/a0a0a0?text=Imagen+no+disponible'">
+                <div class="p-4">
+                    <h3 class="text-lg font-semibold mb-1">Piedra Modelo A</h3>
+                    <p class="text-sm text-gray-600 mb-3">Descripción detallada del producto símil piedra modelo A.</p>
+                    <a href="#contacto" onclick="showPage('home', '#contacto'); return false;" class="text-teal-600 hover:underline font-medium text-sm">Consultar Precio</a>
+                </div>
+            </div>
+             {/* Placeholder Item 2 */}
+            <div class="bg-white rounded-lg shadow-md overflow-hidden">
+                <img src="https://placehold.co/600x400/b0b0b0/505050?text=Piedra+Modelo+B" alt="Piedra Modelo B" class="w-full h-48 object-cover" onerror="this.src='https://placehold.co/600x400/e0e0e0/a0a0a0?text=Imagen+no+disponible'">
+                <div class="p-4">
+                    <h3 class="text-lg font-semibold mb-1">Piedra Modelo B</h3>
+                    <p class="text-sm text-gray-600 mb-3">Descripción detallada del producto símil piedra modelo B.</p>
+                     <a href="#contacto" onclick="showPage('home', '#contacto'); return false;" class="text-teal-600 hover:underline font-medium text-sm">Consultar Precio</a>
+                </div>
+            </div>
+            {/* Add more product cards as needed */}
+        </div>
+    </div> <div id="page-pisos" class="page-content container mx-auto px-6 py-16 md:py-24">
+         <button onclick="showPage('home'); return false;" class="mb-8 inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-teal-600 hover:bg-teal-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-teal-500">
+            <span class="lucide mr-2">&#xe015;</span> Volver a Categorías
+        </button>
+        <h2 class="text-3xl md:text-4xl font-bold text-gray-800 mb-12">Pisos Flotantes</h2>
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            {/* Placeholder Item 1 */}
+            <div class="bg-white rounded-lg shadow-md overflow-hidden">
+                <img src="https://placehold.co/600x400/9ca3af/4b5563?text=Piso+Modelo+Roble" alt="Piso Modelo Roble" class="w-full h-48 object-cover" onerror="this.src='https://placehold.co/600x400/e0e0e0/a0a0a0?text=Imagen+no+disponible'">
+                <div class="p-4">
+                    <h3 class="text-lg font-semibold mb-1">Piso Modelo Roble</h3>
+                    <p class="text-sm text-gray-600 mb-3">Descripción detallada del piso flotante modelo Roble.</p>
+                    <a href="#contacto" onclick="showPage('home', '#contacto'); return false;" class="text-teal-600 hover:underline font-medium text-sm">Consultar Precio</a>
+                </div>
+            </div>
+             {/* Placeholder Item 2 */}
+            <div class="bg-white rounded-lg shadow-md overflow-hidden">
+                <img src="https://placehold.co/600x400/ab8f7a/5d4037?text=Piso+Modelo+Nogal" alt="Piso Modelo Nogal" class="w-full h-48 object-cover" onerror="this.src='https://placehold.co/600x400/e0e0e0/a0a0a0?text=Imagen+no+disponible'">
+                <div class="p-4">
+                    <h3 class="text-lg font-semibold mb-1">Piso Modelo Nogal</h3>
+                    <p class="text-sm text-gray-600 mb-3">Descripción detallada del piso flotante modelo Nogal.</p>
+                     <a href="#contacto" onclick="showPage('home', '#contacto'); return false;" class="text-teal-600 hover:underline font-medium text-sm">Consultar Precio</a>
+                </div>
+            </div>
+            {/* Add more product cards as needed */}
+        </div>
+    </div> <div id="page-cielos" class="page-content container mx-auto px-6 py-16 md:py-24">
+         <button onclick="showPage('home'); return false;" class="mb-8 inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-teal-600 hover:bg-teal-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-teal-500">
+            <span class="lucide mr-2">&#xe015;</span> Volver a Categorías
+        </button>
+        <h2 class="text-3xl md:text-4xl font-bold text-gray-800 mb-12">Cielos Rasos</h2>
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            {/* Placeholder Item 1 */}
+            <div class="bg-white rounded-lg shadow-md overflow-hidden">
+                <img src="https://placehold.co/600x400/6b7280/374151?text=Cielo+Raso+PVC" alt="Cielo Raso PVC" class="w-full h-48 object-cover" onerror="this.src='https://placehold.co/600x400/e0e0e0/a0a0a0?text=Imagen+no+disponible'">
+                <div class="p-4">
+                    <h3 class="text-lg font-semibold mb-1">Cielo Raso PVC Blanco</h3>
+                    <p class="text-sm text-gray-600 mb-3">Descripción detallada del cielo raso de PVC color blanco.</p>
+                    <a href="#contacto" onclick="showPage('home', '#contacto'); return false;" class="text-teal-600 hover:underline font-medium text-sm">Consultar Precio</a>
+                </div>
+            </div>
+             {/* Placeholder Item 2 */}
+            <div class="bg-white rounded-lg shadow-md overflow-hidden">
+                <img src="https://placehold.co/600x400/a1a1aa/404040?text=Cielo+Raso+Desmontable" alt="Cielo Raso Desmontable" class="w-full h-48 object-cover" onerror="this.src='https://placehold.co/600x400/e0e0e0/a0a0a0?text=Imagen+no+disponible'">
+                <div class="p-4">
+                    <h3 class="text-lg font-semibold mb-1">Cielo Raso Desmontable</h3>
+                    <p class="text-sm text-gray-600 mb-3">Descripción detallada del cielo raso tipo desmontable.</p>
+                     <a href="#contacto" onclick="showPage('home', '#contacto'); return false;" class="text-teal-600 hover:underline font-medium text-sm">Consultar Precio</a>
+                </div>
+            </div>
+            {/* Add more product cards as needed */}
+        </div>
+    </div> <script>
+        const pages = document.querySelectorAll('.page-content');
+        const mobileMenu = document.getElementById('mobile-menu');
+        const mobileMenuButton = document.getElementById('mobile-menu-button');
+
+        // Function to show a specific page and optionally scroll to an element
+        function showPage(pageId, scrollToElement = null) {
+            // Update hash in URL without triggering scroll
+            history.pushState(null, null, pageId === 'home' ? '#' : '#' + pageId);
+
+            pages.forEach(page => {
+                page.classList.remove('active');
+            });
+            const activePage = document.getElementById('page-' + pageId);
+            if (activePage) {
+                activePage.classList.add('active');
+                // Scroll to top of the new page content
+                window.scrollTo(0, 0);
+                // If a specific element ID is provided (e.g., #productos), scroll to it
+                if (scrollToElement) {
+                    setTimeout(() => { // Timeout needed to allow content to render before scrolling
+                         const element = document.querySelector(scrollToElement);
+                         if(element) {
+                            element.scrollIntoView({ behavior: 'smooth' });
+                         }
+                    }, 100);
+                }
+            } else {
+                // Fallback to home if pageId not found
+                document.getElementById('page-home').classList.add('active');
+                 history.pushState(null, null, '#');
+            }
+             // Close mobile menu if open
+            closeMobileMenu();
+        }
+
+         // Function to close mobile menu
+        function closeMobileMenu() {
+             if (!mobileMenu.classList.contains('hidden')) {
+                mobileMenu.classList.add('hidden');
+             }
+        }
+
+        // Handle initial page load based on hash
+        function handleInitialLoad() {
+            const hash = window.location.hash.substring(1);
+            // Define valid page IDs (excluding home)
+            const validPageIds = ['antihumedad', 'piedra', 'pisos', 'cielos'];
+            if (hash && validPageIds.includes(hash)) {
+                showPage(hash);
+            } else {
+                // Default to home page
+                showPage('home');
+                 // Clear hash if invalid or empty
+                 history.replaceState(null, null, ' ');
+            }
+        }
+
+        // Handle back/forward browser navigation
+        window.addEventListener('popstate', handleInitialLoad);
+
+        // Mobile menu toggle
+        mobileMenuButton.addEventListener('click', () => {
+            mobileMenu.classList.toggle('hidden');
+        });
+
+        // Add event listeners to close mobile menu when clicking links inside it
+        const mobileMenuLinks = mobileMenu.querySelectorAll('a');
+        mobileMenuLinks.forEach(link => {
+            // Event listener already added via onclick, this is redundant but safe
+            link.addEventListener('click', closeMobileMenu);
+        });
+
+        // Initial setup on page load
+        document.addEventListener('DOMContentLoaded', handleInitialLoad);
+
+    </script>
+
+</body>
+</html>
