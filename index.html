@@ -46,6 +46,12 @@
         -webkit-background-clip: text;
         -webkit-text-fill-color: transparent;
       }
+      /* WhatsApp Button Style */
+      .whatsapp-button svg {
+        width: 28px; /* Adjust size as needed */
+        height: 28px;
+        fill: white;
+      }
     </style>
 </head>
 <body class="bg-gray-100">
@@ -234,6 +240,16 @@
         </div>
     </footer>
 
+    <a href="https://wa.me/5491160479929"
+       target="_blank"
+       rel="noopener noreferrer"
+       aria-label="Contactar por WhatsApp"
+       class="whatsapp-button fixed bottom-5 right-5 z-40 bg-green-500 hover:bg-green-600 text-white p-3 rounded-full shadow-lg transition duration-300 ease-in-out transform hover:scale-110 flex items-center justify-center">
+        <svg viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
+            <path d=" M19.11 17.205c-.372 0-1.088 1.39-1.518 1.39a.63.63 0 0 1-.315-.1c-.802-.402-1.504-.817-2.163-1.447-.545-.516-1.146-1.29-1.46-1.963a.426.426 0 0 1-.073-.215c0-.33.99-.945.99-1.49 0-.143-.73-2.09-.832-2.335-.143-.372-.214-.487-.6-.487-.187 0-.36-.044-.53-.044-.315 0-.76.11-1.042.315-.315.2-.832.77-1.042 1.738-.213 1.028.072 1.958.144 2.163.072.215.213.402.315.57.072.114.143.24.214.372.072.143.11.27.18.402.143.27.315.57.487.87.172.3.372.6.6.91.24.315.516.645.802.975.315.345.645.645.975.91.3.24.6.44.91.615.3.172.615.315.945.44.288.114.576.187.87.215.3.044.57.073.792.073.24 0 .48-.03.688-.072.24-.044.44-.115.615-.215.172-.1.315-.187.44-.3.114-.114.21-.24.27-.372.114-.24.187-.545.215-.87.044-.315.044-.63 0-.945-.044-.315-.072-.6-.11-.87-.044-.27-.072-.487-.143-.73a11.1 11.1 0 0 0-1.187-2.605z M16 0 A16 16 0 0 0 0 16 A16 16 0 0 0 16 32 A16 16 0 0 0 32 16 A16 16 0 0 0 16 0 M16 4.8 A11.2 11.2 0 0 1 27.2 16 A11.2 11.2 0 0 1 16 27.2 A11.2 11.2 0 0 1 4.8 16 A11.2 11.2 0 0 1 16 4.8z"/>
+        </svg>
+    </a>
+
     <script>
         // Set current year in footer
         document.getElementById('current-year').textContent = new Date().getFullYear();
@@ -272,8 +288,6 @@
         showSection('home');
         // Optional: Set initial active state for home button
         document.querySelector('.nav-button[data-target="home"]').classList.add('text-blue-600', 'font-bold');
-
-        // REMOVED: Basic Form Handling Placeholder script as mailto handles submission now.
 
     </script>
 
