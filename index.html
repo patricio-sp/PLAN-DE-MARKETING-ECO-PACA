@@ -355,9 +355,7 @@
                          btn.classList.remove('text-blue-600', 'font-bold');
                     }
                 });
-                 // If the cotizador section is shown, ensure icons are rendered
                  if (targetId === 'cotizador') {
-                    // Ensure icons render if the section was previously hidden
                     requestAnimationFrame(() => {
                         lucide.createIcons();
                     });
@@ -377,7 +375,7 @@
         showSection('home'); // Initialize home section
 
 
-        // --- Cotizador Logic (New Version with Server URL) ---
+        // --- Cotizador Logic (Using Formspree) ---
         const cotizadorSection = document.getElementById('cotizador');
         if (cotizadorSection) {
             // --- Configuration (Quote Section) ---
@@ -422,7 +420,7 @@
 
             // --- Populate Product Options ---
             if (productSelect) {
-                productSelect.innerHTML = ''; // Clear existing
+                productSelect.innerHTML = '';
                  const defaultOption = document.createElement('option');
                  defaultOption.value = "";
                  defaultOption.textContent = "-- Selecciona un producto --";
@@ -465,19 +463,20 @@
                 clearError(errorGeneralUserInfo);
             };
 
-            // --- Event Listener for User Info Form Submission ---
+            // --- Event Listener for User Info Form Submission (Using Formspree) ---
             if (userInfoForm) {
                 userInfoForm.addEventListener('submit', (event) => {
                     event.preventDefault();
                     clearAllUserInfoErrors();
 
                     let isValid = true;
-                    const userInfo = {
+                    const userInfo = { // Use field names expected by Formspree or map them
                         nombre: nombreInput.value.trim(),
                         apellido: apellidoInput.value.trim(),
                         telefono: telefonoInput.value.trim(),
                         direccion: direccionInput.value.trim(),
                         localidad: localidadInput.value.trim()
+                        // You might need hidden fields or specific names if Formspree requires them
                     };
 
                     if (!userInfo.nombre) { displayError(errorNombre, 'El nombre es requerido.', nombreInput); isValid = false; }
@@ -493,39 +492,49 @@
                          return;
                     }
 
-                    // --- Send data to server ---
-                    fetch('https://plakasec.com/procesar_cotizador.php', { // <-- URL ACTUALIZADA
+                    // --- Send data to Formspree ---
+                    fetch('https://formspree.io/f/mjkyjgbd', { // <-- Formspree URL
                         method: 'POST',
                         headers: {
-                            'Content-Type': 'application/json',
+                            'Accept': 'application/json', // Important for Formspree AJAX
+                            'Content-Type': 'application/json'
                         },
                         body: JSON.stringify(userInfo)
                     })
                     .then(response => {
-                        if (!response.ok) {
-                            // Attempt to get error message from server response if possible
-                            return response.text().then(text => {
-                                throw new Error(`Error del servidor: ${response.status} ${response.statusText} - ${text}`);
-                            });
-                        }
-                        return response.json(); // Assumes server sends JSON back on success
-                    })
-                    .then(data => {
-                        console.log('Datos enviados con éxito:', data);
-                        // Proceed to show quote section only after successful submission
-                        if(userInfoSection) userInfoSection.classList.add('hidden');
-                        if(quoteSection) {
-                            quoteSection.classList.remove('hidden');
-                            quoteSection.classList.add('fade-in');
-                            // Render icons in the newly visible section
-                             requestAnimationFrame(() => {
-                                lucide.createIcons();
+                        if (response.ok) {
+                            // Success
+                            console.log('Datos enviados con éxito a Formspree');
+                            // Hide user info form and show quote section
+                            if(userInfoSection) userInfoSection.classList.add('hidden');
+                            if(quoteSection) {
+                                quoteSection.classList.remove('hidden');
+                                quoteSection.classList.add('fade-in');
+                                requestAnimationFrame(() => { // Ensure icons render after display:block
+                                    lucide.createIcons();
+                                });
+                            }
+                        } else {
+                            // Handle Formspree errors (e.g., validation errors)
+                            response.json().then(data => {
+                               if (data && data.errors) {
+                                 const errorMessages = data.errors.map(error => error.message).join(", ");
+                                 displayError(errorGeneralUserInfo, `Error de Formspree: ${errorMessages}`);
+                                 console.error('Error de Formspree:', data.errors);
+                               } else {
+                                 // Generic server error if no specific errors provided
+                                 throw new Error(`Error del servidor Formspree: ${response.status} ${response.statusText}`);
+                               }
+                            }).catch(() => {
+                                // If response cannot be parsed as JSON
+                                throw new Error(`Error del servidor Formspree: ${response.status} ${response.statusText}`);
                             });
                         }
                     })
                     .catch(error => {
-                        console.error('Error al enviar datos:', error);
-                        displayError(errorGeneralUserInfo, `Error al enviar datos: ${error.message}. Intenta de nuevo.`);
+                        // Network error or error during response handling
+                        console.error('Error al enviar datos a Formspree:', error);
+                        displayError(errorGeneralUserInfo, `No se pudieron enviar los datos. ${error.message}. Intenta de nuevo.`);
                     });
                 });
             }
@@ -635,19 +644,18 @@
                         userInfoSection.classList.remove('hidden');
                         userInfoSection.classList.add('fade-in');
                     }
-                    if(quoteForm) quoteForm.reset();
+                    if(quoteForm) quoteForm.reset(); // Reset quote form fields
                     if(quoteResultDiv) quoteResultDiv.classList.add('hidden');
                     clearError(errorMessageMetersP, metersInput);
                     clearError(errorMessageZoneP, shippingZoneSelect);
-                    // Re-render icons if needed
-                     requestAnimationFrame(() => {
+                    requestAnimationFrame(() => { // Re-render icons if needed
                         lucide.createIcons();
                     });
                 });
             }
         } // End of check for cotizadorSection
 
-        // Initialize Lucide Icons (ensure they render on initial load and section change)
+        // Initialize Lucide Icons
         lucide.createIcons();
 
     </script>
