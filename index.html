@@ -52,7 +52,7 @@
         fill: white;
       }
 
-      /* Custom Styles - Cotizador */
+      /* --- UPDATED: Custom Styles - Cotizador (New Version) --- */
       .quote-result-item {
           @apply flex justify-between py-2 border-b border-gray-200;
       }
@@ -73,22 +73,29 @@
           animation: fadeIn 0.5s ease-out forwards;
       }
       .error-message {
-           @apply text-red-600 text-sm mt-1 font-medium h-5; /* Added fixed height */
+           @apply text-red-600 text-sm mt-1 font-medium h-5; /* Fixed height */
       }
-      /* Ensure select dropdown has consistent height and padding */
-      #cotizador select { /* Scoped to cotizador section */
-           @apply p-3;
-      }
+      /* Ensure consistent height and padding within cotizador */
+      #cotizador input[type="text"],
+      #cotizador input[type="tel"],
       #cotizador input[type="number"],
-      #cotizador input[type="checkbox"] { /* Scoped to cotizador section */
-           @apply p-3; /* Consistent padding */
+      #cotizador select {
+           @apply p-3 border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 transition duration-150 ease-in-out w-full;
       }
-      #cotizador input[type="checkbox"] {
-          @apply p-0 h-4 w-4 text-indigo-600 border-gray-300 rounded focus:ring-indigo-500; /* Specific checkbox style */
+       #cotizador input[type="checkbox"] {
+          @apply h-4 w-4 text-indigo-600 border-gray-300 rounded focus:ring-indigo-500;
       }
-      #cotizador label { /* Ensure labels align well */
-          @apply mb-1;
+      #cotizador label {
+          @apply block text-sm font-medium text-gray-700 mb-1;
       }
+      /* Style for required field marker */
+      #cotizador label abbr {
+          color: red;
+          text-decoration: none; /* Remove underline from abbr */
+          margin-left: 2px;
+      }
+      /* --- End of Updated Cotizador Styles --- */
+
     </style>
 </head>
 <body class="bg-gray-100">
@@ -111,7 +118,7 @@
     <main class="container mx-auto px-6 py-8">
 
         <section id="home" class="page-section active">
-            <div class="gradient-bg text-white p-12 rounded-lg shadow-lg text-center">
+             <div class="gradient-bg text-white p-12 rounded-lg shadow-lg text-center">
                 <h1 class="text-4xl md:text-5xl font-bold mb-4">Bienvenido a Plakasec</h1>
                 <p class="text-lg md:text-xl mb-6">Soluciones innovadoras en revestimientos y placas antihumedad para transformar tus espacios.</p>
                 <button data-target="products" class="nav-button bg-white text-blue-600 font-semibold px-6 py-3 rounded-lg shadow hover:bg-gray-100 transition duration-300">
@@ -135,7 +142,7 @@
         </section>
 
         <section id="about" class="page-section bg-white p-8 rounded-lg shadow-lg">
-            <h2 class="text-3xl font-bold mb-6 text-center gradient-text">Quiénes Somos</h2>
+             <h2 class="text-3xl font-bold mb-6 text-center gradient-text">Quiénes Somos</h2>
             <div class="flex flex-col md:flex-row items-center gap-8">
                 <div class="md:w-1/2">
                      <img src="https://placehold.co/600x400/a5b4fc/ffffff?text=Imagen+Empresa" alt="Imagen representativa de la empresa Plakasec" class="rounded-lg shadow-md w-full h-auto object-cover">
@@ -149,90 +156,95 @@
         </section>
 
         <section id="products" class="page-section">
-            <h2 class="text-3xl font-bold mb-8 text-center gradient-text">Nuestros Productos</h2>
-
+             <h2 class="text-3xl font-bold mb-8 text-center gradient-text">Nuestros Productos</h2>
             <div class="mb-12 bg-white p-6 rounded-lg shadow-md">
                 <h3 class="text-2xl font-semibold mb-6 text-green-600 border-b pb-2">Placas Antihumedad</h3>
                 <p class="text-gray-600 mb-6">La solución definitiva y estética para problemas de humedad en paredes y techos. Fáciles de instalar y con diversos diseños.</p>
                 <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-                    <div class="border rounded-lg overflow-hidden shadow hover:shadow-lg transition-shadow duration-300">
-                        <img src="https://i.postimg.cc/htJT44cX/1-20241226-110317-0000.png" alt="Placa antihumedad diseño Travertino" class="w-full h-48 object-cover" onerror="this.onerror=null;this.src='https://placehold.co/300x200/cccccc/ffffff?text=Imagen+No+Disponible';">
-                        <div class="p-4">
-                            <h4 class="font-semibold text-lg mb-1">Diseño Travertino</h4>
-                            <p class="text-sm text-gray-500">Elegancia clásica.</p>
-                        </div>
-                    </div>
-                     <div class="border rounded-lg overflow-hidden shadow hover:shadow-lg transition-shadow duration-300">
-                        <img src="https://i.postimg.cc/CLrbVnTy/2-20241226-110318-0001.png" alt="Placa antihumedad diseño Ubeda" class="w-full h-48 object-cover" onerror="this.onerror=null;this.src='https://placehold.co/300x200/cccccc/ffffff?text=Imagen+No+Disponible';">
-                         <div class="p-4">
-                            <h4 class="font-semibold text-lg mb-1">Diseño Ubeda</h4>
-                            <p class="text-sm text-gray-500">Textura sutil y moderna.</p>
-                        </div>
-                    </div>
-                     <div class="border rounded-lg overflow-hidden shadow hover:shadow-lg transition-shadow duration-300">
-                        <img src="https://i.postimg.cc/3Jx26CqC/3-20241226-110318-0002.png" alt="Placa antihumedad diseño Pizarra" class="w-full h-48 object-cover" onerror="this.onerror=null;this.src='https://placehold.co/300x200/cccccc/ffffff?text=Imagen+No+Disponible';">
-                         <div class="p-4">
-                            <h4 class="font-semibold text-lg mb-1">Diseño Pizarra</h4>
-                            <p class="text-sm text-gray-500">Aspecto rústico y natural.</p>
-                        </div>
-                    </div>
-                     <div class="border rounded-lg overflow-hidden shadow hover:shadow-lg transition-shadow duration-300">
-                        <img src="https://i.postimg.cc/4xrtYCxB/4-20241226-110318-0003.png" alt="Placa antihumedad diseño Sol" class="w-full h-48 object-cover" onerror="this.onerror=null;this.src='https://placehold.co/300x200/cccccc/ffffff?text=Imagen+No+Disponible';">
-                         <div class="p-4">
-                            <h4 class="font-semibold text-lg mb-1">Diseño Sol</h4>
-                            <p class="text-sm text-gray-500">Luminoso y decorativo.</p>
-                        </div>
-                    </div>
+                    <div class="border rounded-lg overflow-hidden shadow hover:shadow-lg transition-shadow duration-300"><img src="https://i.postimg.cc/htJT44cX/1-20241226-110317-0000.png" alt="Placa antihumedad diseño Travertino" class="w-full h-48 object-cover" onerror="this.onerror=null;this.src='https://placehold.co/300x200/cccccc/ffffff?text=Imagen+No+Disponible';"><div class="p-4"><h4 class="font-semibold text-lg mb-1">Diseño Travertino</h4><p class="text-sm text-gray-500">Elegancia clásica.</p></div></div>
+                    <div class="border rounded-lg overflow-hidden shadow hover:shadow-lg transition-shadow duration-300"><img src="https://i.postimg.cc/CLrbVnTy/2-20241226-110318-0001.png" alt="Placa antihumedad diseño Ubeda" class="w-full h-48 object-cover" onerror="this.onerror=null;this.src='https://placehold.co/300x200/cccccc/ffffff?text=Imagen+No+Disponible';"><div class="p-4"><h4 class="font-semibold text-lg mb-1">Diseño Ubeda</h4><p class="text-sm text-gray-500">Textura sutil y moderna.</p></div></div>
+                    <div class="border rounded-lg overflow-hidden shadow hover:shadow-lg transition-shadow duration-300"><img src="https://i.postimg.cc/3Jx26CqC/3-20241226-110318-0002.png" alt="Placa antihumedad diseño Pizarra" class="w-full h-48 object-cover" onerror="this.onerror=null;this.src='https://placehold.co/300x200/cccccc/ffffff?text=Imagen+No+Disponible';"><div class="p-4"><h4 class="font-semibold text-lg mb-1">Diseño Pizarra</h4><p class="text-sm text-gray-500">Aspecto rústico y natural.</p></div></div>
+                    <div class="border rounded-lg overflow-hidden shadow hover:shadow-lg transition-shadow duration-300"><img src="https://i.postimg.cc/4xrtYCxB/4-20241226-110318-0003.png" alt="Placa antihumedad diseño Sol" class="w-full h-48 object-cover" onerror="this.onerror=null;this.src='https://placehold.co/300x200/cccccc/ffffff?text=Imagen+No+Disponible';"><div class="p-4"><h4 class="font-semibold text-lg mb-1">Diseño Sol</h4><p class="text-sm text-gray-500">Luminoso y decorativo.</p></div></div>
                 </div>
             </div>
-
             <div class="mb-12 bg-white p-6 rounded-lg shadow-md">
                 <h3 class="text-2xl font-semibold mb-6 text-blue-600 border-b pb-2">Revestimientos Símil Piedra</h3>
                  <p class="text-gray-600 mb-6">Aporta la calidez y robustez de la piedra natural a tus paredes, tanto en interiores como exteriores, con una instalación más sencilla y económica.</p>
                 <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-                    <div class="border border-dashed border-gray-300 rounded-lg p-4 text-center text-gray-400 flex flex-col justify-center items-center min-h-[200px]">
-                        <span class="lucide text-4xl mb-2">&#xe431;</span> <p>Próximamente: Nuevos diseños Símil Piedra</p>
-                    </div>
-                     <div class="border border-dashed border-gray-300 rounded-lg p-4 text-center text-gray-400 flex flex-col justify-center items-center min-h-[200px]">
-                        <span class="lucide text-4xl mb-2">&#xe431;</span> <p>Más variedad disponible</p>
-                    </div>
+                    <div class="border border-dashed border-gray-300 rounded-lg p-4 text-center text-gray-400 flex flex-col justify-center items-center min-h-[200px]"><span class="lucide text-4xl mb-2">&#xe431;</span><p>Próximamente: Nuevos diseños Símil Piedra</p></div>
+                     <div class="border border-dashed border-gray-300 rounded-lg p-4 text-center text-gray-400 flex flex-col justify-center items-center min-h-[200px]"><span class="lucide text-4xl mb-2">&#xe431;</span><p>Más variedad disponible</p></div>
                 </div>
             </div>
-
             <div class="bg-white p-6 rounded-lg shadow-md">
                 <h3 class="text-2xl font-semibold mb-6 text-violet-600 border-b pb-2">Pisos Flotantes</h3>
                  <p class="text-gray-600 mb-6">Renueva tus suelos rápidamente y sin obras complicadas. Ofrecemos una amplia gama de acabados y colores para complementar tu estilo.</p>
                 <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-                     <div class="border border-dashed border-gray-300 rounded-lg p-4 text-center text-gray-400 flex flex-col justify-center items-center min-h-[200px]">
-                         <span class="lucide text-4xl mb-2">&#xe431;</span> <p>Próximamente: Catálogo de Pisos Flotantes</p>
-                    </div>
-                     <div class="border border-dashed border-gray-300 rounded-lg p-4 text-center text-gray-400 flex flex-col justify-center items-center min-h-[200px]">
-                         <span class="lucide text-4xl mb-2">&#xe431;</span> <p>Consulta por opciones</p>
-                    </div>
+                     <div class="border border-dashed border-gray-300 rounded-lg p-4 text-center text-gray-400 flex flex-col justify-center items-center min-h-[200px]"><span class="lucide text-4xl mb-2">&#xe431;</span><p>Próximamente: Catálogo de Pisos Flotantes</p></div>
+                     <div class="border border-dashed border-gray-300 rounded-lg p-4 text-center text-gray-400 flex flex-col justify-center items-center min-h-[200px]"><span class="lucide text-4xl mb-2">&#xe431;</span><p>Consulta por opciones</p></div>
                 </div>
             </div>
         </section>
 
         <section id="cotizador" class="page-section">
-             <div class="bg-white p-6 md:p-8 rounded-lg shadow-lg w-full max-w-2xl mx-auto"> <div>
-                    <h1 class="text-2xl md:text-3xl font-bold text-center text-gray-800 mb-6">Cotizador Plaka Sec</h1>
+             <div class="bg-white p-6 md:p-8 rounded-lg shadow-lg w-full max-w-lg mx-auto"> <div id="user-info-section">
+                    <h1 class="text-2xl md:text-3xl font-bold text-center text-gray-800 mb-6">Datos de Contacto</h1>
+                    <p class="text-center text-gray-600 mb-6 text-sm">Completa tus datos para continuar al cotizador.</p>
+
+                    <form id="user-info-form" class="space-y-4">
+                        <div>
+                            <label for="nombre">Nombre<abbr title="requerido">*</abbr></label>
+                            <input type="text" id="nombre" name="nombre" placeholder="Tu nombre" required>
+                            <p id="error-nombre" class="error-message hidden"></p>
+                        </div>
+                        <div>
+                            <label for="apellido">Apellido<abbr title="requerido">*</abbr></label>
+                            <input type="text" id="apellido" name="apellido" placeholder="Tu apellido" required>
+                             <p id="error-apellido" class="error-message hidden"></p>
+                        </div>
+                         <div>
+                            <label for="telefono">Teléfono<abbr title="requerido">*</abbr></label>
+                            <input type="tel" id="telefono" name="telefono" placeholder="Ej: 11 5555 5555" required>
+                             <p id="error-telefono" class="error-message hidden"></p>
+                        </div>
+                         <div>
+                            <label for="direccion">Dirección<abbr title="requerido">*</abbr></label>
+                            <input type="text" id="direccion" name="direccion" placeholder="Calle y número" required>
+                             <p id="error-direccion" class="error-message hidden"></p>
+                        </div>
+                         <div>
+                            <label for="localidad">Localidad<abbr title="requerido">*</abbr></label>
+                            <input type="text" id="localidad" name="localidad" placeholder="Tu localidad" required>
+                             <p id="error-localidad" class="error-message hidden"></p>
+                        </div>
+
+                         <p id="error-general-userinfo" class="error-message text-center hidden"></p>
+
+                        <button type="submit" class="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-3 px-4 rounded-md shadow-md transition duration-150 ease-in-out flex items-center justify-center space-x-2">
+                            <i data-lucide="arrow-right-circle" class="w-5 h-5"></i>
+                            <span>Continuar al Cotizador</span>
+                        </button>
+                    </form>
+                </div>
+
+                <div id="quote-section" class="hidden">
+                    <h1 class="text-2xl md:text-3xl font-bold text-center text-gray-800 mb-6">Cotizador Online</h1>
 
                     <form id="quote-form" class="space-y-4">
                         <div>
-                            <label for="product" class="block text-sm font-medium text-gray-700">Selecciona el Producto:</label>
-                            <select id="product" name="product" class="w-full border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 transition duration-150 ease-in-out" required>
+                            <label for="product">Selecciona el Producto:</label>
+                            <select id="product" name="product" required>
                                 </select>
                         </div>
 
                         <div>
-                            <label for="meters" class="block text-sm font-medium text-gray-700">Metros Cuadrados (m²):</label>
-                            <input type="number" id="meters" name="meters" min="0.1" step="0.1" placeholder="Ej: 25.5" class="w-full border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 transition duration-150 ease-in-out" required>
+                            <label for="meters">Metros Cuadrados (m²):</label>
+                            <input type="number" id="meters" name="meters" min="0.1" step="0.1" placeholder="Ej: 25.5" required>
                              <p id="error-message-meters" class="error-message hidden"></p>
                         </div>
 
                         <div>
-                            <label for="shipping-zone" class="block text-sm font-medium text-gray-700">Zona de Envío:</label>
-                            <select id="shipping-zone" name="shipping-zone" class="w-full border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 transition duration-150 ease-in-out" required>
+                            <label for="shipping-zone">Zona de Envío:</label>
+                            <select id="shipping-zone" name="shipping-zone" required>
                                 <option value="">-- Selecciona tu zona --</option>
                                 <option value="caba">Ciudad Autónoma de Buenos Aires (CABA)</option>
                                 <option value="gba">Gran Buenos Aires (GBA)</option>
@@ -245,8 +257,7 @@
 
                         <div class="flex items-center space-x-2 pt-2">
                              <input type="checkbox" id="include-installation" name="include-installation">
-                             <label for="include-installation" class="text-sm font-medium text-gray-700">Incluir Instalación</label>
-                        </div>
+                             <label for="include-installation" class="mb-0">Incluir Instalación</label> </div>
 
                         <button type="submit" class="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-3 px-4 rounded-md shadow-md transition duration-150 ease-in-out flex items-center justify-center space-x-2">
                             <i data-lucide="calculator" class="w-5 h-5"></i>
@@ -261,62 +272,36 @@
                          <div id="quote-total" class="quote-total border-t border-gray-300">
                              </div>
                     </div>
+                     <button id="back-to-user-info" class="mt-4 w-full text-sm text-indigo-600 hover:text-indigo-800 transition duration-150 ease-in-out flex items-center justify-center space-x-1">
+                         <i data-lucide="arrow-left-circle" class="w-4 h-4"></i>
+                         <span>Volver a Datos de Contacto</span>
+                     </button>
                 </div>
+
              </div>
         </section>
 
         <section id="contact" class="page-section bg-white p-8 rounded-lg shadow-lg">
-            <h2 class="text-3xl font-bold mb-8 text-center gradient-text">Contacto</h2>
+             <h2 class="text-3xl font-bold mb-8 text-center gradient-text">Contacto</h2>
             <div class="flex flex-col md:flex-row gap-10">
                 <div class="md:w-1/2 space-y-4 text-gray-700">
                     <h3 class="text-xl font-semibold text-gray-800 mb-3">Información de Contacto</h3>
-                    <p class="flex items-center">
-                        <span class="lucide mr-3 text-blue-500">&#xe0dc;</span> Carmona 62, Adrogué, Buenos Aires, Argentina.
-                    </p>
-                    <p class="flex items-center">
-                        <span class="lucide mr-3 text-green-500">&#xe0e6;</span> <a href="tel:1160479929" class="hover:text-blue-600">11 6047 9929</a>
-                    </p>
-                    <p class="flex items-center">
-                         <span class="lucide mr-3 text-violet-500">&#xe0be;</span> <a href="mailto:info@plakasec.com" class="hover:text-blue-600">info@plakasec.com</a>
-                    </p>
-                    <div class="mt-6">
-                        <h4 class="text-lg font-semibold text-gray-800 mb-2">Horario de Atención</h4>
-                        <p>Lunes a Viernes: 9:00 - 18:00 hs</p>
-                        <p>Sábados: 9:00 - 13:00 hs</p>
-                    </div>
-                     <div class="mt-6 border rounded-lg overflow-hidden">
-                         <img src="https://placehold.co/600x300/e0e7ff/374151?text=Mapa+(Ubicaci%C3%B3n+Aproximada)" alt="Mapa indicando la ubicación de Plakasec en Adrogué" class="w-full h-auto">
-                     </div>
+                    <p class="flex items-center"><span class="lucide mr-3 text-blue-500">&#xe0dc;</span>Carmona 62, Adrogué, Buenos Aires, Argentina.</p>
+                    <p class="flex items-center"><span class="lucide mr-3 text-green-500">&#xe0e6;</span><a href="tel:1160479929" class="hover:text-blue-600">11 6047 9929</a></p>
+                    <p class="flex items-center"><span class="lucide mr-3 text-violet-500">&#xe0be;</span><a href="mailto:info@plakasec.com" class="hover:text-blue-600">info@plakasec.com</a></p>
+                    <div class="mt-6"><h4 class="text-lg font-semibold text-gray-800 mb-2">Horario de Atención</h4><p>Lunes a Viernes: 9:00 - 18:00 hs</p><p>Sábados: 9:00 - 13:00 hs</p></div>
+                    <div class="mt-6 border rounded-lg overflow-hidden"><img src="https://placehold.co/600x300/e0e7ff/374151?text=Mapa+(Ubicaci%C3%B3n+Aproximada)" alt="Mapa indicando la ubicación de Plakasec en Adrogué" class="w-full h-auto"></div>
                 </div>
-
                 <div class="md:w-1/2">
                     <h3 class="text-xl font-semibold text-gray-800 mb-3">Envíanos tu Consulta</h3>
                     <form action="mailto:ventas@plakasec.com" method="POST" enctype="text/plain" class="space-y-4">
-                        <div>
-                            <label for="name" class="block text-sm font-medium text-gray-700">Nombre</label>
-                            <input type="text" id="name" name="Nombre" required class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm">
-                        </div>
-                        <div>
-                            <label for="email" class="block text-sm font-medium text-gray-700">Email</label>
-                            <input type="email" id="email" name="Email" required class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm">
-                        </div>
-                        <div>
-                            <label for="subject" class="block text-sm font-medium text-gray-700">Asunto</label>
-                            <input type="text" id="subject" name="Asunto" class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm">
-                        </div>
-                        <div>
-                            <label for="message" class="block text-sm font-medium text-gray-700">Mensaje</label>
-                            <textarea id="message" name="Mensaje" rows="4" required class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"></textarea>
-                        </div>
-                        <div>
-                            <button type="submit" class="w-full inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-gradient-to-r from-green-500 via-blue-500 to-violet-500 hover:from-green-600 hover:via-blue-600 hover:to-violet-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition duration-300">
-                                Enviar Mensaje
-                            </button>
-                        </div>
+                        <div><label for="name" class="block text-sm font-medium text-gray-700">Nombre</label><input type="text" id="name" name="Nombre" required class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"></div>
+                        <div><label for="email" class="block text-sm font-medium text-gray-700">Email</label><input type="email" id="email" name="Email" required class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"></div>
+                        <div><label for="subject" class="block text-sm font-medium text-gray-700">Asunto</label><input type="text" id="subject" name="Asunto" class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"></div>
+                        <div><label for="message" class="block text-sm font-medium text-gray-700">Mensaje</label><textarea id="message" name="Mensaje" rows="4" required class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"></textarea></div>
+                        <div><button type="submit" class="w-full inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-gradient-to-r from-green-500 via-blue-500 to-violet-500 hover:from-green-600 hover:via-blue-600 hover:to-violet-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition duration-300">Enviar Mensaje</button></div>
                     </form>
-                    <p class="mt-4 text-center text-sm text-gray-500">
-                        Al hacer clic en "Enviar Mensaje", se abrirá tu aplicación de correo electrónico para enviar la consulta a <span class="font-medium">ventas@plakasec.com</span>.
-                    </p>
+                    <p class="mt-4 text-center text-sm text-gray-500">Al hacer clic en "Enviar Mensaje", se abrirá tu aplicación de correo electrónico para enviar la consulta a <span class="font-medium">ventas@plakasec.com</span>.</p>
                 </div>
             </div>
         </section>
@@ -341,7 +326,7 @@
     </a>
 
     <script src="https://unpkg.com/lucide@latest"></script> <script>
-        // --- Navigation Logic ---
+        // --- Navigation Logic (Remains the same) ---
         document.getElementById('current-year').textContent = new Date().getFullYear();
         const navButtons = document.querySelectorAll('.nav-button');
         const sections = document.querySelectorAll('.page-section');
@@ -358,10 +343,8 @@
                     section.classList.remove('active');
                 }
             });
-             // If section found, scroll to top and update button state
             if (sectionFound) {
                 window.scrollTo({ top: 0, behavior: 'smooth' });
-                 // Update active state styling for buttons
                 navButtons.forEach(btn => {
                     if (btn.getAttribute('data-target') === targetId) {
                         btn.classList.add('text-blue-600', 'font-bold');
@@ -369,6 +352,10 @@
                          btn.classList.remove('text-blue-600', 'font-bold');
                     }
                 });
+                 // If the cotizador section is shown, ensure icons are rendered
+                 if (targetId === 'cotizador') {
+                    lucide.createIcons();
+                 }
             } else {
                 console.warn("Target section not found:", targetId);
             }
@@ -381,31 +368,42 @@
             });
         });
 
-        // Initialize: Show the home section by default
-        showSection('home');
+        showSection('home'); // Initialize home section
 
 
-        // --- Cotizador Logic ---
-        // Check if we are on a page that contains the cotizador elements
+        // --- UPDATED: Cotizador Logic (New Version) ---
         const cotizadorSection = document.getElementById('cotizador');
         if (cotizadorSection) {
-            // --- Configuration ---
+            // --- Configuration (Quote Section) ---
             const productsConfig = [
-                { id: 'placa-antihumedad', name: 'Placas Anti Humedad', pricePerMeter: 20000 }, // ARS per m²
-                { id: 'simil-piedra', name: 'Símil Piedra', pricePerMeter: 25000 },          // ARS per m²
-                { id: 'piso-flotante', name: 'Pisos Flotantes', pricePerMeter: 45000 }       // ARS per m²
+                { id: 'placa-antihumedad', name: 'Placas Anti Humedad', pricePerMeter: 20000 },
+                { id: 'simil-piedra', name: 'Símil Piedra', pricePerMeter: 25000 },
+                { id: 'piso-flotante', name: 'Pisos Flotantes', pricePerMeter: 45000 }
             ];
             const shippingCostsByZoneConfig = {
-                'caba': 35000,
-                'gba': 30000,
-                'bsas_interior': 0, // Assuming free or requires custom quote
-                'otra_provincia': 0, // Assuming free or requires custom quote
-                'no_shipping': 0
+                'caba': 3000, 'gba': 5000, 'bsas_interior': 8000, 'otra_provincia': 12000, 'no_shipping': 0
             };
-            const installationCostPerMeterConfig = 3000; // ARS per m²
-            const taxRateConfig = 0.21; // 21% IVA
+            const installationCostPerMeterConfig = 3000;
+            const taxRateConfig = 0.21;
 
-            // --- DOM Elements (scoped within cotizador logic) ---
+            // --- DOM Elements ---
+            // User Info Section
+            const userInfoSection = cotizadorSection.querySelector('#user-info-section');
+            const userInfoForm = cotizadorSection.querySelector('#user-info-form');
+            const nombreInput = cotizadorSection.querySelector('#nombre');
+            const apellidoInput = cotizadorSection.querySelector('#apellido');
+            const telefonoInput = cotizadorSection.querySelector('#telefono');
+            const direccionInput = cotizadorSection.querySelector('#direccion');
+            const localidadInput = cotizadorSection.querySelector('#localidad');
+            const errorGeneralUserInfo = cotizadorSection.querySelector('#error-general-userinfo');
+            const errorNombre = cotizadorSection.querySelector('#error-nombre');
+            const errorApellido = cotizadorSection.querySelector('#error-apellido');
+            const errorTelefono = cotizadorSection.querySelector('#error-telefono');
+            const errorDireccion = cotizadorSection.querySelector('#error-direccion');
+            const errorLocalidad = cotizadorSection.querySelector('#error-localidad');
+
+            // Quote Section
+            const quoteSection = cotizadorSection.querySelector('#quote-section');
             const productSelect = cotizadorSection.querySelector('#product');
             const metersInput = cotizadorSection.querySelector('#meters');
             const shippingZoneSelect = cotizadorSection.querySelector('#shipping-zone');
@@ -416,90 +414,128 @@
             const quoteTotalDiv = cotizadorSection.querySelector('#quote-total');
             const errorMessageMetersP = cotizadorSection.querySelector('#error-message-meters');
             const errorMessageZoneP = cotizadorSection.querySelector('#error-message-zone');
+            const backButton = cotizadorSection.querySelector('#back-to-user-info');
 
             // --- Populate Product Options ---
             if (productSelect) {
+                // Clear existing options first in case of re-runs
+                productSelect.innerHTML = '';
+                // Add default placeholder option
+                 const defaultOption = document.createElement('option');
+                 defaultOption.value = "";
+                 defaultOption.textContent = "-- Selecciona un producto --";
+                 defaultOption.disabled = true;
+                 defaultOption.selected = true;
+                 productSelect.appendChild(defaultOption);
+
                 productsConfig.forEach(product => {
                     const option = document.createElement('option');
                     option.value = product.id;
                     option.textContent = product.name;
                     productSelect.appendChild(option);
                 });
-            } else {
-                 console.error("Cotizador element #product not found");
             }
 
-
-            // --- Format Currency (Argentine Pesos) ---
+            // --- Format Currency ---
             const formatCurrency = (amount) => {
-                 if (typeof amount !== 'number' || isNaN(amount)) {
-                    amount = 0;
-                }
+                 if (typeof amount !== 'number' || isNaN(amount)) amount = 0;
                 return amount.toLocaleString('es-AR', { style: 'currency', currency: 'ARS' });
             };
 
-            // --- Display Error Message ---
-            const displayError = (element, message) => {
-                 if (!element) return; // Guard clause
+            // --- Display/Clear Error Messages ---
+            const displayError = (element, message, inputElement = null) => {
+                 if (!element) return;
                 element.textContent = message;
                 element.classList.remove('hidden');
-                // Highlight related input/select
-                if (element.id === 'error-message-meters' && metersInput) {
-                    metersInput.classList.add('border-red-500');
-                } else if (element.id === 'error-message-zone' && shippingZoneSelect) {
-                     shippingZoneSelect.classList.add('border-red-500');
-                }
+                if (inputElement) inputElement.classList.add('border-red-500');
             };
-
-            // --- Clear Error Message ---
-            const clearError = (element) => {
-                 if (!element) return; // Guard clause
+            const clearError = (element, inputElement = null) => {
+                 if (!element) return;
                 element.textContent = '';
                 element.classList.add('hidden');
-                // Remove highlight
-                if (element.id === 'error-message-meters' && metersInput) {
-                    metersInput.classList.remove('border-red-500');
-                } else if (element.id === 'error-message-zone' && shippingZoneSelect) {
-                     shippingZoneSelect.classList.remove('border-red-500');
-                }
+                if (inputElement) inputElement.classList.remove('border-red-500');
+            };
+            const clearAllUserInfoErrors = () => {
+                clearError(errorNombre, nombreInput);
+                clearError(errorApellido, apellidoInput);
+                clearError(errorTelefono, telefonoInput);
+                clearError(errorDireccion, direccionInput);
+                clearError(errorLocalidad, localidadInput);
+                clearError(errorGeneralUserInfo);
             };
 
-             // --- Event Listener for Form Submission ---
-             if (quoteForm) {
+            // --- Event Listener for User Info Form Submission ---
+            if (userInfoForm) {
+                userInfoForm.addEventListener('submit', (event) => {
+                    event.preventDefault();
+                    clearAllUserInfoErrors();
+
+                    let isValid = true;
+                    const userInfo = {
+                        nombre: nombreInput.value.trim(),
+                        apellido: apellidoInput.value.trim(),
+                        telefono: telefonoInput.value.trim(),
+                        direccion: direccionInput.value.trim(),
+                        localidad: localidadInput.value.trim()
+                    };
+
+                    if (!userInfo.nombre) { displayError(errorNombre, 'El nombre es requerido.', nombreInput); isValid = false; }
+                    if (!userInfo.apellido) { displayError(errorApellido, 'El apellido es requerido.', apellidoInput); isValid = false; }
+                    if (!userInfo.telefono) { displayError(errorTelefono, 'El teléfono es requerido.', telefonoInput); isValid = false; }
+                    if (!userInfo.direccion) { displayError(errorDireccion, 'La dirección es requerida.', direccionInput); isValid = false; }
+                    if (!userInfo.localidad) { displayError(errorLocalidad, 'La localidad es requerida.', localidadInput); isValid = false; }
+
+                    if (!isValid) {
+                         displayError(errorGeneralUserInfo, 'Por favor, completa todos los campos requeridos.');
+                         const firstInvalid = userInfoForm.querySelector('.border-red-500');
+                         if (firstInvalid) firstInvalid.focus();
+                         return;
+                    }
+
+                    console.log("User Info Submitted:", userInfo); // Optional: Send data
+                    if(userInfoSection) userInfoSection.classList.add('hidden');
+                    if(quoteSection) {
+                        quoteSection.classList.remove('hidden');
+                        quoteSection.classList.add('fade-in');
+                        lucide.createIcons(); // Render icons in the new section
+                    }
+                });
+            }
+
+            // --- Event Listener for Quote Form Submission ---
+            if (quoteForm) {
                 quoteForm.addEventListener('submit', (event) => {
                     event.preventDefault();
-                    clearError(errorMessageMetersP);
-                    clearError(errorMessageZoneP);
+                    clearError(errorMessageMetersP, metersInput);
+                    clearError(errorMessageZoneP, shippingZoneSelect);
 
-                    // Get selected values
                     const selectedProductId = productSelect.value;
                     const meters = parseFloat(metersInput.value);
                     const selectedZone = shippingZoneSelect.value;
 
-                    // --- Input Validation ---
-                    let isValid = true;
-                    if (!selectedProductId) isValid = false;
+                    let isQuoteValid = true;
+                    if (!selectedProductId) {
+                        // Handle case where default option might be selected after reset
+                         displayError(errorMessageMetersP, 'Selecciona un producto.', productSelect); // Error near product select
+                         isQuoteValid = false;
+                    }
                     if (isNaN(meters) || meters <= 0) {
-                        displayError(errorMessageMetersP, 'Ingresa una cantidad válida de metros cuadrados.');
-                        if (metersInput) metersInput.focus();
-                        isValid = false;
+                        displayError(errorMessageMetersP, 'Ingresa una cantidad válida de m².', metersInput);
+                        isQuoteValid = false;
                     }
                     if (!selectedZone) {
-                         displayError(errorMessageZoneP, 'Por favor, selecciona una zona de envío.');
-                         if (shippingZoneSelect) shippingZoneSelect.focus();
-                         isValid = false;
+                         displayError(errorMessageZoneP, 'Selecciona una zona de envío.', shippingZoneSelect);
+                         isQuoteValid = false;
                     }
-                    if (!isValid) return;
+                    if (!isQuoteValid) return;
 
-                    // Find product details
                     const selectedProduct = productsConfig.find(p => p.id === selectedProductId);
                     if (!selectedProduct) {
                          console.error("Selected product not found:", selectedProductId);
-                         displayError(errorMessageMetersP, 'Error: Producto no encontrado.');
+                         displayError(errorMessageMetersP, 'Error: Producto no encontrado.', productSelect);
                          return;
                     }
 
-                    // --- Calculations ---
                     const productCost = selectedProduct.pricePerMeter * meters;
                     const shippingCost = shippingCostsByZoneConfig[selectedZone] ?? 0;
                     const installationCost = installationCheckbox.checked ? installationCostPerMeterConfig * meters : 0;
@@ -507,12 +543,10 @@
                     const taxes = subtotal * taxRateConfig;
                     const total = subtotal + taxes;
 
-                    // --- Display Results ---
-                    if (quoteDetailsDiv) quoteDetailsDiv.innerHTML = ''; // Clear previous details
-
+                    if (quoteDetailsDiv) quoteDetailsDiv.innerHTML = '';
                     const addDetailLine = (label, amount, zoneInfo = '') => {
                         if (!quoteDetailsDiv) return;
-                        if (amount > 0 || label === 'Costo del Producto') {
+                        if (amount > 0 || label === 'Costo del Producto' || (label === 'Envío' && selectedZone === 'no_shipping')) {
                             const itemDiv = document.createElement('div');
                             itemDiv.className = 'quote-result-item';
                             itemDiv.innerHTML = `
@@ -524,24 +558,13 @@
                     };
 
                     addDetailLine('Costo del Producto', productCost);
-                    if (shippingCost > 0) {
-                        const selectedOption = shippingZoneSelect.options[shippingZoneSelect.selectedIndex];
-                        const zoneName = selectedOption ? selectedOption.text.split('(')[0].trim() : selectedZone;
+                    if (selectedZone && selectedZone !== 'no_shipping' && shippingCost >= 0) { // Show shipping even if 0 for clarity, except 'no_shipping' handled below
+                         const selectedOption = shippingZoneSelect.options[shippingZoneSelect.selectedIndex];
+                         const zoneName = selectedOption ? selectedOption.text.split('(')[0].trim() : selectedZone;
                          addDetailLine('Costo de Envío', shippingCost, ` (${zoneName})`);
                     } else if (selectedZone === 'no_shipping') {
                          addDetailLine('Envío', 0, ' (Retiro en local)');
-                    } else if (selectedZone === 'bsas_interior' || selectedZone === 'otra_provincia') {
-                        // Add a note for zones with 0 cost (indicating custom quote needed)
-                         const itemDiv = document.createElement('div');
-                         itemDiv.className = 'quote-result-item';
-                         itemDiv.innerHTML = `
-                             <span>Costo de Envío (${selectedZone === 'bsas_interior' ? 'BsAs Interior' : 'Otra Provincia'}):</span>
-                             <span class="text-sm text-gray-600">A cotizar</span>
-                         `;
-                         quoteDetailsDiv.appendChild(itemDiv);
                     }
-
-
                     if (installationCheckbox.checked) addDetailLine('Costo de Instalación', installationCost);
                     addDetailLine('Impuestos (IVA 21%)', taxes);
 
@@ -557,29 +580,48 @@
                         quoteResultDiv.classList.add('fade-in');
                     }
                 });
-             } else {
-                  console.error("Cotizador element #quote-form not found");
-             }
+            }
 
-
-            // --- Clear errors/results on input changes ---
-            if (metersInput) metersInput.addEventListener('input', () => clearError(errorMessageMetersP));
-            if (productSelect) productSelect.addEventListener('change', () => {
-                 if (quoteResultDiv) quoteResultDiv.classList.add('hidden');
-                 clearError(errorMessageMetersP);
-                 clearError(errorMessageZoneP);
-             });
-            if (shippingZoneSelect) shippingZoneSelect.addEventListener('change', () => {
-                 if (quoteResultDiv) quoteResultDiv.classList.add('hidden');
-                 clearError(errorMessageZoneP);
-             });
-            if (installationCheckbox) installationCheckbox.addEventListener('change', () => {
-                if (quoteResultDiv) quoteResultDiv.classList.add('hidden');
+            // --- Event Listeners for Clearing Errors/Results on Input Change ---
+            // User Info Form Inputs
+            [nombreInput, apellidoInput, telefonoInput, direccionInput, localidadInput].forEach(input => {
+                if(input) input.addEventListener('input', () => clearError(cotizadorSection.querySelector(`#error-${input.id}`), input));
             });
 
+             // Quote Form Inputs
+             if(metersInput) metersInput.addEventListener('input', () => clearError(errorMessageMetersP, metersInput));
+             if(productSelect) productSelect.addEventListener('change', () => {
+                 if (quoteResultDiv) quoteResultDiv.classList.add('hidden');
+                 clearError(errorMessageMetersP, metersInput);
+                 clearError(errorMessageZoneP, shippingZoneSelect);
+             });
+             if(shippingZoneSelect) shippingZoneSelect.addEventListener('change', () => {
+                 clearError(errorMessageZoneP, shippingZoneSelect);
+                 if (quoteResultDiv) quoteResultDiv.classList.add('hidden');
+             });
+             if(installationCheckbox) installationCheckbox.addEventListener('change', () => {
+                if (quoteResultDiv) quoteResultDiv.classList.add('hidden');
+             });
+
+            // --- Optional: Back Button Functionality ---
+            if (backButton) {
+                backButton.addEventListener('click', () => {
+                    if(quoteSection) quoteSection.classList.add('hidden');
+                    if(userInfoSection) {
+                        userInfoSection.classList.remove('hidden');
+                        userInfoSection.classList.add('fade-in');
+                    }
+                    // Clear quote form and results when going back
+                    if(quoteForm) quoteForm.reset();
+                    if(quoteResultDiv) quoteResultDiv.classList.add('hidden');
+                    clearError(errorMessageMetersP, metersInput);
+                    clearError(errorMessageZoneP, shippingZoneSelect);
+                    lucide.createIcons(); // Re-render icons if needed
+                });
+            }
         } // End of check for cotizadorSection
 
-        // Initialize Lucide Icons (needed for the calculator button icon)
+        // Initialize Lucide Icons (needed for the calculator icons)
         lucide.createIcons();
 
     </script>
