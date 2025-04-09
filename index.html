@@ -492,9 +492,8 @@
                     }
 
                     // --- Send data to Google Apps Script ---
-                    fetch('https://script.google.com/macros/s/AKfycbzFHxPYwc0F8Nc3CRKYDjVxzas3UyET1smSkigINtzLElr7Z1RzU-3rc_uST5vHJDS4/exec', { // <-- Google Apps Script URL
+                    fetch('https://script.google.com/macros/s/AKfycbwGYta5vlvNEhyZUyzi93_tpJnkTfMBFUeHENlJPgIEsvzHM-y61a9xjAhgJUAYusha/exec', { // <-- UPDATED Google Apps Script URL
                         method: 'POST',
-                        // No CORS mode needed if deployed correctly
                         headers: {
                             'Content-Type': 'application/json'
                         },
@@ -521,6 +520,7 @@
                     .catch(error => {
                         // Network error or error parsing JSON or error thrown above
                         console.error('Error al enviar datos a Google Apps Script:', error);
+                        // Display the actual error message caught
                         displayError(errorGeneralUserInfo, `No se pudieron enviar los datos: ${error.message}. Intenta de nuevo.`);
                     });
                 });
