@@ -9,6 +9,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <style>
+      /* Lucide Font */
       @font-face {
         font-family: 'LucideIcons';
         src: url(https://cdn.jsdelivr.net/npm/lucide-static@latest/font/Lucide.ttf) format('truetype');
@@ -23,11 +24,11 @@
         -webkit-font-smoothing: antialiased;
         -moz-osx-font-smoothing: grayscale;
       }
-      /* Custom Styles */
+
+      /* Custom Styles - Main Site */
       body {
         font-family: 'Inter', sans-serif;
       }
-      /* Simple fade transition */
       .page-section {
         display: none; /* Hide sections by default */
         opacity: 0;
@@ -37,7 +38,6 @@
         display: block; /* Show active section */
         opacity: 1;
       }
-      /* Custom gradient */
       .gradient-bg {
         background: linear-gradient(to right, #86efac, #60a5fa, #c084fc); /* green-300, blue-400, violet-400 */
       }
@@ -46,11 +46,48 @@
         -webkit-background-clip: text;
         -webkit-text-fill-color: transparent;
       }
-      /* WhatsApp Button Style */
       .whatsapp-button svg {
-        width: 28px; /* Adjust size as needed */
+        width: 28px;
         height: 28px;
         fill: white;
+      }
+
+      /* Custom Styles - Cotizador */
+      .quote-result-item {
+          @apply flex justify-between py-2 border-b border-gray-200;
+      }
+      .quote-result-item span:first-child {
+          @apply text-gray-600;
+      }
+      .quote-result-item span:last-child {
+          @apply font-semibold text-gray-800;
+      }
+      .quote-total {
+          @apply flex justify-between py-3 mt-2 font-bold text-lg;
+      }
+      @keyframes fadeIn {
+          from { opacity: 0; transform: translateY(10px); }
+          to { opacity: 1; transform: translateY(0); }
+      }
+      .fade-in {
+          animation: fadeIn 0.5s ease-out forwards;
+      }
+      .error-message {
+           @apply text-red-600 text-sm mt-1 font-medium h-5; /* Added fixed height */
+      }
+      /* Ensure select dropdown has consistent height and padding */
+      #cotizador select { /* Scoped to cotizador section */
+           @apply p-3;
+      }
+      #cotizador input[type="number"],
+      #cotizador input[type="checkbox"] { /* Scoped to cotizador section */
+           @apply p-3; /* Consistent padding */
+      }
+      #cotizador input[type="checkbox"] {
+          @apply p-0 h-4 w-4 text-indigo-600 border-gray-300 rounded focus:ring-indigo-500; /* Specific checkbox style */
+      }
+      #cotizador label { /* Ensure labels align well */
+          @apply mb-1;
       }
     </style>
 </head>
@@ -65,6 +102,7 @@
                 <button data-target="home" class="nav-button text-gray-700 hover:text-blue-600 px-3 py-2 rounded-md font-medium">Inicio</button>
                 <button data-target="about" class="nav-button text-gray-700 hover:text-blue-600 px-3 py-2 rounded-md font-medium">Quiénes Somos</button>
                 <button data-target="products" class="nav-button text-gray-700 hover:text-blue-600 px-3 py-2 rounded-md font-medium">Productos</button>
+                <button data-target="cotizador" class="nav-button text-gray-700 hover:text-blue-600 px-3 py-2 rounded-md font-medium">Cotizador Web</button>
                 <button data-target="contact" class="nav-button text-gray-700 hover:text-blue-600 px-3 py-2 rounded-md font-medium">Contacto</button>
             </div>
         </nav>
@@ -175,6 +213,58 @@
             </div>
         </section>
 
+        <section id="cotizador" class="page-section">
+             <div class="bg-white p-6 md:p-8 rounded-lg shadow-lg w-full max-w-2xl mx-auto"> <div>
+                    <h1 class="text-2xl md:text-3xl font-bold text-center text-gray-800 mb-6">Cotizador Plaka Sec</h1>
+
+                    <form id="quote-form" class="space-y-4">
+                        <div>
+                            <label for="product" class="block text-sm font-medium text-gray-700">Selecciona el Producto:</label>
+                            <select id="product" name="product" class="w-full border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 transition duration-150 ease-in-out" required>
+                                </select>
+                        </div>
+
+                        <div>
+                            <label for="meters" class="block text-sm font-medium text-gray-700">Metros Cuadrados (m²):</label>
+                            <input type="number" id="meters" name="meters" min="0.1" step="0.1" placeholder="Ej: 25.5" class="w-full border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 transition duration-150 ease-in-out" required>
+                             <p id="error-message-meters" class="error-message hidden"></p>
+                        </div>
+
+                        <div>
+                            <label for="shipping-zone" class="block text-sm font-medium text-gray-700">Zona de Envío:</label>
+                            <select id="shipping-zone" name="shipping-zone" class="w-full border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 transition duration-150 ease-in-out" required>
+                                <option value="">-- Selecciona tu zona --</option>
+                                <option value="caba">Ciudad Autónoma de Buenos Aires (CABA)</option>
+                                <option value="gba">Gran Buenos Aires (GBA)</option>
+                                <option value="bsas_interior">Provincia de Buenos Aires (Interior)</option>
+                                <option value="otra_provincia">Otra Provincia</option>
+                                <option value="no_shipping">Retiro en local / Sin envío</option>
+                            </select>
+                            <p id="error-message-zone" class="error-message hidden"></p>
+                        </div>
+
+                        <div class="flex items-center space-x-2 pt-2">
+                             <input type="checkbox" id="include-installation" name="include-installation">
+                             <label for="include-installation" class="text-sm font-medium text-gray-700">Incluir Instalación</label>
+                        </div>
+
+                        <button type="submit" class="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-3 px-4 rounded-md shadow-md transition duration-150 ease-in-out flex items-center justify-center space-x-2">
+                            <i data-lucide="calculator" class="w-5 h-5"></i>
+                            <span>Calcular Presupuesto</span>
+                        </button>
+                    </form>
+
+                    <div id="quote-result" class="mt-8 hidden">
+                         <h2 class="text-xl font-semibold text-gray-800 mb-4 border-b pb-2">Detalle del Presupuesto:</h2>
+                         <div id="quote-details" class="space-y-1">
+                             </div>
+                         <div id="quote-total" class="quote-total border-t border-gray-300">
+                             </div>
+                    </div>
+                </div>
+             </div>
+        </section>
+
         <section id="contact" class="page-section bg-white p-8 rounded-lg shadow-lg">
             <h2 class="text-3xl font-bold mb-8 text-center gradient-text">Contacto</h2>
             <div class="flex flex-col md:flex-row gap-10">
@@ -196,7 +286,7 @@
                     </div>
                      <div class="mt-6 border rounded-lg overflow-hidden">
                          <img src="https://placehold.co/600x300/e0e7ff/374151?text=Mapa+(Ubicaci%C3%B3n+Aproximada)" alt="Mapa indicando la ubicación de Plakasec en Adrogué" class="w-full h-auto">
-                         </div>
+                     </div>
                 </div>
 
                 <div class="md:w-1/2">
@@ -236,7 +326,7 @@
     <footer class="bg-gray-800 text-white mt-12 py-6">
         <div class="container mx-auto px-6 text-center">
             <p>&copy; <span id="current-year"></span> Plakasec. Todos los derechos reservados.</p>
-            <p class="text-sm text-gray-400 mt-1">Diseño web por Trend In Media Marketing</p>
+            <p class="text-sm text-gray-400 mt-1">Diseño web por IA</p>
         </div>
     </footer>
 
@@ -250,44 +340,247 @@
         </svg>
     </a>
 
-    <script>
-        // Set current year in footer
+    <script src="https://unpkg.com/lucide@latest"></script> <script>
+        // --- Navigation Logic ---
         document.getElementById('current-year').textContent = new Date().getFullYear();
-
-        // Navigation Logic
         const navButtons = document.querySelectorAll('.nav-button');
         const sections = document.querySelectorAll('.page-section');
 
         function showSection(targetId) {
+            let sectionFound = false;
             sections.forEach(section => {
                 if (section.id === targetId) {
-                    // Use requestAnimationFrame for smoother transition start
                     requestAnimationFrame(() => {
                         section.classList.add('active');
                     });
+                    sectionFound = true;
                 } else {
                     section.classList.remove('active');
                 }
             });
-            // Scroll to top of the page smoothly
-            window.scrollTo({ top: 0, behavior: 'smooth' });
+             // If section found, scroll to top and update button state
+            if (sectionFound) {
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+                 // Update active state styling for buttons
+                navButtons.forEach(btn => {
+                    if (btn.getAttribute('data-target') === targetId) {
+                        btn.classList.add('text-blue-600', 'font-bold');
+                    } else {
+                         btn.classList.remove('text-blue-600', 'font-bold');
+                    }
+                });
+            } else {
+                console.warn("Target section not found:", targetId);
+            }
         }
 
         navButtons.forEach(button => {
             button.addEventListener('click', () => {
                 const targetId = button.getAttribute('data-target');
                 showSection(targetId);
-
-                // Optional: Update active state styling for buttons
-                navButtons.forEach(btn => btn.classList.remove('text-blue-600', 'font-bold'));
-                button.classList.add('text-blue-600', 'font-bold');
             });
         });
 
         // Initialize: Show the home section by default
         showSection('home');
-        // Optional: Set initial active state for home button
-        document.querySelector('.nav-button[data-target="home"]').classList.add('text-blue-600', 'font-bold');
+
+
+        // --- Cotizador Logic ---
+        // Check if we are on a page that contains the cotizador elements
+        const cotizadorSection = document.getElementById('cotizador');
+        if (cotizadorSection) {
+            // --- Configuration ---
+            const productsConfig = [
+                { id: 'placa-antihumedad', name: 'Placas Anti Humedad', pricePerMeter: 20000 }, // ARS per m²
+                { id: 'simil-piedra', name: 'Símil Piedra', pricePerMeter: 25000 },          // ARS per m²
+                { id: 'piso-flotante', name: 'Pisos Flotantes', pricePerMeter: 45000 }       // ARS per m²
+            ];
+            const shippingCostsByZoneConfig = {
+                'caba': 35000,
+                'gba': 30000,
+                'bsas_interior': 0, // Assuming free or requires custom quote
+                'otra_provincia': 0, // Assuming free or requires custom quote
+                'no_shipping': 0
+            };
+            const installationCostPerMeterConfig = 3000; // ARS per m²
+            const taxRateConfig = 0.21; // 21% IVA
+
+            // --- DOM Elements (scoped within cotizador logic) ---
+            const productSelect = cotizadorSection.querySelector('#product');
+            const metersInput = cotizadorSection.querySelector('#meters');
+            const shippingZoneSelect = cotizadorSection.querySelector('#shipping-zone');
+            const installationCheckbox = cotizadorSection.querySelector('#include-installation');
+            const quoteForm = cotizadorSection.querySelector('#quote-form');
+            const quoteResultDiv = cotizadorSection.querySelector('#quote-result');
+            const quoteDetailsDiv = cotizadorSection.querySelector('#quote-details');
+            const quoteTotalDiv = cotizadorSection.querySelector('#quote-total');
+            const errorMessageMetersP = cotizadorSection.querySelector('#error-message-meters');
+            const errorMessageZoneP = cotizadorSection.querySelector('#error-message-zone');
+
+            // --- Populate Product Options ---
+            if (productSelect) {
+                productsConfig.forEach(product => {
+                    const option = document.createElement('option');
+                    option.value = product.id;
+                    option.textContent = product.name;
+                    productSelect.appendChild(option);
+                });
+            } else {
+                 console.error("Cotizador element #product not found");
+            }
+
+
+            // --- Format Currency (Argentine Pesos) ---
+            const formatCurrency = (amount) => {
+                 if (typeof amount !== 'number' || isNaN(amount)) {
+                    amount = 0;
+                }
+                return amount.toLocaleString('es-AR', { style: 'currency', currency: 'ARS' });
+            };
+
+            // --- Display Error Message ---
+            const displayError = (element, message) => {
+                 if (!element) return; // Guard clause
+                element.textContent = message;
+                element.classList.remove('hidden');
+                // Highlight related input/select
+                if (element.id === 'error-message-meters' && metersInput) {
+                    metersInput.classList.add('border-red-500');
+                } else if (element.id === 'error-message-zone' && shippingZoneSelect) {
+                     shippingZoneSelect.classList.add('border-red-500');
+                }
+            };
+
+            // --- Clear Error Message ---
+            const clearError = (element) => {
+                 if (!element) return; // Guard clause
+                element.textContent = '';
+                element.classList.add('hidden');
+                // Remove highlight
+                if (element.id === 'error-message-meters' && metersInput) {
+                    metersInput.classList.remove('border-red-500');
+                } else if (element.id === 'error-message-zone' && shippingZoneSelect) {
+                     shippingZoneSelect.classList.remove('border-red-500');
+                }
+            };
+
+             // --- Event Listener for Form Submission ---
+             if (quoteForm) {
+                quoteForm.addEventListener('submit', (event) => {
+                    event.preventDefault();
+                    clearError(errorMessageMetersP);
+                    clearError(errorMessageZoneP);
+
+                    // Get selected values
+                    const selectedProductId = productSelect.value;
+                    const meters = parseFloat(metersInput.value);
+                    const selectedZone = shippingZoneSelect.value;
+
+                    // --- Input Validation ---
+                    let isValid = true;
+                    if (!selectedProductId) isValid = false;
+                    if (isNaN(meters) || meters <= 0) {
+                        displayError(errorMessageMetersP, 'Ingresa una cantidad válida de metros cuadrados.');
+                        if (metersInput) metersInput.focus();
+                        isValid = false;
+                    }
+                    if (!selectedZone) {
+                         displayError(errorMessageZoneP, 'Por favor, selecciona una zona de envío.');
+                         if (shippingZoneSelect) shippingZoneSelect.focus();
+                         isValid = false;
+                    }
+                    if (!isValid) return;
+
+                    // Find product details
+                    const selectedProduct = productsConfig.find(p => p.id === selectedProductId);
+                    if (!selectedProduct) {
+                         console.error("Selected product not found:", selectedProductId);
+                         displayError(errorMessageMetersP, 'Error: Producto no encontrado.');
+                         return;
+                    }
+
+                    // --- Calculations ---
+                    const productCost = selectedProduct.pricePerMeter * meters;
+                    const shippingCost = shippingCostsByZoneConfig[selectedZone] ?? 0;
+                    const installationCost = installationCheckbox.checked ? installationCostPerMeterConfig * meters : 0;
+                    const subtotal = productCost + shippingCost + installationCost;
+                    const taxes = subtotal * taxRateConfig;
+                    const total = subtotal + taxes;
+
+                    // --- Display Results ---
+                    if (quoteDetailsDiv) quoteDetailsDiv.innerHTML = ''; // Clear previous details
+
+                    const addDetailLine = (label, amount, zoneInfo = '') => {
+                        if (!quoteDetailsDiv) return;
+                        if (amount > 0 || label === 'Costo del Producto') {
+                            const itemDiv = document.createElement('div');
+                            itemDiv.className = 'quote-result-item';
+                            itemDiv.innerHTML = `
+                                <span>${label}${zoneInfo}:</span>
+                                <span>${formatCurrency(amount)}</span>
+                            `;
+                            quoteDetailsDiv.appendChild(itemDiv);
+                        }
+                    };
+
+                    addDetailLine('Costo del Producto', productCost);
+                    if (shippingCost > 0) {
+                        const selectedOption = shippingZoneSelect.options[shippingZoneSelect.selectedIndex];
+                        const zoneName = selectedOption ? selectedOption.text.split('(')[0].trim() : selectedZone;
+                         addDetailLine('Costo de Envío', shippingCost, ` (${zoneName})`);
+                    } else if (selectedZone === 'no_shipping') {
+                         addDetailLine('Envío', 0, ' (Retiro en local)');
+                    } else if (selectedZone === 'bsas_interior' || selectedZone === 'otra_provincia') {
+                        // Add a note for zones with 0 cost (indicating custom quote needed)
+                         const itemDiv = document.createElement('div');
+                         itemDiv.className = 'quote-result-item';
+                         itemDiv.innerHTML = `
+                             <span>Costo de Envío (${selectedZone === 'bsas_interior' ? 'BsAs Interior' : 'Otra Provincia'}):</span>
+                             <span class="text-sm text-gray-600">A cotizar</span>
+                         `;
+                         quoteDetailsDiv.appendChild(itemDiv);
+                    }
+
+
+                    if (installationCheckbox.checked) addDetailLine('Costo de Instalación', installationCost);
+                    addDetailLine('Impuestos (IVA 21%)', taxes);
+
+                    if (quoteTotalDiv) {
+                        quoteTotalDiv.innerHTML = `
+                            <span>Total Estimado:</span>
+                            <span>${formatCurrency(total)}</span>
+                        `;
+                    }
+
+                    if (quoteResultDiv) {
+                        quoteResultDiv.classList.remove('hidden');
+                        quoteResultDiv.classList.add('fade-in');
+                    }
+                });
+             } else {
+                  console.error("Cotizador element #quote-form not found");
+             }
+
+
+            // --- Clear errors/results on input changes ---
+            if (metersInput) metersInput.addEventListener('input', () => clearError(errorMessageMetersP));
+            if (productSelect) productSelect.addEventListener('change', () => {
+                 if (quoteResultDiv) quoteResultDiv.classList.add('hidden');
+                 clearError(errorMessageMetersP);
+                 clearError(errorMessageZoneP);
+             });
+            if (shippingZoneSelect) shippingZoneSelect.addEventListener('change', () => {
+                 if (quoteResultDiv) quoteResultDiv.classList.add('hidden');
+                 clearError(errorMessageZoneP);
+             });
+            if (installationCheckbox) installationCheckbox.addEventListener('change', () => {
+                if (quoteResultDiv) quoteResultDiv.classList.add('hidden');
+            });
+
+        } // End of check for cotizadorSection
+
+        // Initialize Lucide Icons (needed for the calculator button icon)
+        lucide.createIcons();
 
     </script>
 
