@@ -28,293 +28,390 @@
       /* Custom Styles - Main Site */
       body {
         font-family: 'Inter', sans-serif;
+        @apply bg-gray-50 text-gray-800; /* Light background, default text color */
       }
       .page-section {
         display: none; /* Hide sections by default */
         opacity: 0;
         transition: opacity 0.5s ease-in-out;
+        @apply py-12 md:py-20; /* Consistent vertical padding */
       }
       .page-section.active {
         display: block; /* Show active section */
         opacity: 1;
       }
-      .gradient-bg {
-        background: linear-gradient(to right, #86efac, #60a5fa, #c084fc); /* green-300, blue-400, violet-400 */
-      }
-      .gradient-text {
-        background: linear-gradient(to right, #16a34a, #2563eb, #9333ea); /* green-600, blue-600, violet-600 */
+      /* Updated Gradient Text for more subtle use */
+      .gradient-text-subtle {
+        background: linear-gradient(to right, #15803d, #1d4ed8, #7e22ce); /* Darker green, blue, violet */
         -webkit-background-clip: text;
         -webkit-text-fill-color: transparent;
       }
+       /* Main Gradient Button Style */
+      .btn-gradient {
+        @apply inline-block px-8 py-3 font-semibold text-white rounded-lg shadow-md transition duration-300 ease-in-out;
+        background: linear-gradient(to right, #22c55e, #3b82f6, #a855f7); /* Brighter green, blue, violet */
+      }
+      .btn-gradient:hover {
+        filter: brightness(1.1);
+        box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -4px rgba(0, 0, 0, 0.1);
+      }
+       /* Secondary Button Style */
+       .btn-secondary {
+           @apply inline-block px-6 py-2 font-medium text-blue-600 border border-blue-600 rounded-lg hover:bg-blue-50 transition duration-300;
+       }
+
       .whatsapp-button svg {
         width: 28px;
         height: 28px;
         fill: white;
       }
 
-      /* Custom Styles - Cotizador (New Version) */
-      .quote-result-item {
-          @apply flex justify-between py-2 border-b border-gray-200;
-      }
-      .quote-result-item span:first-child {
-          @apply text-gray-600;
-      }
-      .quote-result-item span:last-child {
-          @apply font-semibold text-gray-800;
-      }
-      .quote-total {
-          @apply flex justify-between py-3 mt-2 font-bold text-lg;
-      }
-      @keyframes fadeIn {
-          from { opacity: 0; transform: translateY(10px); }
-          to { opacity: 1; transform: translateY(0); }
-      }
-      .fade-in {
-          animation: fadeIn 0.5s ease-out forwards;
-      }
-      .error-message {
-           @apply text-red-600 text-sm mt-1 font-medium h-5; /* Fixed height */
-      }
-      /* Ensure consistent height and padding within cotizador */
+      /* Custom Styles - Cotizador */
+      .quote-result-item { @apply flex justify-between py-2 border-b border-gray-200; }
+      .quote-result-item span:first-child { @apply text-gray-600; }
+      .quote-result-item span:last-child { @apply font-semibold text-gray-800; }
+      .quote-total { @apply flex justify-between py-3 mt-2 font-bold text-lg; }
+      @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+      .fade-in { animation: fadeIn 0.5s ease-out forwards; }
+      .error-message { @apply text-red-600 text-sm mt-1 font-medium h-5; }
+      /* Updated Form Styles */
       #cotizador input[type="text"],
       #cotizador input[type="tel"],
       #cotizador input[type="number"],
-      #cotizador select {
-           @apply p-3 border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 transition duration-150 ease-in-out w-full;
+      #cotizador select,
+      #contact input[type="text"],
+      #contact input[type="email"],
+      #contact textarea {
+           @apply block w-full px-4 py-3 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 transition duration-150 ease-in-out bg-white;
       }
        #cotizador input[type="checkbox"] {
-          @apply h-4 w-4 text-indigo-600 border-gray-300 rounded focus:ring-indigo-500;
+          @apply h-4 w-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500;
       }
-      #cotizador label {
+      #cotizador label, #contact label {
           @apply block text-sm font-medium text-gray-700 mb-1;
       }
-      /* Style for required field marker */
-      #cotizador label abbr {
-          color: red;
-          text-decoration: none; /* Remove underline from abbr */
-          margin-left: 2px;
+      #cotizador label abbr, #contact label abbr { color: red; text-decoration: none; margin-left: 2px; }
+      /* Update button styles in forms */
+       #cotizador button[type="submit"], #contact button[type="submit"] {
+           @apply w-full py-3 px-4 font-bold text-white rounded-md shadow-md transition duration-150 ease-in-out flex items-center justify-center space-x-2;
+           background: linear-gradient(to right, #16a34a, #2563eb, #9333ea); /* Darker gradient for form buttons */
+       }
+        #cotizador button[type="submit"]:hover, #contact button[type="submit"]:hover {
+            filter: brightness(1.15);
+        }
+       #cotizador #back-to-user-info {
+           @apply mt-4 w-full text-sm text-blue-600 hover:text-blue-800 transition duration-150 ease-in-out flex items-center justify-center space-x-1;
+       }
+
+
+      /* Carousel Styles */
+      .carousel-container { scroll-behavior: smooth; }
+      .carousel-slide { scroll-snap-align: start; }
+      /* Style carousel buttons */
+      #prev-slide, #next-slide {
+          @apply absolute top-1/2 transform -translate-y-1/2 bg-gray-800 bg-opacity-50 text-white p-2 rounded-full hover:bg-opacity-75 transition duration-300 focus:outline-none z-10;
       }
-      /* --- End of Updated Cotizador Styles --- */
+       #prev-slide { @apply left-3 md:left-5; }
+       #next-slide { @apply right-3 md:right-5; }
+       /* Style carousel dots */
+       #carousel-dots button {
+           @apply w-2.5 h-2.5 rounded-full transition-colors duration-300 border border-gray-400;
+       }
+       #carousel-dots button.active {
+           @apply bg-blue-600 border-blue-600;
+       }
+       #carousel-dots button:not(.active) {
+           @apply bg-gray-300 hover:bg-gray-400;
+       }
+
+       /* Product Card Styles */
+       .product-card {
+           @apply bg-white border border-gray-200 rounded-lg overflow-hidden shadow-sm hover:shadow-lg transition-shadow duration-300 flex flex-col;
+       }
+       .product-card img {
+           @apply w-full h-52 object-cover; /* Increased height */
+       }
+       .product-card-content {
+           @apply p-4 flex flex-col flex-grow;
+       }
+       .product-card-title {
+           @apply font-semibold text-lg mb-1 text-gray-800;
+       }
+       .product-card-description {
+           @apply text-sm text-gray-600 flex-grow mb-3;
+       }
 
     </style>
 </head>
-<body class="bg-gray-100">
+<body class="bg-gray-50">
 
     <header class="bg-white shadow-md sticky top-0 z-50">
         <nav class="container mx-auto px-6 py-3 flex justify-between items-center">
-            <div class="text-2xl font-bold gradient-text">
+            <a href="#" data-target="home" class="nav-button text-2xl font-bold gradient-text-subtle">
                 Plakasec
+            </a>
+            <div class="hidden md:flex space-x-2">
+                <button data-target="home" class="nav-button text-gray-600 hover:text-blue-600 px-4 py-2 rounded-md font-medium">Inicio</button>
+                <button data-target="about" class="nav-button text-gray-600 hover:text-blue-600 px-4 py-2 rounded-md font-medium">Quiénes Somos</button>
+                <button data-target="products" class="nav-button text-gray-600 hover:text-blue-600 px-4 py-2 rounded-md font-medium">Productos</button>
+                <button data-target="cotizador" class="nav-button text-gray-600 hover:text-blue-600 px-4 py-2 rounded-md font-medium">Cotizador Web</button>
+                <button data-target="contact" class="nav-button text-gray-600 hover:text-blue-600 px-4 py-2 rounded-md font-medium">Contacto</button>
             </div>
-            <div class="space-x-4">
-                <button data-target="home" class="nav-button text-gray-700 hover:text-blue-600 px-3 py-2 rounded-md font-medium">Inicio</button>
-                <button data-target="about" class="nav-button text-gray-700 hover:text-blue-600 px-3 py-2 rounded-md font-medium">Quiénes Somos</button>
-                <button data-target="products" class="nav-button text-gray-700 hover:text-blue-600 px-3 py-2 rounded-md font-medium">Productos</button>
-                <button data-target="cotizador" class="nav-button text-gray-700 hover:text-blue-600 px-3 py-2 rounded-md font-medium">Cotizador Web</button>
-                <button data-target="contact" class="nav-button text-gray-700 hover:text-blue-600 px-3 py-2 rounded-md font-medium">Contacto</button>
-            </div>
+             <div class="md:hidden">
+                 <button id="mobile-menu-button" aria-label="Abrir menú" class="text-gray-600 focus:outline-none">
+                     <i data-lucide="menu" class="w-6 h-6"></i>
+                 </button>
+             </div>
         </nav>
+         <div id="mobile-menu" class="md:hidden hidden bg-white py-2 absolute w-full shadow-lg">
+             <button data-target="home" class="nav-button block w-full text-left px-6 py-2 text-gray-600 hover:bg-gray-100">Inicio</button>
+             <button data-target="about" class="nav-button block w-full text-left px-6 py-2 text-gray-600 hover:bg-gray-100">Quiénes Somos</button>
+             <button data-target="products" class="nav-button block w-full text-left px-6 py-2 text-gray-600 hover:bg-gray-100">Productos</button>
+             <button data-target="cotizador" class="nav-button block w-full text-left px-6 py-2 text-gray-600 hover:bg-gray-100">Cotizador Web</button>
+             <button data-target="contact" class="nav-button block w-full text-left px-6 py-2 text-gray-600 hover:bg-gray-100">Contacto</button>
+         </div>
     </header>
 
-    <main class="container mx-auto px-6 py-8">
+    <main> <section id="home" class="page-section active !pt-0"> <div class="relative bg-gradient-to-r from-green-100 via-blue-100 to-violet-100 pt-24 pb-16 md:pt-32 md:pb-24 text-center overflow-hidden">
+                 <div class="container mx-auto px-6 relative z-10">
+                    <h1 class="text-4xl md:text-5xl lg:text-6xl font-bold mb-4 text-gray-800">Plakasec: Soluciones Definitivas</h1>
+                    <p class="text-lg md:text-xl text-gray-600 mb-8 max-w-3xl mx-auto">Transforma tus ambientes con nuestras placas antihumedad, revestimientos y pisos de alta calidad.</p>
+                    <button data-target="products" class="nav-button btn-gradient">
+                        Descubrir Productos
+                    </button>
+                 </div>
+                 </div>
 
-        <section id="home" class="page-section active">
-            <div class="gradient-bg text-white p-12 rounded-lg shadow-lg text-center">
-                <h1 class="text-4xl md:text-5xl font-bold mb-4">Bienvenido a Plakasec</h1>
-                <p class="text-lg md:text-xl mb-6">Soluciones innovadoras en revestimientos y placas antihumedad para transformar tus espacios.</p>
-                <button data-target="products" class="nav-button bg-white text-blue-600 font-semibold px-6 py-3 rounded-lg shadow hover:bg-gray-100 transition duration-300">
-                    Ver Productos
-                </button>
+             <div class="container mx-auto px-6 py-16">
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-8 text-center">
+                     <div class="bg-white p-8 rounded-lg shadow-lg border border-gray-100">
+                         <i data-lucide="shield-check" class="w-12 h-12 text-green-500 mx-auto mb-4"></i>
+                         <h3 class="text-xl font-semibold mb-2">Calidad Garantizada</h3>
+                         <p class="text-gray-600">Productos duraderos y efectivos para proteger y embellecer tus ambientes.</p>
+                     </div>
+                     <div class="bg-white p-8 rounded-lg shadow-lg border border-gray-100">
+                          <i data-lucide="settings-2" class="w-12 h-12 text-blue-500 mx-auto mb-4"></i>
+                         <h3 class="text-xl font-semibold mb-2">Instalación Profesional</h3>
+                         <p class="text-gray-600">Contamos con personal experto para una colocación perfecta.</p>
+                     </div>
+                     <div class="bg-white p-8 rounded-lg shadow-lg border border-gray-100">
+                          <i data-lucide="messages-square" class="w-12 h-12 text-violet-500 mx-auto mb-4"></i>
+                         <h3 class="text-xl font-semibold mb-2">Asesoramiento Personalizado</h3>
+                         <p class="text-gray-600">Te ayudamos a elegir la mejor solución para tus necesidades.</p>
+                     </div>
+                </div>
             </div>
-            <div class="mt-10 grid grid-cols-1 md:grid-cols-3 gap-8 text-center">
-                 <div class="bg-white p-6 rounded-lg shadow">
-                     <span class="lucide text-4xl text-green-500 mb-3 inline-block">&#xe48f;</span> <h3 class="text-xl font-semibold mb-2">Calidad Garantizada</h3>
-                     <p class="text-gray-600">Productos duraderos y efectivos para proteger y embellecer tus ambientes.</p>
-                 </div>
-                 <div class="bg-white p-6 rounded-lg shadow">
-                     <span class="lucide text-4xl text-blue-500 mb-3 inline-block">&#xe446;</span> <h3 class="text-xl font-semibold mb-2">Instalación Profesional</h3>
-                     <p class="text-gray-600">Contamos con personal experto para una colocación perfecta.</p>
-                 </div>
-                 <div class="bg-white p-6 rounded-lg shadow">
-                     <span class="lucide text-4xl text-violet-500 mb-3 inline-block">&#xe0d5;</span> <h3 class="text-xl font-semibold mb-2">Asesoramiento Personalizado</h3>
-                     <p class="text-gray-600">Te ayudamos a elegir la mejor solución para tus necesidades.</p>
-                 </div>
+
+            <div class="bg-gray-100 py-16">
+                <div class="container mx-auto px-6">
+                    <h3 class="text-3xl font-semibold text-center mb-8 text-gray-800">Opiniones de Nuestros Clientes</h3>
+                    <div class="relative overflow-hidden bg-white p-4 rounded-lg shadow-xl max-w-4xl mx-auto">
+                        <div id="carousel-wrapper" class="flex transition-transform duration-500 ease-in-out">
+                            <div class="carousel-slide flex-shrink-0 w-full flex justify-center p-4">
+                                <img src="https://placehold.co/800x400/e0f2fe/0891b2?text=Opinión+Positiva+1" alt="Opinión de cliente 1" class="rounded-lg shadow-md object-contain max-h-[400px]" onerror="this.onerror=null;this.src='https://placehold.co/800x400/cccccc/ffffff?text=Error+Cargando+Imagen';">
+                            </div>
+                            <div class="carousel-slide flex-shrink-0 w-full flex justify-center p-4">
+                                <img src="https://placehold.co/800x400/dcfce7/16a34a?text=Opinión+Positiva+2" alt="Opinión de cliente 2" class="rounded-lg shadow-md object-contain max-h-[400px]" onerror="this.onerror=null;this.src='https://placehold.co/800x400/cccccc/ffffff?text=Error+Cargando+Imagen';">
+                            </div>
+                            <div class="carousel-slide flex-shrink-0 w-full flex justify-center p-4">
+                                <img src="https://placehold.co/800x400/f3e8ff/7e22ce?text=Opinión+Positiva+3" alt="Opinión de cliente 3" class="rounded-lg shadow-md object-contain max-h-[400px]" onerror="this.onerror=null;this.src='https://placehold.co/800x400/cccccc/ffffff?text=Error+Cargando+Imagen';">
+                            </div>
+                             <div class="carousel-slide flex-shrink-0 w-full flex justify-center p-4">
+                                <img src="https://placehold.co/800x400/fef9c3/ca8a04?text=Opinión+Positiva+4" alt="Opinión de cliente 4" class="rounded-lg shadow-md object-contain max-h-[400px]" onerror="this.onerror=null;this.src='https://placehold.co/800x400/cccccc/ffffff?text=Error+Cargando+Imagen';">
+                            </div>
+                        </div>
+                        <button id="prev-slide" aria-label="Anterior opinión"><i data-lucide="chevron-left" class="w-6 h-6"></i></button>
+                        <button id="next-slide" aria-label="Siguiente opinión"><i data-lucide="chevron-right" class="w-6 h-6"></i></button>
+                    </div>
+                     <div id="carousel-dots" class="flex justify-center space-x-2 mt-4"></div>
+                </div>
             </div>
         </section>
 
-        <section id="about" class="page-section bg-white p-8 rounded-lg shadow-lg">
-            <h2 class="text-3xl font-bold mb-6 text-center gradient-text">Quiénes Somos</h2>
-            <div class="flex flex-col md:flex-row items-center gap-8">
-                <div class="md:w-1/2">
-                     <img src="https://placehold.co/600x400/a5b4fc/ffffff?text=Imagen+Empresa" alt="Imagen representativa de la empresa Plakasec" class="rounded-lg shadow-md w-full h-auto object-cover">
-                </div>
-                 <div class="md:w-1/2 text-gray-700 space-y-4">
+        <section id="about" class="page-section container mx-auto px-6">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
+                 <div class="prose lg:prose-lg text-gray-700">
+                     <h2 class="text-3xl font-bold mb-4 gradient-text-subtle">Quiénes Somos</h2>
                     <p>Somos Plakasec, una empresa dedicada a ofrecer soluciones integrales en revestimientos y sistemas antihumedad. Nacimos con la misión de mejorar la calidad de vida de nuestros clientes a través de ambientes más sanos, confortables y estéticamente agradables.</p>
                     <p>Nuestro equipo está formado por profesionales apasionados por la innovación y la calidad. Creemos en el trabajo bien hecho, en la atención personalizada y en la búsqueda constante de los mejores materiales y técnicas.</p>
-                    <p>Desde Adrogué, brindamos servicio en toda la zona, comprometidos con la satisfacción total de quienes confían en nosotros. ¡Conoce más sobre nuestros productos y cómo podemos ayudarte!</p>
+                    <p>Desde Adrogué, brindamos servicio en toda la zona, comprometidos con la satisfacción total de quienes confían en nosotros.</p>
+                     <button data-target="contact" class="nav-button btn-secondary mt-4">Contáctanos</button>
+                 </div>
+                 <div class="order-first md:order-last">
+                     <img src="https://placehold.co/600x500/dbeafe/1e3a8a?text=Equipo+Plakasec" alt="Imagen representativa de la empresa Plakasec" class="rounded-lg shadow-xl w-full h-auto object-cover">
                  </div>
             </div>
         </section>
 
-        <section id="products" class="page-section">
-            <h2 class="text-3xl font-bold mb-8 text-center gradient-text">Nuestros Productos</h2>
-            <div class="mb-12 bg-white p-6 rounded-lg shadow-md">
-                <h3 class="text-2xl font-semibold mb-6 text-green-600 border-b pb-2">Placas Antihumedad</h3>
-                <p class="text-gray-600 mb-6">La solución definitiva y estética para problemas de humedad en paredes y techos. Fáciles de instalar y con diversos diseños.</p>
+        <section id="products" class="page-section container mx-auto px-6">
+            <h2 class="text-3xl md:text-4xl font-bold mb-10 text-center gradient-text-subtle">Nuestros Productos</h2>
+
+            <div class="mb-16">
+                <h3 class="text-2xl font-semibold mb-6 text-green-700">Placas Antihumedad</h3>
+                <p class="text-gray-600 mb-8 max-w-3xl">La solución definitiva y estética para problemas de humedad. Fáciles de instalar y con diversos diseños para renovar tus paredes y techos.</p>
                 <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-                    <div class="border rounded-lg overflow-hidden shadow hover:shadow-lg transition-shadow duration-300"><img src="https://i.postimg.cc/htJT44cX/1-20241226-110317-0000.png" alt="Placa antihumedad diseño Travertino" class="w-full h-48 object-cover" onerror="this.onerror=null;this.src='https://placehold.co/300x200/cccccc/ffffff?text=Imagen+No+Disponible';"><div class="p-4"><h4 class="font-semibold text-lg mb-1">Diseño Travertino</h4><p class="text-sm text-gray-500">Elegancia clásica.</p></div></div>
-                    <div class="border rounded-lg overflow-hidden shadow hover:shadow-lg transition-shadow duration-300"><img src="https://i.postimg.cc/CLrbVnTy/2-20241226-110318-0001.png" alt="Placa antihumedad diseño Ubeda" class="w-full h-48 object-cover" onerror="this.onerror=null;this.src='https://placehold.co/300x200/cccccc/ffffff?text=Imagen+No+Disponible';"><div class="p-4"><h4 class="font-semibold text-lg mb-1">Diseño Ubeda</h4><p class="text-sm text-gray-500">Textura sutil y moderna.</p></div></div>
-                    <div class="border rounded-lg overflow-hidden shadow hover:shadow-lg transition-shadow duration-300"><img src="https://i.postimg.cc/3Jx26CqC/3-20241226-110318-0002.png" alt="Placa antihumedad diseño Pizarra" class="w-full h-48 object-cover" onerror="this.onerror=null;this.src='https://placehold.co/300x200/cccccc/ffffff?text=Imagen+No+Disponible';"><div class="p-4"><h4 class="font-semibold text-lg mb-1">Diseño Pizarra</h4><p class="text-sm text-gray-500">Aspecto rústico y natural.</p></div></div>
-                    <div class="border rounded-lg overflow-hidden shadow hover:shadow-lg transition-shadow duration-300"><img src="https://i.postimg.cc/4xrtYCxB/4-20241226-110318-0003.png" alt="Placa antihumedad diseño Sol" class="w-full h-48 object-cover" onerror="this.onerror=null;this.src='https://placehold.co/300x200/cccccc/ffffff?text=Imagen+No+Disponible';"><div class="p-4"><h4 class="font-semibold text-lg mb-1">Diseño Sol</h4><p class="text-sm text-gray-500">Luminoso y decorativo.</p></div></div>
+                    <div class="product-card">
+                        <img src="https://i.postimg.cc/htm1S6ks/2.png" alt="Placa antihumedad Murete" onerror="this.onerror=null;this.src='https://placehold.co/300x200/cccccc/ffffff?text=Imagen+No+Disponible';">
+                        <div class="product-card-content">
+                            <h4 class="product-card-title">Murete</h4>
+                            <p class="product-card-description">Diseño moderno y texturizado.</p>
+                        </div>
+                    </div>
+                    <div class="product-card">
+                        <img src="https://i.postimg.cc/hG6rcgj2/MARMOL.png" alt="Placa antihumedad Mármol" onerror="this.onerror=null;this.src='https://placehold.co/300x200/cccccc/ffffff?text=Imagen+No+Disponible';">
+                        <div class="product-card-content">
+                            <h4 class="product-card-title">Mármol</h4>
+                            <p class="product-card-description">Acabado sofisticado y elegante.</p>
+                        </div>
+                    </div>
+                    <div class="product-card">
+                        <img src="https://i.postimg.cc/d1C90XZw/PIEDRA.png" alt="Placa antihumedad Piedra" onerror="this.onerror=null;this.src='https://placehold.co/300x200/cccccc/ffffff?text=Imagen+No+Disponible';">
+                        <div class="product-card-content">
+                            <h4 class="product-card-title">Piedra</h4>
+                            <p class="product-card-description">Textura natural y robusta.</p>
+                        </div>
+                    </div>
+                    <div class="product-card">
+                        <img src="https://i.postimg.cc/vTdtxz59/TRAVERTINO.png" alt="Placa antihumedad Travertino" onerror="this.onerror=null;this.src='https://placehold.co/300x200/cccccc/ffffff?text=Imagen+No+Disponible';">
+                        <div class="product-card-content">
+                            <h4 class="product-card-title">Travertino</h4>
+                            <p class="product-card-description">Aspecto clásico y atemporal.</p>
+                        </div>
+                    </div>
                 </div>
             </div>
-            <div class="mb-12 bg-white p-6 rounded-lg shadow-md">
-                <h3 class="text-2xl font-semibold mb-6 text-blue-600 border-b pb-2">Revestimientos Símil Piedra</h3>
-                 <p class="text-gray-600 mb-6">Aporta la calidez y robustez de la piedra natural a tus paredes, tanto en interiores como exteriores, con una instalación más sencilla y económica.</p>
+
+            <div class="mb-16">
+                <h3 class="text-2xl font-semibold mb-6 text-blue-700">Revestimientos Símil Piedra</h3>
+                 <p class="text-gray-600 mb-8 max-w-3xl">Aporta la calidez y robustez de la piedra natural con una instalación más sencilla y económica, ideal para interiores y exteriores.</p>
                 <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-                    <div class="border border-dashed border-gray-300 rounded-lg p-4 text-center text-gray-400 flex flex-col justify-center items-center min-h-[200px]"><span class="lucide text-4xl mb-2">&#xe431;</span><p>Próximamente: Nuevos diseños Símil Piedra</p></div>
-                     <div class="border border-dashed border-gray-300 rounded-lg p-4 text-center text-gray-400 flex flex-col justify-center items-center min-h-[200px]"><span class="lucide text-4xl mb-2">&#xe431;</span><p>Más variedad disponible</p></div>
-                </div>
+                    <div class="product-card">
+                        <img src="https://i.postimg.cc/gJs66mPF/SJ-ARENA.png" alt="Revestimiento Símil Piedra San Juan Arena" onerror="this.onerror=null;this.src='https://placehold.co/300x200/cccccc/ffffff?text=Imagen+No+Disponible';">
+                        <div class="product-card-content">
+                            <h4 class="product-card-title">San Juan Arena</h4>
+                            <p class="product-card-description">Tonalidad arena natural y luminosa.</p>
+                        </div>
+                    </div>
+                    <div class="product-card">
+                        <img src="https://i.postimg.cc/N0wyJ5sv/SJ-BEIGH.png" alt="Revestimiento Símil Piedra San Juan Beige" onerror="this.onerror=null;this.src='https://placehold.co/300x200/cccccc/ffffff?text=Imagen+No+Disponible';">
+                        <div class="product-card-content">
+                            <h4 class="product-card-title">San Juan Beige</h4>
+                            <p class="product-card-description">Calidez, versatilidad y elegancia.</p>
+                        </div>
+                    </div>
+                    <div class="product-card">
+                        <img src="https://i.postimg.cc/tTqsbwnr/SJ-GRIS.png" alt="Revestimiento Símil Piedra San Juan Gris" onerror="this.onerror=null;this.src='https://placehold.co/300x200/cccccc/ffffff?text=Imagen+No+Disponible';">
+                        <div class="product-card-content">
+                            <h4 class="product-card-title">San Juan Gris</h4>
+                            <p class="product-card-description">Estilo moderno y sofisticado.</p>
+                        </div>
+                    </div>
+                     <div class="border border-dashed border-gray-300 rounded-lg p-4 text-center text-gray-400 flex flex-col justify-center items-center min-h-[200px] bg-gray-50">
+                         <i data-lucide="image-plus" class="w-10 h-10 text-gray-400 mb-2"></i>
+                         <p class="text-sm">Más diseños próximamente</p>
+                     </div>
+                 </div>
             </div>
-            <div class="bg-white p-6 rounded-lg shadow-md">
-                <h3 class="text-2xl font-semibold mb-6 text-violet-600 border-b pb-2">Pisos Flotantes</h3>
-                 <p class="text-gray-600 mb-6">Renueva tus suelos rápidamente y sin obras complicadas. Ofrecemos una amplia gama de acabados y colores para complementar tu estilo.</p>
+
+            <div>
+                <h3 class="text-2xl font-semibold mb-6 text-violet-700">Pisos Flotantes</h3>
+                 <p class="text-gray-600 mb-8 max-w-3xl">Renueva tus suelos rápidamente y sin obras complicadas. Ofrecemos una amplia gama de acabados y colores para complementar tu estilo.</p>
                 <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-                     <div class="border border-dashed border-gray-300 rounded-lg p-4 text-center text-gray-400 flex flex-col justify-center items-center min-h-[200px]"><span class="lucide text-4xl mb-2">&#xe431;</span><p>Próximamente: Catálogo de Pisos Flotantes</p></div>
-                     <div class="border border-dashed border-gray-300 rounded-lg p-4 text-center text-gray-400 flex flex-col justify-center items-center min-h-[200px]"><span class="lucide text-4xl mb-2">&#xe431;</span><p>Consulta por opciones</p></div>
+                     <div class="border border-dashed border-gray-300 rounded-lg p-4 text-center text-gray-400 flex flex-col justify-center items-center min-h-[200px] bg-gray-50">
+                         <i data-lucide="image-plus" class="w-10 h-10 text-gray-400 mb-2"></i>
+                         <p class="text-sm">Catálogo Próximamente</p>
+                     </div>
+                     <div class="border border-dashed border-gray-300 rounded-lg p-4 text-center text-gray-400 flex flex-col justify-center items-center min-h-[200px] bg-gray-50">
+                          <i data-lucide="image-plus" class="w-10 h-10 text-gray-400 mb-2"></i>
+                         <p class="text-sm">Consulta por opciones</p>
+                     </div>
                 </div>
             </div>
         </section>
 
-        <section id="cotizador" class="page-section">
-             <div class="bg-white p-6 md:p-8 rounded-lg shadow-lg w-full max-w-lg mx-auto">
-
-                <div id="user-info-section">
-                    <h1 class="text-2xl md:text-3xl font-bold text-center text-gray-800 mb-6">Datos de Contacto</h1>
-                    <p class="text-center text-gray-600 mb-6 text-sm">Completa tus datos para continuar al cotizador.</p>
-
-                    <form id="user-info-form" class="space-y-4">
-                        <div>
-                            <label for="nombre">Nombre<abbr title="requerido">*</abbr></label>
-                            <input type="text" id="nombre" name="nombre" placeholder="Tu nombre" required>
-                            <p id="error-nombre" class="error-message hidden"></p>
-                        </div>
-                        <div>
-                            <label for="apellido">Apellido<abbr title="requerido">*</abbr></label>
-                            <input type="text" id="apellido" name="apellido" placeholder="Tu apellido" required>
-                             <p id="error-apellido" class="error-message hidden"></p>
-                        </div>
-                         <div>
-                            <label for="telefono">Teléfono<abbr title="requerido">*</abbr></label>
-                            <input type="tel" id="telefono" name="telefono" placeholder="Ej: 11 5555 5555" required>
-                             <p id="error-telefono" class="error-message hidden"></p>
-                        </div>
-                         <div>
-                            <label for="direccion">Dirección<abbr title="requerido">*</abbr></label>
-                            <input type="text" id="direccion" name="direccion" placeholder="Calle y número" required>
-                             <p id="error-direccion" class="error-message hidden"></p>
-                        </div>
-                         <div>
-                            <label for="localidad">Localidad<abbr title="requerido">*</abbr></label>
-                            <input type="text" id="localidad" name="localidad" placeholder="Tu localidad" required>
-                             <p id="error-localidad" class="error-message hidden"></p>
-                        </div>
-
-                         <p id="error-general-userinfo" class="error-message text-center hidden"></p>
-
-                        <button type="submit" class="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-3 px-4 rounded-md shadow-md transition duration-150 ease-in-out flex items-center justify-center space-x-2">
-                            <i data-lucide="arrow-right-circle" class="w-5 h-5"></i>
-                            <span>Continuar al Cotizador</span>
-                        </button>
-                    </form>
-                </div>
-
-                <div id="quote-section" class="hidden">
-                    <h1 class="text-2xl md:text-3xl font-bold text-center text-gray-800 mb-6">Cotizador Online</h1>
-
-                    <form id="quote-form" class="space-y-4">
-                        <div>
-                            <label for="product">Selecciona el Producto:</label>
-                            <select id="product" name="product" required>
-                                </select>
-                        </div>
-
-                        <div>
-                            <label for="meters">Metros Cuadrados (m²):</label>
-                            <input type="number" id="meters" name="meters" min="0.1" step="0.1" placeholder="Ej: 25.5" required>
-                             <p id="error-message-meters" class="error-message hidden"></p>
-                        </div>
-
-                        <div>
-                            <label for="shipping-zone">Zona de Envío:</label>
-                            <select id="shipping-zone" name="shipping-zone" required>
-                                <option value="">-- Selecciona tu zona --</option>
-                                <option value="caba">Ciudad Autónoma de Buenos Aires (CABA)</option>
-                                <option value="gba">Gran Buenos Aires (GBA)</option>
-                                <option value="bsas_interior">Provincia de Buenos Aires (Interior)</option>
-                                <option value="otra_provincia">Otra Provincia</option>
-                                <option value="no_shipping">Retiro en local / Sin envío</option>
-                            </select>
-                            <p id="error-message-zone" class="error-message hidden"></p>
-                        </div>
-
-                        <div class="flex items-center space-x-2 pt-2">
-                             <input type="checkbox" id="include-installation" name="include-installation">
-                             <label for="include-installation" class="mb-0">Incluir Instalación</label>
-                        </div>
-
-                        <button type="submit" class="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-3 px-4 rounded-md shadow-md transition duration-150 ease-in-out flex items-center justify-center space-x-2">
-                            <i data-lucide="calculator" class="w-5 h-5"></i>
-                            <span>Calcular Presupuesto</span>
-                        </button>
-                    </form>
-
-                    <div id="quote-result" class="mt-8 hidden">
-                         <h2 class="text-xl font-semibold text-gray-800 mb-4 border-b pb-2">Detalle del Presupuesto:</h2>
-                         <div id="quote-details" class="space-y-1">
-                             </div>
-                         <div id="quote-total" class="quote-total border-t border-gray-300">
-                             </div>
+        <section id="cotizador" class="page-section bg-gradient-to-br from-blue-50 to-violet-50">
+             <div class="container mx-auto px-6">
+                 <div class="bg-white p-8 md:p-10 rounded-lg shadow-xl w-full max-w-lg mx-auto">
+                    <div id="user-info-section">
+                        <h2 class="text-2xl md:text-3xl font-bold text-center text-gray-800 mb-2">Datos de Contacto</h2>
+                        <p class="text-center text-gray-600 mb-6 text-sm">Completa tus datos para obtener tu presupuesto.</p>
+                        <form id="user-info-form" class="space-y-5">
+                            <div><label for="nombre">Nombre<abbr title="requerido">*</abbr></label><input type="text" id="nombre" name="nombre" placeholder="Tu nombre" required><p id="error-nombre" class="error-message"></p></div>
+                            <div><label for="apellido">Apellido<abbr title="requerido">*</abbr></label><input type="text" id="apellido" name="apellido" placeholder="Tu apellido" required><p id="error-apellido" class="error-message"></p></div>
+                            <div><label for="telefono">Teléfono<abbr title="requerido">*</abbr></label><input type="tel" id="telefono" name="telefono" placeholder="Ej: 11 5555 5555" required><p id="error-telefono" class="error-message"></p></div>
+                            <div><label for="direccion">Dirección<abbr title="requerido">*</abbr></label><input type="text" id="direccion" name="direccion" placeholder="Calle y número" required><p id="error-direccion" class="error-message"></p></div>
+                            <div><label for="localidad">Localidad<abbr title="requerido">*</abbr></label><input type="text" id="localidad" name="localidad" placeholder="Tu localidad" required><p id="error-localidad" class="error-message"></p></div>
+                            <p id="error-general-userinfo" class="error-message text-center"></p>
+                            <button type="submit"><i data-lucide="arrow-right-circle" class="w-5 h-5"></i><span>Continuar al Cotizador</span></button>
+                        </form>
                     </div>
-                     <button id="back-to-user-info" class="mt-4 w-full text-sm text-indigo-600 hover:text-indigo-800 transition duration-150 ease-in-out flex items-center justify-center space-x-1">
-                         <i data-lucide="arrow-left-circle" class="w-4 h-4"></i>
-                         <span>Volver a Datos de Contacto</span>
-                     </button>
-                </div>
-
+                     <div id="quote-section" class="hidden">
+                        <h2 class="text-2xl md:text-3xl font-bold text-center text-gray-800 mb-6">Cotizador Online</h2>
+                        <form id="quote-form" class="space-y-5">
+                            <div><label for="product">Selecciona el Producto:</label><select id="product" name="product" required></select></div>
+                            <div><label for="meters">Metros Cuadrados (m²):</label><input type="number" id="meters" name="meters" min="0.1" step="0.1" placeholder="Ej: 25.5" required><p id="error-message-meters" class="error-message"></p></div>
+                            <div><label for="shipping-zone">Zona de Envío:</label><select id="shipping-zone" name="shipping-zone" required><option value="">-- Selecciona tu zona --</option><option value="caba">CABA</option><option value="gba">GBA</option><option value="bsas_interior">Bs.As. Interior</option><option value="otra_provincia">Otra Provincia</option><option value="no_shipping">Retiro / Sin envío</option></select><p id="error-message-zone" class="error-message"></p></div>
+                            <div class="flex items-center space-x-3 pt-2"><input type="checkbox" id="include-installation" name="include-installation"><label for="include-installation" class="mb-0 !font-normal text-gray-600">Incluir Instalación</label></div>
+                            <button type="submit"><i data-lucide="calculator" class="w-5 h-5"></i><span>Calcular Presupuesto</span></button>
+                        </form>
+                        <div id="quote-result" class="mt-8 hidden"><h3 class="text-xl font-semibold text-gray-800 mb-4 border-b pb-2">Detalle del Presupuesto:</h3><div id="quote-details" class="space-y-1"></div><div id="quote-total" class="quote-total border-t border-gray-300"></div></div>
+                        <button id="back-to-user-info"><i data-lucide="arrow-left-circle" class="w-4 h-4"></i><span>Volver a Datos</span></button>
+                    </div>
+                 </div>
              </div>
         </section>
 
-        <section id="contact" class="page-section bg-white p-8 rounded-lg shadow-lg">
-            <h2 class="text-3xl font-bold mb-8 text-center gradient-text">Contacto</h2>
-            <div class="flex flex-col md:flex-row gap-10">
-                <div class="md:w-1/2 space-y-4 text-gray-700">
-                    <h3 class="text-xl font-semibold text-gray-800 mb-3">Información de Contacto</h3>
-                    <p class="flex items-center"><span class="lucide mr-3 text-blue-500">&#xe0dc;</span>Carmona 62, Adrogué, Buenos Aires, Argentina.</p>
-                    <p class="flex items-center"><span class="lucide mr-3 text-green-500">&#xe0e6;</span><a href="tel:1160479929" class="hover:text-blue-600">11 6047 9929</a></p>
-                    <p class="flex items-center"><span class="lucide mr-3 text-violet-500">&#xe0be;</span><a href="mailto:info@plakasec.com" class="hover:text-blue-600">info@plakasec.com</a></p>
-                    <div class="mt-6"><h4 class="text-lg font-semibold text-gray-800 mb-2">Horario de Atención</h4><p>Lunes a Viernes: 9:00 - 18:00 hs</p><p>Sábados: 9:00 - 13:00 hs</p></div>
-                    <div class="mt-6 border rounded-lg overflow-hidden"><img src="https://placehold.co/600x300/e0e7ff/374151?text=Mapa+(Ubicaci%C3%B3n+Aproximada)" alt="Mapa indicando la ubicación de Plakasec en Adrogué" class="w-full h-auto"></div>
+        <section id="contact" class="page-section container mx-auto px-6">
+             <h2 class="text-3xl md:text-4xl font-bold mb-10 text-center gradient-text-subtle">Contacto</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-10 md:gap-16 items-start">
+                 <div class="space-y-6 text-gray-700">
+                    <div>
+                        <h3 class="text-xl font-semibold text-gray-800 mb-3">Información de Contacto</h3>
+                        <p class="flex items-start mb-3">
+                            <i data-lucide="map-pin" class="w-5 h-5 mr-3 text-blue-600 mt-1 flex-shrink-0"></i>
+                            <span>Carmona 62, Adrogué,<br>Buenos Aires, Argentina.</span>
+                        </p>
+                        <p class="flex items-center mb-3">
+                            <i data-lucide="phone" class="w-5 h-5 mr-3 text-blue-600 flex-shrink-0"></i>
+                            <a href="tel:1160479929" class="hover:text-blue-800">11 6047 9929</a>
+                        </p>
+                        <p class="flex items-center">
+                             <i data-lucide="mail" class="w-5 h-5 mr-3 text-blue-600 flex-shrink-0"></i>
+                            <a href="mailto:info@plakasec.com" class="hover:text-blue-800">info@plakasec.com</a>
+                        </p>
+                    </div>
+                     <div class="pt-4 border-t border-gray-200">
+                        <h4 class="text-lg font-semibold text-gray-800 mb-2">Horario de Atención</h4>
+                        <p>Lunes a Viernes: 9:00 - 18:00 hs</p>
+                        <p>Sábados: 9:00 - 13:00 hs</p>
+                    </div>
+                     <div class="mt-6 border rounded-lg overflow-hidden shadow-md">
+                         <img src="https://placehold.co/600x350/e0e7ff/374151?text=Mapa+(Ubicación+Aproximada)" alt="Mapa indicando la ubicación de Plakasec en Adrogué" class="w-full h-auto">
+                     </div>
                 </div>
-                <div class="md:w-1/2">
-                    <h3 class="text-xl font-semibold text-gray-800 mb-3">Envíanos tu Consulta</h3>
-                    <form action="mailto:ventas@plakasec.com" method="POST" enctype="text/plain" class="space-y-4">
-                        <div><label for="name" class="block text-sm font-medium text-gray-700">Nombre</label><input type="text" id="name" name="Nombre" required class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"></div>
-                        <div><label for="email" class="block text-sm font-medium text-gray-700">Email</label><input type="email" id="email" name="Email" required class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"></div>
-                        <div><label for="subject" class="block text-sm font-medium text-gray-700">Asunto</label><input type="text" id="subject" name="Asunto" class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"></div>
-                        <div><label for="message" class="block text-sm font-medium text-gray-700">Mensaje</label><textarea id="message" name="Mensaje" rows="4" required class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"></textarea></div>
-                        <div><button type="submit" class="w-full inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-gradient-to-r from-green-500 via-blue-500 to-violet-500 hover:from-green-600 hover:via-blue-600 hover:to-violet-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition duration-300">Enviar Mensaje</button></div>
+
+                <div class="bg-white p-8 rounded-lg shadow-lg border border-gray-100">
+                    <h3 class="text-xl font-semibold text-gray-800 mb-5">Envíanos tu Consulta</h3>
+                    <form action="mailto:ventas@plakasec.com" method="POST" enctype="text/plain" class="space-y-5">
+                        <div><label for="contact-name">Nombre</label><input type="text" id="contact-name" name="Nombre" required></div>
+                        <div><label for="contact-email">Email</label><input type="email" id="contact-email" name="Email" required></div>
+                        <div><label for="contact-subject">Asunto</label><input type="text" id="contact-subject" name="Asunto"></div>
+                        <div><label for="contact-message">Mensaje</label><textarea id="contact-message" name="Mensaje" rows="4" required></textarea></div>
+                        <div><button type="submit"><i data-lucide="send" class="w-5 h-5"></i><span>Enviar Mensaje</span></button></div>
                     </form>
-                    <p class="mt-4 text-center text-sm text-gray-500">Al hacer clic en "Enviar Mensaje", se abrirá tu aplicación de correo electrónico para enviar la consulta a <span class="font-medium">ventas@plakasec.com</span>.</p>
+                    <p class="mt-4 text-center text-xs text-gray-500">
+                        Al hacer clic, se abrirá tu app de correo para enviar la consulta a <span class="font-medium">ventas@plakasec.com</span>.
+                    </p>
                 </div>
             </div>
         </section>
 
     </main>
 
-    <footer class="bg-gray-800 text-white mt-12 py-6">
+    <footer class="bg-gray-800 text-gray-300 mt-16 py-8">
         <div class="container mx-auto px-6 text-center">
             <p>&copy; <span id="current-year"></span> Plakasec. Todos los derechos reservados.</p>
-            <p class="text-sm text-gray-400 mt-1">Diseño web por IA</p>
+            <p class="text-sm text-gray-400 mt-1">Sitio web desarrollado con asistencia de IA</p>
         </div>
     </footer>
 
@@ -323,24 +420,24 @@
        rel="noopener noreferrer"
        aria-label="Contactar por WhatsApp"
        class="whatsapp-button fixed bottom-5 right-5 z-40 bg-green-500 hover:bg-green-600 text-white p-3 rounded-full shadow-lg transition duration-300 ease-in-out transform hover:scale-110 flex items-center justify-center">
-        <svg viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
-            <path d=" M19.11 17.205c-.372 0-1.088 1.39-1.518 1.39a.63.63 0 0 1-.315-.1c-.802-.402-1.504-.817-2.163-1.447-.545-.516-1.146-1.29-1.46-1.963a.426.426 0 0 1-.073-.215c0-.33.99-.945.99-1.49 0-.143-.73-2.09-.832-2.335-.143-.372-.214-.487-.6-.487-.187 0-.36-.044-.53-.044-.315 0-.76.11-1.042.315-.315.2-.832.77-1.042 1.738-.213 1.028.072 1.958.144 2.163.072.215.213.402.315.57.072.114.143.24.214.372.072.143.11.27.18.402.143.27.315.57.487.87.172.3.372.6.6.91.24.315.516.645.802.975.315.345.645.645.975.91.3.24.6.44.91.615.3.172.615.315.945.44.288.114.576.187.87.215.3.044.57.073.792.073.24 0 .48-.03.688-.072.24-.044.44-.115.615-.215.172-.1.315-.187.44-.3.114-.114.21-.24.27-.372.114-.24.187-.545.215-.87.044-.315.044-.63 0-.945-.044-.315-.072-.6-.11-.87-.044-.27-.072-.487-.143-.73a11.1 11.1 0 0 0-1.187-2.605z M16 0 A16 16 0 0 0 0 16 A16 16 0 0 0 16 32 A16 16 0 0 0 32 16 A16 16 0 0 0 16 0 M16 4.8 A11.2 11.2 0 0 1 27.2 16 A11.2 11.2 0 0 1 16 27.2 A11.2 11.2 0 0 1 4.8 16 A11.2 11.2 0 0 1 16 4.8z"/>
-        </svg>
+        <svg viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg" class="w-7 h-7"><path fill="currentColor" d=" M19.11 17.205c-.372 0-1.088 1.39-1.518 1.39a.63.63 0 0 1-.315-.1c-.802-.402-1.504-.817-2.163-1.447-.545-.516-1.146-1.29-1.46-1.963a.426.426 0 0 1-.073-.215c0-.33.99-.945.99-1.49 0-.143-.73-2.09-.832-2.335-.143-.372-.214-.487-.6-.487-.187 0-.36-.044-.53-.044-.315 0-.76.11-1.042.315-.315.2-.832.77-1.042 1.738-.213 1.028.072 1.958.144 2.163.072.215.213.402.315.57.072.114.143.24.214.372.072.143.11.27.18.402.143.27.315.57.487.87.172.3.372.6.6.91.24.315.516.645.802.975.315.345.645.645.975.91.3.24.6.44.91.615.3.172.615.315.945.44.288.114.576.187.87.215.3.044.57.073.792.073.24 0 .48-.03.688-.072.24-.044.44-.115.615-.215.172-.1.315-.187.44-.3.114-.114.21-.24.27-.372.114-.24.187-.545.215-.87.044-.315.044-.63 0-.945-.044-.315-.072-.6-.11-.87-.044-.27-.072-.487-.143-.73a11.1 11.1 0 0 0-1.187-2.605z M16 0 A16 16 0 0 0 0 16 A16 16 0 0 0 16 32 A16 16 0 0 0 32 16 A16 16 0 0 0 16 0 M16 4.8 A11.2 11.2 0 0 1 27.2 16 A11.2 11.2 0 0 1 16 27.2 A11.2 11.2 0 0 1 4.8 16 A11.2 11.2 0 0 1 16 4.8z"/></svg>
     </a>
 
-    <script src="https://unpkg.com/lucide@latest"></script> <script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <script>
         // --- Navigation Logic ---
-        document.getElementById('current-year').textContent = new Date().getFullYear();
         const navButtons = document.querySelectorAll('.nav-button');
         const sections = document.querySelectorAll('.page-section');
+        const mobileMenuButton = document.getElementById('mobile-menu-button');
+        const mobileMenu = document.getElementById('mobile-menu');
 
-        function showSection(targetId) {
+        document.getElementById('current-year').textContent = new Date().getFullYear();
+
+        function showSection(targetId, isMobile = false) {
             let sectionFound = false;
             sections.forEach(section => {
                 if (section.id === targetId) {
-                    requestAnimationFrame(() => {
-                        section.classList.add('active');
-                    });
+                    requestAnimationFrame(() => { section.classList.add('active'); });
                     sectionFound = true;
                 } else {
                     section.classList.remove('active');
@@ -348,312 +445,163 @@
             });
             if (sectionFound) {
                 window.scrollTo({ top: 0, behavior: 'smooth' });
+                // Update active button state (optional, more complex for combined buttons)
                 navButtons.forEach(btn => {
                     if (btn.getAttribute('data-target') === targetId) {
-                        btn.classList.add('text-blue-600', 'font-bold');
+                        btn.classList.add('text-blue-600', 'font-semibold'); // Example active style
                     } else {
-                         btn.classList.remove('text-blue-600', 'font-bold');
+                        btn.classList.remove('text-blue-600', 'font-semibold');
                     }
                 });
-                 if (targetId === 'cotizador') {
-                    requestAnimationFrame(() => {
-                        lucide.createIcons();
-                    });
+                 // Close mobile menu if open and navigating from it
+                 if (isMobile && mobileMenu && !mobileMenu.classList.contains('hidden')) {
+                     mobileMenu.classList.add('hidden');
                  }
+                 // Re-render icons if needed (especially for newly shown sections)
+                 requestAnimationFrame(() => { lucide.createIcons(); });
             } else {
                 console.warn("Target section not found:", targetId);
             }
         }
 
         navButtons.forEach(button => {
-            button.addEventListener('click', () => {
+            button.addEventListener('click', (e) => {
                 const targetId = button.getAttribute('data-target');
-                showSection(targetId);
+                // Check if the click came from within the mobile menu
+                const isMobileClick = e.target.closest('#mobile-menu') !== null;
+                showSection(targetId, isMobileClick);
             });
         });
 
+        // Mobile Menu Toggle
+        if (mobileMenuButton && mobileMenu) {
+            mobileMenuButton.addEventListener('click', () => {
+                mobileMenu.classList.toggle('hidden');
+            });
+        }
+
         showSection('home'); // Initialize home section
 
-
-        // --- Cotizador Logic (Using Formspree) --- // MODIFIED SECTION
+        // --- Cotizador Logic (Using Formspree) ---
         const cotizadorSection = document.getElementById('cotizador');
         if (cotizadorSection) {
-            // --- Configuration (Quote Section) ---
-            const productsConfig = [
-                { id: 'placa-antihumedad', name: 'Placas Anti Humedad', pricePerMeter: 20000 },
-                { id: 'simil-piedra', name: 'Símil Piedra', pricePerMeter: 25000 },
-                { id: 'piso-flotante', name: 'Pisos Flotantes', pricePerMeter: 45000 }
-            ];
-            const shippingCostsByZoneConfig = {
-                'caba': 3000, 'gba': 5000, 'bsas_interior': 8000, 'otra_provincia': 12000, 'no_shipping': 0
-            };
-            const installationCostPerMeterConfig = 3000;
-            const taxRateConfig = 0.21;
+            // Config, DOM elements, functions (formatCurrency, displayError, etc.)
+            const productsConfig = [ { id: 'placa-antihumedad', name: 'Placas Anti Humedad', pricePerMeter: 20000 }, { id: 'simil-piedra', name: 'Símil Piedra', pricePerMeter: 25000 }, { id: 'piso-flotante', name: 'Pisos Flotantes', pricePerMeter: 45000 } ];
+            const shippingCostsByZoneConfig = { 'caba': 3000, 'gba': 5000, 'bsas_interior': 8000, 'otra_provincia': 12000, 'no_shipping': 0 };
+            const installationCostPerMeterConfig = 3000; const taxRateConfig = 0.21;
+            const userInfoSection = cotizadorSection.querySelector('#user-info-section'); const userInfoForm = cotizadorSection.querySelector('#user-info-form'); const nombreInput = cotizadorSection.querySelector('#nombre'); const apellidoInput = cotizadorSection.querySelector('#apellido'); const telefonoInput = cotizadorSection.querySelector('#telefono'); const direccionInput = cotizadorSection.querySelector('#direccion'); const localidadInput = cotizadorSection.querySelector('#localidad'); const errorGeneralUserInfo = cotizadorSection.querySelector('#error-general-userinfo'); const errorNombre = cotizadorSection.querySelector('#error-nombre'); const errorApellido = cotizadorSection.querySelector('#error-apellido'); const errorTelefono = cotizadorSection.querySelector('#error-telefono'); const errorDireccion = cotizadorSection.querySelector('#error-direccion'); const errorLocalidad = cotizadorSection.querySelector('#error-localidad'); const quoteSection = cotizadorSection.querySelector('#quote-section'); const productSelect = cotizadorSection.querySelector('#product'); const metersInput = cotizadorSection.querySelector('#meters'); const shippingZoneSelect = cotizadorSection.querySelector('#shipping-zone'); const installationCheckbox = cotizadorSection.querySelector('#include-installation'); const quoteForm = cotizadorSection.querySelector('#quote-form'); const quoteResultDiv = cotizadorSection.querySelector('#quote-result'); const quoteDetailsDiv = cotizadorSection.querySelector('#quote-details'); const quoteTotalDiv = cotizadorSection.querySelector('#quote-total'); const errorMessageMetersP = cotizadorSection.querySelector('#error-message-meters'); const errorMessageZoneP = cotizadorSection.querySelector('#error-message-zone'); const backButton = cotizadorSection.querySelector('#back-to-user-info');
+            if (productSelect) { productSelect.innerHTML = ''; const defaultOption = document.createElement('option'); defaultOption.value = ""; defaultOption.textContent = "-- Selecciona un producto --"; defaultOption.disabled = true; defaultOption.selected = true; productSelect.appendChild(defaultOption); productsConfig.forEach(product => { const option = document.createElement('option'); option.value = product.id; option.textContent = product.name; productSelect.appendChild(option); }); }
+            const formatCurrency = (amount) => { if (typeof amount !== 'number' || isNaN(amount)) amount = 0; return amount.toLocaleString('es-AR', { style: 'currency', currency: 'ARS' }); };
+            const displayError = (element, message, inputElement = null) => { if (!element) return; element.textContent = message; element.classList.remove('hidden'); if (inputElement) inputElement.classList.add('border-red-500'); }; const clearError = (element, inputElement = null) => { if (!element) return; element.textContent = ''; element.classList.add('hidden'); if (inputElement) inputElement.classList.remove('border-red-500'); }; const clearAllUserInfoErrors = () => { clearError(errorNombre, nombreInput); clearError(errorApellido, apellidoInput); clearError(errorTelefono, telefonoInput); clearError(errorDireccion, direccionInput); clearError(errorLocalidad, localidadInput); clearError(errorGeneralUserInfo); };
 
-            // --- DOM Elements ---
-            const userInfoSection = cotizadorSection.querySelector('#user-info-section');
-            const userInfoForm = cotizadorSection.querySelector('#user-info-form');
-            const nombreInput = cotizadorSection.querySelector('#nombre');
-            const apellidoInput = cotizadorSection.querySelector('#apellido');
-            const telefonoInput = cotizadorSection.querySelector('#telefono');
-            const direccionInput = cotizadorSection.querySelector('#direccion');
-            const localidadInput = cotizadorSection.querySelector('#localidad');
-            const errorGeneralUserInfo = cotizadorSection.querySelector('#error-general-userinfo');
-            const errorNombre = cotizadorSection.querySelector('#error-nombre');
-            const errorApellido = cotizadorSection.querySelector('#error-apellido');
-            const errorTelefono = cotizadorSection.querySelector('#error-telefono');
-            const errorDireccion = cotizadorSection.querySelector('#error-direccion');
-            const errorLocalidad = cotizadorSection.querySelector('#error-localidad');
-
-            const quoteSection = cotizadorSection.querySelector('#quote-section');
-            const productSelect = cotizadorSection.querySelector('#product');
-            const metersInput = cotizadorSection.querySelector('#meters');
-            const shippingZoneSelect = cotizadorSection.querySelector('#shipping-zone');
-            const installationCheckbox = cotizadorSection.querySelector('#include-installation');
-            const quoteForm = cotizadorSection.querySelector('#quote-form');
-            const quoteResultDiv = cotizadorSection.querySelector('#quote-result');
-            const quoteDetailsDiv = cotizadorSection.querySelector('#quote-details');
-            const quoteTotalDiv = cotizadorSection.querySelector('#quote-total');
-            const errorMessageMetersP = cotizadorSection.querySelector('#error-message-meters');
-            const errorMessageZoneP = cotizadorSection.querySelector('#error-message-zone');
-            const backButton = cotizadorSection.querySelector('#back-to-user-info');
-
-            // --- Populate Product Options ---
-            if (productSelect) {
-                productSelect.innerHTML = '';
-                 const defaultOption = document.createElement('option');
-                 defaultOption.value = "";
-                 defaultOption.textContent = "-- Selecciona un producto --";
-                 defaultOption.disabled = true;
-                 defaultOption.selected = true;
-                 productSelect.appendChild(defaultOption);
-                productsConfig.forEach(product => {
-                    const option = document.createElement('option');
-                    option.value = product.id;
-                    option.textContent = product.name;
-                    productSelect.appendChild(option);
-                });
-            }
-
-            // --- Format Currency ---
-            const formatCurrency = (amount) => {
-                 if (typeof amount !== 'number' || isNaN(amount)) amount = 0;
-                return amount.toLocaleString('es-AR', { style: 'currency', currency: 'ARS' });
-            };
-
-            // --- Display/Clear Error Messages ---
-            const displayError = (element, message, inputElement = null) => {
-                 if (!element) return;
-                element.textContent = message;
-                element.classList.remove('hidden');
-                if (inputElement) inputElement.classList.add('border-red-500');
-            };
-            const clearError = (element, inputElement = null) => {
-                 if (!element) return;
-                element.textContent = '';
-                element.classList.add('hidden');
-                if (inputElement) inputElement.classList.remove('border-red-500');
-            };
-            const clearAllUserInfoErrors = () => {
-                clearError(errorNombre, nombreInput);
-                clearError(errorApellido, apellidoInput);
-                clearError(errorTelefono, telefonoInput);
-                clearError(errorDireccion, direccionInput);
-                clearError(errorLocalidad, localidadInput);
-                clearError(errorGeneralUserInfo);
-            };
-
-            // --- Event Listener for User Info Form Submission (Using Formspree) --- // MODIFIED
+             // User Info Form Submission (Formspree)
             if (userInfoForm) {
                 userInfoForm.addEventListener('submit', (event) => {
-                    event.preventDefault();
-                    clearAllUserInfoErrors();
-
-                    let isValid = true;
-                    const userInfo = { // Use field names expected by Formspree or map them
-                        nombre: nombreInput.value.trim(),
-                        apellido: apellidoInput.value.trim(),
-                        telefono: telefonoInput.value.trim(),
-                        direccion: direccionInput.value.trim(),
-                        localidad: localidadInput.value.trim()
-                        // You might need hidden fields or specific names if Formspree requires them
-                        // _subject: "Nuevo Contacto Cotizador Plakasec", // Example Formspree special field
-                    };
-
-                    if (!userInfo.nombre) { displayError(errorNombre, 'El nombre es requerido.', nombreInput); isValid = false; }
-                    if (!userInfo.apellido) { displayError(errorApellido, 'El apellido es requerido.', apellidoInput); isValid = false; }
-                    if (!userInfo.telefono) { displayError(errorTelefono, 'El teléfono es requerido.', telefonoInput); isValid = false; }
-                    if (!userInfo.direccion) { displayError(errorDireccion, 'La dirección es requerida.', direccionInput); isValid = false; }
-                    if (!userInfo.localidad) { displayError(errorLocalidad, 'La localidad es requerida.', localidadInput); isValid = false; }
-
-                    if (!isValid) {
-                         displayError(errorGeneralUserInfo, 'Por favor, completa todos los campos requeridos.');
-                         const firstInvalid = userInfoForm.querySelector('.border-red-500');
-                         if (firstInvalid) firstInvalid.focus();
-                         return;
-                    }
-
-                    // --- Send data to Formspree ---
-                    fetch('https://formspree.io/f/mjkyjgbd', { // <-- Formspree URL
-                        method: 'POST',
-                        headers: {
-                            'Accept': 'application/json', // Important for Formspree AJAX
-                            'Content-Type': 'application/json'
-                        },
-                        body: JSON.stringify(userInfo)
-                    })
-                    .then(response => {
-                        if (response.ok) {
-                            // Success (Formspree accepted the data)
-                            console.log('Datos enviados con éxito a Formspree');
-                            // Hide user info form and show quote section
-                            if(userInfoSection) userInfoSection.classList.add('hidden');
-                            if(quoteSection) {
-                                quoteSection.classList.remove('hidden');
-                                quoteSection.classList.add('fade-in');
-                                 requestAnimationFrame(() => { lucide.createIcons(); });
-                            }
-                        } else {
-                            // Handle Formspree errors (e.g., validation errors)
-                            response.json().then(data => {
-                               if (data && data.errors) {
-                                 const errorMessages = data.errors.map(error => error.message).join(", ");
-                                 displayError(errorGeneralUserInfo, `Error de Formspree: ${errorMessages}`);
-                                 console.error('Error de Formspree:', data.errors);
-                               } else {
-                                 // Generic server error if no specific errors provided
-                                 throw new Error(`Error del servidor Formspree: ${response.status} ${response.statusText}`);
-                               }
-                            }).catch(() => {
-                                // If response cannot be parsed as JSON
-                                throw new Error(`Error del servidor Formspree: ${response.status} ${response.statusText}`);
-                            });
-                        }
-                    })
-                    .catch(error => {
-                        // Network error or error during response handling
-                        console.error('Error al enviar datos a Formspree:', error);
-                        displayError(errorGeneralUserInfo, `No se pudieron enviar los datos: ${error.message}. Intenta de nuevo.`);
-                    });
+                    event.preventDefault(); clearAllUserInfoErrors(); let isValid = true;
+                    const userInfo = { nombre: nombreInput.value.trim(), apellido: apellidoInput.value.trim(), telefono: telefonoInput.value.trim(), direccion: direccionInput.value.trim(), localidad: localidadInput.value.trim() };
+                    if (!userInfo.nombre) { displayError(errorNombre, 'El nombre es requerido.', nombreInput); isValid = false; } if (!userInfo.apellido) { displayError(errorApellido, 'El apellido es requerido.', apellidoInput); isValid = false; } if (!userInfo.telefono) { displayError(errorTelefono, 'El teléfono es requerido.', telefonoInput); isValid = false; } if (!userInfo.direccion) { displayError(errorDireccion, 'La dirección es requerida.', direccionInput); isValid = false; } if (!userInfo.localidad) { displayError(errorLocalidad, 'La localidad es requerida.', localidadInput); isValid = false; }
+                    if (!isValid) { displayError(errorGeneralUserInfo, 'Por favor, completa todos los campos requeridos.'); const firstInvalid = userInfoForm.querySelector('.border-red-500'); if (firstInvalid) firstInvalid.focus(); return; }
+                    fetch('https://formspree.io/f/mjkyjgbd', { method: 'POST', headers: { 'Accept': 'application/json', 'Content-Type': 'application/json' }, body: JSON.stringify(userInfo) })
+                    .then(response => { if (response.ok) { console.log('Datos enviados con éxito a Formspree'); if(userInfoSection) userInfoSection.classList.add('hidden'); if(quoteSection) { quoteSection.classList.remove('hidden'); quoteSection.classList.add('fade-in'); requestAnimationFrame(() => { lucide.createIcons(); }); } } else { response.json().then(data => { if (data && data.errors) { const errorMessages = data.errors.map(error => error.message).join(", "); displayError(errorGeneralUserInfo, `Error de Formspree: ${errorMessages}`); console.error('Error de Formspree:', data.errors); } else { throw new Error(`Error del servidor Formspree: ${response.status} ${response.statusText}`); } }).catch(() => { throw new Error(`Error del servidor Formspree: ${response.status} ${response.statusText}`); }); } })
+                    .catch(error => { console.error('Error al enviar datos a Formspree:', error); displayError(errorGeneralUserInfo, `No se pudieron enviar los datos: ${error.message}. Intenta de nuevo.`); });
                 });
             }
 
-
-            // --- Event Listener for Quote Form Submission ---
+             // Quote Form Submission
             if (quoteForm) {
                 quoteForm.addEventListener('submit', (event) => {
-                    event.preventDefault();
-                    clearError(errorMessageMetersP, metersInput);
-                    clearError(errorMessageZoneP, shippingZoneSelect);
-
-                    const selectedProductId = productSelect.value;
-                    const meters = parseFloat(metersInput.value);
-                    const selectedZone = shippingZoneSelect.value;
-
-                    let isQuoteValid = true;
-                    if (!selectedProductId) {
-                         displayError(errorMessageMetersP, 'Selecciona un producto.', productSelect);
-                         isQuoteValid = false;
-                    }
-                    if (isNaN(meters) || meters <= 0) {
-                        displayError(errorMessageMetersP, 'Ingresa una cantidad válida de m².', metersInput);
-                        isQuoteValid = false;
-                    }
-                    if (!selectedZone) {
-                         displayError(errorMessageZoneP, 'Selecciona una zona de envío.', shippingZoneSelect);
-                         isQuoteValid = false;
-                    }
-                    if (!isQuoteValid) return;
-
-                    const selectedProduct = productsConfig.find(p => p.id === selectedProductId);
-                    if (!selectedProduct) {
-                         console.error("Selected product not found:", selectedProductId);
-                         displayError(errorMessageMetersP, 'Error: Producto no encontrado.', productSelect);
-                         return;
-                    }
-
-                    const productCost = selectedProduct.pricePerMeter * meters;
-                    const shippingCost = shippingCostsByZoneConfig[selectedZone] ?? 0;
-                    const installationCost = installationCheckbox.checked ? installationCostPerMeterConfig * meters : 0;
-                    const subtotal = productCost + shippingCost + installationCost;
-                    const taxes = subtotal * taxRateConfig;
-                    const total = subtotal + taxes;
-
-                    if (quoteDetailsDiv) quoteDetailsDiv.innerHTML = '';
-                    const addDetailLine = (label, amount, zoneInfo = '') => {
-                        if (!quoteDetailsDiv) return;
-                        if (amount > 0 || label === 'Costo del Producto' || (label === 'Envío' && selectedZone === 'no_shipping')) {
-                            const itemDiv = document.createElement('div');
-                            itemDiv.className = 'quote-result-item';
-                            itemDiv.innerHTML = `
-                                <span>${label}${zoneInfo}:</span>
-                                <span>${formatCurrency(amount)}</span>
-                            `;
-                            quoteDetailsDiv.appendChild(itemDiv);
-                        }
-                    };
-
-                    addDetailLine('Costo del Producto', productCost);
-                    if (selectedZone && selectedZone !== 'no_shipping' && shippingCost >= 0) {
-                         const selectedOption = shippingZoneSelect.options[shippingZoneSelect.selectedIndex];
-                         const zoneName = selectedOption ? selectedOption.text.split('(')[0].trim() : selectedZone;
-                         addDetailLine('Costo de Envío', shippingCost, ` (${zoneName})`);
-                    } else if (selectedZone === 'no_shipping') {
-                         addDetailLine('Envío', 0, ' (Retiro en local)');
-                    }
-                    if (installationCheckbox.checked) addDetailLine('Costo de Instalación', installationCost);
-                    addDetailLine('Impuestos (IVA 21%)', taxes);
-
-                    if (quoteTotalDiv) {
-                        quoteTotalDiv.innerHTML = `
-                            <span>Total Estimado:</span>
-                            <span>${formatCurrency(total)}</span>
-                        `;
-                    }
-
-                    if (quoteResultDiv) {
-                        quoteResultDiv.classList.remove('hidden');
-                        quoteResultDiv.classList.add('fade-in');
-                    }
+                    event.preventDefault(); clearError(errorMessageMetersP, metersInput); clearError(errorMessageZoneP, shippingZoneSelect);
+                    const selectedProductId = productSelect.value; const meters = parseFloat(metersInput.value); const selectedZone = shippingZoneSelect.value; let isQuoteValid = true;
+                    if (!selectedProductId) { displayError(errorMessageMetersP, 'Selecciona un producto.', productSelect); isQuoteValid = false; } if (isNaN(meters) || meters <= 0) { displayError(errorMessageMetersP, 'Ingresa una cantidad válida de m².', metersInput); isQuoteValid = false; } if (!selectedZone) { displayError(errorMessageZoneP, 'Selecciona una zona de envío.', shippingZoneSelect); isQuoteValid = false; } if (!isQuoteValid) return;
+                    const selectedProduct = productsConfig.find(p => p.id === selectedProductId); if (!selectedProduct) { console.error("Selected product not found:", selectedProductId); displayError(errorMessageMetersP, 'Error: Producto no encontrado.', productSelect); return; }
+                    const productCost = selectedProduct.pricePerMeter * meters; const shippingCost = shippingCostsByZoneConfig[selectedZone] ?? 0; const installationCost = installationCheckbox.checked ? installationCostPerMeterConfig * meters : 0; const subtotal = productCost + shippingCost + installationCost; const taxes = subtotal * taxRateConfig; const total = subtotal + taxes;
+                    if (quoteDetailsDiv) quoteDetailsDiv.innerHTML = ''; const addDetailLine = (label, amount, zoneInfo = '') => { if (!quoteDetailsDiv) return; if (amount > 0 || label === 'Costo del Producto' || (label === 'Envío' && selectedZone === 'no_shipping')) { const itemDiv = document.createElement('div'); itemDiv.className = 'quote-result-item'; itemDiv.innerHTML = `<span>${label}${zoneInfo}:</span><span>${formatCurrency(amount)}</span>`; quoteDetailsDiv.appendChild(itemDiv); } };
+                    addDetailLine('Costo del Producto', productCost); if (selectedZone && selectedZone !== 'no_shipping' && shippingCost >= 0) { const selectedOption = shippingZoneSelect.options[shippingZoneSelect.selectedIndex]; const zoneName = selectedOption ? selectedOption.text.split('(')[0].trim() : selectedZone; addDetailLine('Costo de Envío', shippingCost, ` (${zoneName})`); } else if (selectedZone === 'no_shipping') { addDetailLine('Envío', 0, ' (Retiro en local)'); } if (installationCheckbox.checked) addDetailLine('Costo de Instalación', installationCost); addDetailLine('Impuestos (IVA 21%)', taxes);
+                    if (quoteTotalDiv) { quoteTotalDiv.innerHTML = `<span>Total Estimado:</span><span>${formatCurrency(total)}</span>`; } if (quoteResultDiv) { quoteResultDiv.classList.remove('hidden'); quoteResultDiv.classList.add('fade-in'); }
                 });
             }
 
-            // --- Event Listeners for Clearing Errors/Results on Input Change ---
-            [nombreInput, apellidoInput, telefonoInput, direccionInput, localidadInput].forEach(input => {
-                if(input) input.addEventListener('input', () => clearError(cotizadorSection.querySelector(`#error-${input.id}`), input));
-            });
-            if(metersInput) metersInput.addEventListener('input', () => clearError(errorMessageMetersP, metersInput));
-            if(productSelect) productSelect.addEventListener('change', () => {
-                 if (quoteResultDiv) quoteResultDiv.classList.add('hidden');
-                 clearError(errorMessageMetersP, metersInput);
-                 clearError(errorMessageZoneP, shippingZoneSelect);
-             });
-            if(shippingZoneSelect) shippingZoneSelect.addEventListener('change', () => {
-                 clearError(errorMessageZoneP, shippingZoneSelect);
-                 if (quoteResultDiv) quoteResultDiv.classList.add('hidden');
-             });
-            if(installationCheckbox) installationCheckbox.addEventListener('change', () => {
-                if (quoteResultDiv) quoteResultDiv.classList.add('hidden');
-             });
+            // Clear errors/results on input change listeners...
+            [nombreInput, apellidoInput, telefonoInput, direccionInput, localidadInput].forEach(input => { if(input) input.addEventListener('input', () => clearError(cotizadorSection.querySelector(`#error-${input.id}`), input)); }); if(metersInput) metersInput.addEventListener('input', () => clearError(errorMessageMetersP, metersInput)); if(productSelect) productSelect.addEventListener('change', () => { if (quoteResultDiv) quoteResultDiv.classList.add('hidden'); clearError(errorMessageMetersP, metersInput); clearError(errorMessageZoneP, shippingZoneSelect); }); if(shippingZoneSelect) shippingZoneSelect.addEventListener('change', () => { clearError(errorMessageZoneP, shippingZoneSelect); if (quoteResultDiv) quoteResultDiv.classList.add('hidden'); }); if(installationCheckbox) installationCheckbox.addEventListener('change', () => { if (quoteResultDiv) quoteResultDiv.classList.add('hidden'); });
 
-            // --- Back Button Functionality ---
-            if (backButton) {
-                backButton.addEventListener('click', () => {
-                    if(quoteSection) quoteSection.classList.add('hidden');
-                    if(userInfoSection) {
-                        userInfoSection.classList.remove('hidden');
-                        userInfoSection.classList.add('fade-in');
-                    }
-                    if(quoteForm) quoteForm.reset(); // Reset quote form fields
-                    if(quoteResultDiv) quoteResultDiv.classList.add('hidden');
-                    clearError(errorMessageMetersP, metersInput);
-                    clearError(errorMessageZoneP, shippingZoneSelect);
-                    requestAnimationFrame(() => { // Re-render icons if needed
-                        lucide.createIcons();
-                    });
-                });
-            }
+            // Back Button Functionality
+            if (backButton) { backButton.addEventListener('click', () => { if(quoteSection) quoteSection.classList.add('hidden'); if(userInfoSection) { userInfoSection.classList.remove('hidden'); userInfoSection.classList.add('fade-in'); } if(quoteForm) quoteForm.reset(); if(quoteResultDiv) quoteResultDiv.classList.add('hidden'); clearError(errorMessageMetersP, metersInput); clearError(errorMessageZoneP, shippingZoneSelect); requestAnimationFrame(() => { lucide.createIcons(); }); }); }
         } // End of check for cotizadorSection
+
+
+        // --- Carousel Logic ---
+        const carouselWrapper = document.getElementById('carousel-wrapper');
+        const prevButton = document.getElementById('prev-slide');
+        const nextButton = document.getElementById('next-slide');
+        const dotsContainer = document.getElementById('carousel-dots');
+
+        if (carouselWrapper && prevButton && nextButton && dotsContainer) {
+            const slides = Array.from(carouselWrapper.children).filter(el => el.classList.contains('carousel-slide')); // Ensure we only count slides
+            const totalSlides = slides.length;
+            let currentIndex = 0;
+
+            // Create dots
+            dotsContainer.innerHTML = ''; // Clear existing dots first
+            if (totalSlides > 1) { // Only show dots if more than one slide
+                for (let i = 0; i < totalSlides; i++) {
+                    const dot = document.createElement('button');
+                    dot.classList.add('w-2.5', 'h-2.5', 'rounded-full', 'transition-colors', 'duration-300', 'border', 'border-gray-400');
+                    dot.setAttribute('aria-label', `Ir a opinión ${i + 1}`);
+                    dot.addEventListener('click', () => { goToSlide(i); });
+                    dotsContainer.appendChild(dot);
+                }
+            }
+            const dots = dotsContainer.children;
+
+            function updateCarousel() {
+                if (totalSlides > 0) {
+                    carouselWrapper.style.transform = `translateX(-${currentIndex * 100}%)`;
+                    // Update dots
+                    for (let i = 0; i < dots.length; i++) {
+                         if (i === currentIndex) {
+                             dots[i].classList.remove('bg-gray-300', 'hover:bg-gray-400');
+                             dots[i].classList.add('bg-blue-600', 'border-blue-600'); // Use theme color
+                         } else {
+                             dots[i].classList.remove('bg-blue-600', 'border-blue-600');
+                             dots[i].classList.add('bg-gray-300', 'hover:bg-gray-400');
+                         }
+                     }
+                }
+                 // Hide/show buttons if only one slide
+                 if (totalSlides <= 1) {
+                     prevButton.style.display = 'none';
+                     nextButton.style.display = 'none';
+                     dotsContainer.style.display = 'none';
+                 } else {
+                     prevButton.style.display = 'block';
+                     nextButton.style.display = 'block';
+                     dotsContainer.style.display = 'flex';
+                 }
+            }
+
+            function goToSlide(index) {
+                currentIndex = index;
+                updateCarousel();
+            }
+
+            prevButton.addEventListener('click', () => {
+                if (totalSlides > 0) {
+                    currentIndex = (currentIndex === 0) ? totalSlides - 1 : currentIndex - 1;
+                    updateCarousel();
+                }
+            });
+
+            nextButton.addEventListener('click', () => {
+                 if (totalSlides > 0) {
+                    currentIndex = (currentIndex === totalSlides - 1) ? 0 : currentIndex + 1;
+                    updateCarousel();
+                }
+            });
+
+            // Initialize
+            updateCarousel();
+        }
+        // --- END: Carousel Logic ---
 
         // Initialize Lucide Icons
         lucide.createIcons();
