@@ -12,7 +12,6 @@
       /* Lucide Font */
       @font-face {
         font-family: 'LucideIcons';
-        /* URL correcta para la fuente Lucide */
         src: url(https://cdn.jsdelivr.net/npm/lucide-static@latest/font/Lucide.ttf) format('truetype');
       }
       .lucide {
@@ -376,7 +375,7 @@
         showSection('home'); // Initialize home section
 
 
-        // --- Cotizador Logic (Using Google Apps Script) ---
+        // --- Cotizador Logic (Using Formspree) --- // MODIFIED SECTION
         const cotizadorSection = document.getElementById('cotizador');
         if (cotizadorSection) {
             // --- Configuration (Quote Section) ---
@@ -464,19 +463,21 @@
                 clearError(errorGeneralUserInfo);
             };
 
-            // --- Event Listener for User Info Form Submission (Using Google Apps Script) ---
+            // --- Event Listener for User Info Form Submission (Using Formspree) --- // MODIFIED
             if (userInfoForm) {
                 userInfoForm.addEventListener('submit', (event) => {
                     event.preventDefault();
                     clearAllUserInfoErrors();
 
                     let isValid = true;
-                    const userInfo = { // Use field names expected by your Apps Script
+                    const userInfo = { // Use field names expected by Formspree or map them
                         nombre: nombreInput.value.trim(),
                         apellido: apellidoInput.value.trim(),
                         telefono: telefonoInput.value.trim(),
                         direccion: direccionInput.value.trim(),
                         localidad: localidadInput.value.trim()
+                        // You might need hidden fields or specific names if Formspree requires them
+                        // _subject: "Nuevo Contacto Cotizador Plakasec", // Example Formspree special field
                     };
 
                     if (!userInfo.nombre) { displayError(errorNombre, 'El nombre es requerido.', nombreInput); isValid = false; }
@@ -492,20 +493,19 @@
                          return;
                     }
 
-                    // --- Send data to Google Apps Script ---
-                    fetch('https://script.google.com/macros/s/AKfycbxmJn1yCBdqQbWtc2QzDM7X1B3qSI71esSq23HrB97U597NxGOjauaNJ6v5pY1kZfyrwA/exec', { // <-- FINAL Google Apps Script URL
+                    // --- Send data to Formspree ---
+                    fetch('https://formspree.io/f/mjkyjgbd', { // <-- Formspree URL
                         method: 'POST',
                         headers: {
+                            'Accept': 'application/json', // Important for Formspree AJAX
                             'Content-Type': 'application/json'
                         },
-                        body: JSON.stringify(userInfo) // Send data as JSON
+                        body: JSON.stringify(userInfo)
                     })
-                    .then(response => response.json()) // Parse the JSON response from Apps Script
-                    .then(data => {
-                        // Check the status returned by your Apps Script
-                        if (data.status === "success") {
-                            // Success: Apps Script processed the data
-                            console.log('Datos enviados con éxito a Google Sheet:', data.message);
+                    .then(response => {
+                        if (response.ok) {
+                            // Success (Formspree accepted the data)
+                            console.log('Datos enviados con éxito a Formspree');
                             // Hide user info form and show quote section
                             if(userInfoSection) userInfoSection.classList.add('hidden');
                             if(quoteSection) {
@@ -514,18 +514,30 @@
                                  requestAnimationFrame(() => { lucide.createIcons(); });
                             }
                         } else {
-                            // Error: Apps Script reported an issue
-                            throw new Error(data.message || "Error desconocido del script de Google.");
+                            // Handle Formspree errors (e.g., validation errors)
+                            response.json().then(data => {
+                               if (data && data.errors) {
+                                 const errorMessages = data.errors.map(error => error.message).join(", ");
+                                 displayError(errorGeneralUserInfo, `Error de Formspree: ${errorMessages}`);
+                                 console.error('Error de Formspree:', data.errors);
+                               } else {
+                                 // Generic server error if no specific errors provided
+                                 throw new Error(`Error del servidor Formspree: ${response.status} ${response.statusText}`);
+                               }
+                            }).catch(() => {
+                                // If response cannot be parsed as JSON
+                                throw new Error(`Error del servidor Formspree: ${response.status} ${response.statusText}`);
+                            });
                         }
                     })
                     .catch(error => {
-                        // Network error or error parsing JSON or error thrown above
-                        console.error('Error al enviar datos a Google Apps Script:', error);
-                        // Display the actual error message caught
+                        // Network error or error during response handling
+                        console.error('Error al enviar datos a Formspree:', error);
                         displayError(errorGeneralUserInfo, `No se pudieron enviar los datos: ${error.message}. Intenta de nuevo.`);
                     });
                 });
             }
+
 
             // --- Event Listener for Quote Form Submission ---
             if (quoteForm) {
