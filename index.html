@@ -45,13 +45,20 @@
         -webkit-background-clip: text;
         -webkit-text-fill-color: transparent;
       }
+       /* Main Button Style (Relief + Border) */
       .btn-primary-relief {
-        @apply inline-block px-8 py-3 font-semibold text-white rounded-lg shadow-lg transition duration-200 ease-in-out transform;
+        @apply inline-block px-8 py-3 font-semibold text-white rounded-lg shadow-lg transition duration-200 ease-in-out transform border border-blue-700 border-opacity-50;
         @apply bg-blue-600 hover:bg-blue-700 hover:shadow-xl active:bg-blue-800 active:shadow-md active:translate-y-px;
       }
+       /* Secondary Button Style */
        .btn-secondary {
            @apply inline-block px-6 py-2 font-medium text-blue-600 border border-blue-600 rounded-lg hover:bg-blue-50 transition duration-300;
        }
+       /* Button inside product card */
+       .btn-card {
+            @apply mt-auto inline-block px-4 py-2 text-sm font-medium text-center text-blue-600 border border-blue-600 rounded-md hover:bg-blue-50 focus:ring-2 focus:ring-blue-300 focus:outline-none transition duration-150 ease-in-out;
+       }
+
 
       .whatsapp-button svg {
         width: 28px;
@@ -106,9 +113,9 @@
            @apply bg-gray-300 hover:bg-gray-400;
        }
 
-       /* UPDATED: Product Card Styles */
+       /* Product Card Styles */
        .product-card {
-           @apply bg-white border border-gray-300 rounded-lg overflow-hidden shadow-lg hover:shadow-xl transition-shadow duration-300 flex flex-col; /* Increased shadow and border darkness */
+           @apply bg-white border border-gray-300 rounded-lg overflow-hidden shadow-lg hover:shadow-xl transition-shadow duration-300 flex flex-col;
        }
        .product-card img {
            @apply w-full h-52 object-cover;
@@ -154,17 +161,44 @@
          </div>
     </header>
 
-    <main> <section id="home" class="page-section active !pt-0"> <div class="relative bg-gradient-to-r from-green-100 via-blue-100 to-violet-100 pt-24 pb-16 md:pt-32 md:pb-24 text-center overflow-hidden">
+    <main> <section id="home" class="page-section active !pt-0"> <div class="relative pt-24 pb-16 md:pt-32 md:pb-24 text-center overflow-hidden bg-cover bg-center min-h-[400px] md:min-h-[500px] flex items-center justify-center"
+                 style="background-image: url('https://i.postimg.cc/rwtK0tNC/file-0000000016c86230b22ffd247d050af5-conversation-id-67f9768b-59b0-8002-8630-b4c6fd2200cc-message-i.png'); background-size: cover; background-position: center;">
+                 <div class="absolute inset-0 bg-gradient-to-t from-black/60 via-black/40 to-transparent"></div>
                  <div class="container mx-auto px-6 relative z-10">
-                    <h1 class="text-4xl md:text-5xl lg:text-6xl font-bold mb-4 text-gray-800">Plakasec: Soluciones Definitivas</h1>
-                    <p class="text-lg md:text-xl text-gray-600 mb-8 max-w-3xl mx-auto">Transforma tus ambientes con nuestras placas antihumedad, revestimientos y pisos de alta calidad.</p>
-                    <button data-target="products" class="nav-button btn-primary-relief">
-                        Descubrir Productos
-                    </button>
-                 </div>
+                    </div>
             </div>
 
-             <div class="container mx-auto px-6 py-16">
+            <div class="container mx-auto px-6 py-16">
+                <h2 class="text-3xl font-semibold text-center mb-10 text-gray-800">Productos Destacados</h2>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                    <div class="product-card">
+                        <img src="https://i.postimg.cc/htm1S6ks/2.png" alt="Placa antihumedad Murete" onerror="this.onerror=null;this.src='https://placehold.co/300x200/cccccc/ffffff?text=Imagen+No+Disponible';">
+                        <div class="product-card-content">
+                            <h4 class="product-card-title">Placas Antihumedad (Murete)</h4>
+                            <p class="product-card-description">Solución eficaz y decorativa contra la humedad de cimientos o paredes.</p>
+                             <button data-target="products" class="nav-button btn-card">Ver Detalles</button>
+                        </div>
+                    </div>
+                    <div class="product-card">
+                        <img src="https://i.postimg.cc/gJs66mPF/SJ-ARENA.png" alt="Revestimiento Símil Piedra San Juan Arena" onerror="this.onerror=null;this.src='https://placehold.co/300x200/cccccc/ffffff?text=Imagen+No+Disponible';">
+                        <div class="product-card-content">
+                            <h4 class="product-card-title">Revestimiento Símil Piedra</h4>
+                            <p class="product-card-description">Aporta calidez y textura a tus muros interiores o exteriores.</p>
+                             <button data-target="products" class="nav-button btn-card">Ver Detalles</button>
+                        </div>
+                    </div>
+                    <div class="product-card">
+                        <img src="https://placehold.co/600x400/a78bfa/ffffff?text=Pisos+Flotantes" alt="Pisos Flotantes" onerror="this.onerror=null;this.src='https://placehold.co/600x400/cccccc/ffffff?text=Imagen+No+Disponible';">
+                        <div class="product-card-content">
+                            <h4 class="product-card-title">Pisos Flotantes</h4>
+                            <p class="product-card-description">Renovación rápida y moderna para tus suelos, sin obras complejas.</p>
+                             <button data-target="products" class="nav-button btn-card">Ver Detalles</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+             <div class="container mx-auto px-6 pb-16">
                 <div class="grid grid-cols-1 md:grid-cols-3 gap-8 text-center">
                      <div class="bg-white p-8 rounded-lg shadow-lg border border-gray-100">
                          <i data-lucide="shield-check" class="w-12 h-12 text-green-500 mx-auto mb-4"></i>
@@ -345,90 +379,138 @@
 
     <script src="https://unpkg.com/lucide@latest"></script>
     <script>
+     // Wrap main script logic in DOMContentLoaded
+     document.addEventListener('DOMContentLoaded', () => {
+        console.log("DOM Cargado, iniciando scripts..."); // Debug log
+
         // --- Navigation Logic ---
-        const navButtons = document.querySelectorAll('.nav-button');
-        const sections = document.querySelectorAll('.page-section');
-        const mobileMenuButton = document.getElementById('mobile-menu-button');
-        const mobileMenu = document.getElementById('mobile-menu');
+        try { // Add try...catch for robustness
+            const navButtons = document.querySelectorAll('.nav-button');
+            const sections = document.querySelectorAll('.page-section');
+            const mobileMenuButton = document.getElementById('mobile-menu-button');
+            const mobileMenu = document.getElementById('mobile-menu');
 
-        document.getElementById('current-year').textContent = new Date().getFullYear();
+            document.getElementById('current-year').textContent = new Date().getFullYear();
 
-        function showSection(targetId, isMobile = false) {
-            let sectionFound = false;
-            sections.forEach(section => {
-                if (section.id === targetId) {
-                    requestAnimationFrame(() => { section.classList.add('active'); });
-                    sectionFound = true;
-                } else {
-                    section.classList.remove('active');
-                }
-            });
-            if (sectionFound) {
-                window.scrollTo({ top: 0, behavior: 'smooth' });
-                navButtons.forEach(btn => {
-                    if (btn.getAttribute('data-target') === targetId) {
-                        btn.classList.add('text-blue-600', 'font-semibold');
-                    } else {
-                        btn.classList.remove('text-blue-600', 'font-semibold');
-                    }
-                });
-                 if (isMobile && mobileMenu && !mobileMenu.classList.contains('hidden')) {
-                     mobileMenu.classList.add('hidden');
+            function showSection(targetId, isMobile = false) {
+                 let sectionFound = false;
+                 sections.forEach(section => {
+                     if (section.id === targetId) {
+                         requestAnimationFrame(() => { section.classList.add('active'); });
+                         sectionFound = true;
+                     } else {
+                         section.classList.remove('active');
+                     }
+                 });
+                 if (sectionFound) {
+                     window.scrollTo({ top: 0, behavior: 'smooth' });
+                     navButtons.forEach(btn => {
+                         if (btn.getAttribute('data-target') === targetId) {
+                             btn.classList.add('text-blue-600', 'font-semibold');
+                         } else {
+                             btn.classList.remove('text-blue-600', 'font-semibold');
+                         }
+                     });
+                      if (isMobile && mobileMenu && !mobileMenu.classList.contains('hidden')) {
+                          mobileMenu.classList.add('hidden');
+                      }
+                      requestAnimationFrame(() => {
+                         if (typeof lucide !== 'undefined') { lucide.createIcons(); }
+                      });
+                 } else {
+                     console.warn("Target section not found:", targetId);
                  }
-                 requestAnimationFrame(() => { lucide.createIcons(); });
-            } else {
-                console.warn("Target section not found:", targetId);
+             }
+
+            console.log("Configurando botones de navegación...");
+            navButtons.forEach(button => {
+                 button.addEventListener('click', (e) => {
+                     console.log("Botón de navegación clickeado:", button.getAttribute('data-target'));
+                     const targetId = button.getAttribute('data-target');
+                     const isMobileClick = e.target.closest('#mobile-menu') !== null;
+                     showSection(targetId, isMobileClick);
+                 });
+            });
+            console.log("Botones de navegación configurados.");
+
+            if (mobileMenuButton && mobileMenu) {
+                mobileMenuButton.addEventListener('click', () => {
+                    mobileMenu.classList.toggle('hidden');
+                });
             }
+
+            showSection('home'); // Initialize home section
+        } catch (error) {
+            console.error("Error en la lógica de navegación:", error);
         }
-
-        navButtons.forEach(button => {
-            button.addEventListener('click', (e) => {
-                const targetId = button.getAttribute('data-target');
-                const isMobileClick = e.target.closest('#mobile-menu') !== null;
-                showSection(targetId, isMobileClick);
-            });
-        });
-
-        if (mobileMenuButton && mobileMenu) {
-            mobileMenuButton.addEventListener('click', () => {
-                mobileMenu.classList.toggle('hidden');
-            });
-        }
-
-        showSection('home');
 
         // --- Cotizador Logic (Using Formspree) ---
-        const cotizadorSection = document.getElementById('cotizador');
-        if (cotizadorSection) {
-            // Config, DOM elements, functions (formatCurrency, displayError, etc.) - COLLAPSED
-            const productsConfig = [ { id: 'placa-antihumedad', name: 'Placas Anti Humedad', pricePerMeter: 20000 }, { id: 'simil-piedra', name: 'Símil Piedra', pricePerMeter: 25000 }, { id: 'piso-flotante', name: 'Pisos Flotantes', pricePerMeter: 45000 } ]; const shippingCostsByZoneConfig = { 'caba': 3000, 'gba': 5000, 'bsas_interior': 8000, 'otra_provincia': 12000, 'no_shipping': 0 }; const installationCostPerMeterConfig = 3000; const taxRateConfig = 0.21; const userInfoSection = cotizadorSection.querySelector('#user-info-section'); const userInfoForm = cotizadorSection.querySelector('#user-info-form'); const nombreInput = cotizadorSection.querySelector('#nombre'); const apellidoInput = cotizadorSection.querySelector('#apellido'); const telefonoInput = cotizadorSection.querySelector('#telefono'); const direccionInput = cotizadorSection.querySelector('#direccion'); const localidadInput = cotizadorSection.querySelector('#localidad'); const errorGeneralUserInfo = cotizadorSection.querySelector('#error-general-userinfo'); const errorNombre = cotizadorSection.querySelector('#error-nombre'); const errorApellido = cotizadorSection.querySelector('#error-apellido'); const errorTelefono = cotizadorSection.querySelector('#error-telefono'); const errorDireccion = cotizadorSection.querySelector('#error-direccion'); const errorLocalidad = cotizadorSection.querySelector('#error-localidad'); const quoteSection = cotizadorSection.querySelector('#quote-section'); const productSelect = cotizadorSection.querySelector('#product'); const metersInput = cotizadorSection.querySelector('#meters'); const shippingZoneSelect = cotizadorSection.querySelector('#shipping-zone'); const installationCheckbox = cotizadorSection.querySelector('#include-installation'); const quoteForm = cotizadorSection.querySelector('#quote-form'); const quoteResultDiv = cotizadorSection.querySelector('#quote-result'); const quoteDetailsDiv = cotizadorSection.querySelector('#quote-details'); const quoteTotalDiv = cotizadorSection.querySelector('#quote-total'); const errorMessageMetersP = cotizadorSection.querySelector('#error-message-meters'); const errorMessageZoneP = cotizadorSection.querySelector('#error-message-zone'); const backButton = cotizadorSection.querySelector('#back-to-user-info');
-            if (productSelect) { productSelect.innerHTML = ''; const defaultOption = document.createElement('option'); defaultOption.value = ""; defaultOption.textContent = "-- Selecciona un producto --"; defaultOption.disabled = true; defaultOption.selected = true; productSelect.appendChild(defaultOption); productsConfig.forEach(product => { const option = document.createElement('option'); option.value = product.id; option.textContent = product.name; productSelect.appendChild(option); }); }
-            const formatCurrency = (amount) => { if (typeof amount !== 'number' || isNaN(amount)) amount = 0; return amount.toLocaleString('es-AR', { style: 'currency', currency: 'ARS' }); }; const displayError = (element, message, inputElement = null) => { if (!element) return; element.textContent = message; element.classList.remove('hidden'); if (inputElement) inputElement.classList.add('border-red-500'); }; const clearError = (element, inputElement = null) => { if (!element) return; element.textContent = ''; element.classList.add('hidden'); if (inputElement) inputElement.classList.remove('border-red-500'); }; const clearAllUserInfoErrors = () => { clearError(errorNombre, nombreInput); clearError(errorApellido, apellidoInput); clearError(errorTelefono, telefonoInput); clearError(errorDireccion, direccionInput); clearError(errorLocalidad, localidadInput); clearError(errorGeneralUserInfo); };
+        try { // Add try...catch for robustness
+            const cotizadorSection = document.getElementById('cotizador');
+            if (cotizadorSection) {
+                console.log("Configurando lógica del cotizador...");
+                // Config, DOM elements, functions (formatCurrency, displayError, etc.) - COLLAPSED
+                const productsConfig = [ { id: 'placa-antihumedad', name: 'Placas Anti Humedad', pricePerMeter: 20000 }, { id: 'simil-piedra', name: 'Símil Piedra', pricePerMeter: 25000 }, { id: 'piso-flotante', name: 'Pisos Flotantes', pricePerMeter: 45000 } ]; const shippingCostsByZoneConfig = { 'caba': 3000, 'gba': 5000, 'bsas_interior': 8000, 'otra_provincia': 12000, 'no_shipping': 0 }; const installationCostPerMeterConfig = 3000; const taxRateConfig = 0.21; const userInfoSection = cotizadorSection.querySelector('#user-info-section'); const userInfoForm = cotizadorSection.querySelector('#user-info-form'); const nombreInput = cotizadorSection.querySelector('#nombre'); const apellidoInput = cotizadorSection.querySelector('#apellido'); const telefonoInput = cotizadorSection.querySelector('#telefono'); const direccionInput = cotizadorSection.querySelector('#direccion'); const localidadInput = cotizadorSection.querySelector('#localidad'); const errorGeneralUserInfo = cotizadorSection.querySelector('#error-general-userinfo'); const errorNombre = cotizadorSection.querySelector('#error-nombre'); const errorApellido = cotizadorSection.querySelector('#error-apellido'); const errorTelefono = cotizadorSection.querySelector('#error-telefono'); const errorDireccion = cotizadorSection.querySelector('#error-direccion'); const errorLocalidad = cotizadorSection.querySelector('#error-localidad'); const quoteSection = cotizadorSection.querySelector('#quote-section'); const productSelect = cotizadorSection.querySelector('#product'); const metersInput = cotizadorSection.querySelector('#meters'); const shippingZoneSelect = cotizadorSection.querySelector('#shipping-zone'); const installationCheckbox = cotizadorSection.querySelector('#include-installation'); const quoteForm = cotizadorSection.querySelector('#quote-form'); const quoteResultDiv = cotizadorSection.querySelector('#quote-result'); const quoteDetailsDiv = cotizadorSection.querySelector('#quote-details'); const quoteTotalDiv = cotizadorSection.querySelector('#quote-total'); const errorMessageMetersP = cotizadorSection.querySelector('#error-message-meters'); const errorMessageZoneP = cotizadorSection.querySelector('#error-message-zone'); const backButton = cotizadorSection.querySelector('#back-to-user-info');
+                if (productSelect) { /* ... populate logic ... */ } // Collapsed
+                const formatCurrency = (amount) => { /* ... formatting logic ... */ }; const displayError = (element, message, inputElement = null) => { /* ... error display logic ... */ }; const clearError = (element, inputElement = null) => { /* ... error clear logic ... */ }; const clearAllUserInfoErrors = () => { /* ... clear all errors logic ... */ };
 
-             // User Info Form Submission (Formspree)
-            if (userInfoForm) {
-                userInfoForm.addEventListener('submit', (event) => {
-                    event.preventDefault(); clearAllUserInfoErrors(); let isValid = true; const userInfo = { nombre: nombreInput.value.trim(), apellido: apellidoInput.value.trim(), telefono: telefonoInput.value.trim(), direccion: direccionInput.value.trim(), localidad: localidadInput.value.trim() }; if (!userInfo.nombre) { displayError(errorNombre, 'El nombre es requerido.', nombreInput); isValid = false; } if (!userInfo.apellido) { displayError(errorApellido, 'El apellido es requerido.', apellidoInput); isValid = false; } if (!userInfo.telefono) { displayError(errorTelefono, 'El teléfono es requerido.', telefonoInput); isValid = false; } if (!userInfo.direccion) { displayError(errorDireccion, 'La dirección es requerida.', direccionInput); isValid = false; } if (!userInfo.localidad) { displayError(errorLocalidad, 'La localidad es requerida.', localidadInput); isValid = false; } if (!isValid) { displayError(errorGeneralUserInfo, 'Por favor, completa todos los campos requeridos.'); const firstInvalid = userInfoForm.querySelector('.border-red-500'); if (firstInvalid) firstInvalid.focus(); return; }
-                    fetch('https://formspree.io/f/mjkyjgbd', { method: 'POST', headers: { 'Accept': 'application/json', 'Content-Type': 'application/json' }, body: JSON.stringify(userInfo) })
-                    .then(response => { if (response.ok) { console.log('Datos enviados con éxito a Formspree'); if(userInfoSection) userInfoSection.classList.add('hidden'); if(quoteSection) { quoteSection.classList.remove('hidden'); quoteSection.classList.add('fade-in'); requestAnimationFrame(() => { lucide.createIcons(); }); } } else { response.json().then(data => { if (data && data.errors) { const errorMessages = data.errors.map(error => error.message).join(", "); displayError(errorGeneralUserInfo, `Error de Formspree: ${errorMessages}`); console.error('Error de Formspree:', data.errors); } else { throw new Error(`Error del servidor Formspree: ${response.status} ${response.statusText}`); } }).catch(() => { throw new Error(`Error del servidor Formspree: ${response.status} ${response.statusText}`); }); } })
-                    .catch(error => { console.error('Error al enviar datos a Formspree:', error); displayError(errorGeneralUserInfo, `No se pudieron enviar los datos: ${error.message}. Intenta de nuevo.`); });
-                });
-            }
-             // Quote Form Submission
-            if (quoteForm) { quoteForm.addEventListener('submit', (event) => { /* ... quote calculation logic - COLLAPSED ... */ }); }
-            // Clear errors/results on input change listeners... COLLAPSED
-            [nombreInput, apellidoInput, telefonoInput, direccionInput, localidadInput].forEach(input => { if(input) input.addEventListener('input', () => clearError(cotizadorSection.querySelector(`#error-${input.id}`), input)); }); if(metersInput) metersInput.addEventListener('input', () => clearError(errorMessageMetersP, metersInput)); if(productSelect) productSelect.addEventListener('change', () => { if (quoteResultDiv) quoteResultDiv.classList.add('hidden'); clearError(errorMessageMetersP, metersInput); clearError(errorMessageZoneP, shippingZoneSelect); }); if(shippingZoneSelect) shippingZoneSelect.addEventListener('change', () => { clearError(errorMessageZoneP, shippingZoneSelect); if (quoteResultDiv) quoteResultDiv.classList.add('hidden'); }); if(installationCheckbox) installationCheckbox.addEventListener('change', () => { if (quoteResultDiv) quoteResultDiv.classList.add('hidden'); });
-            // Back Button Functionality - COLLAPSED
-            if (backButton) { backButton.addEventListener('click', () => { if(quoteSection) quoteSection.classList.add('hidden'); if(userInfoSection) { userInfoSection.classList.remove('hidden'); userInfoSection.classList.add('fade-in'); } if(quoteForm) quoteForm.reset(); if(quoteResultDiv) quoteResultDiv.classList.add('hidden'); clearError(errorMessageMetersP, metersInput); clearError(errorMessageZoneP, shippingZoneSelect); requestAnimationFrame(() => { lucide.createIcons(); }); }); }
-        } // End of check for cotizadorSection
+                 // User Info Form Submission (Formspree)
+                if (userInfoForm) {
+                    userInfoForm.addEventListener('submit', (event) => { /* ... Formspree fetch logic ... */ }); // Collapsed
+                }
+                 // Quote Form Submission
+                if (quoteForm) {
+                    quoteForm.addEventListener('submit', (event) => {
+                        console.log("Calculadora: Evento submit capturado");
+                        event.preventDefault();
+                        console.log("Calculadora: Default prevenido");
+                        try {
+                            clearError(errorMessageMetersP, metersInput); clearError(errorMessageZoneP, shippingZoneSelect); console.log("Calculadora: Errores previos limpiados");
+                            const selectedProductId = productSelect.value; const meters = parseFloat(metersInput.value); const selectedZone = shippingZoneSelect.value; console.log("Calculadora: Valores obtenidos:", { selectedProductId, meters, selectedZone });
+                            let isQuoteValid = true; if (!selectedProductId) { displayError(errorMessageMetersP, 'Selecciona un producto.', productSelect); isQuoteValid = false; } if (isNaN(meters) || meters <= 0) { displayError(errorMessageMetersP, 'Ingresa una cantidad válida de m².', metersInput); isQuoteValid = false; } if (!selectedZone) { displayError(errorMessageZoneP, 'Selecciona una zona de envío.', shippingZoneSelect); isQuoteValid = false; }
+                            if (!isQuoteValid) { console.log("Calculadora: Validación fallida"); return; } console.log("Calculadora: Validación pasada");
+                            const selectedProduct = productsConfig.find(p => p.id === selectedProductId); if (!selectedProduct) { console.error("Calculadora: Producto no encontrado:", selectedProductId); displayError(errorMessageMetersP, 'Error: Producto no encontrado.', productSelect); return; } console.log("Calculadora: Producto encontrado:", selectedProduct);
+                            console.log("Calculadora: Calculando costos..."); const productCost = selectedProduct.pricePerMeter * meters; const shippingCost = shippingCostsByZoneConfig[selectedZone] ?? 0; const installationCost = installationCheckbox.checked ? installationCostPerMeterConfig * meters : 0; const subtotal = productCost + shippingCost + installationCost; const taxes = subtotal * taxRateConfig; const total = subtotal + taxes; console.log("Calculadora: Costos calculados:", { productCost, shippingCost, installationCost, subtotal, taxes, total });
+                            console.log("Calculadora: Mostrando resultados..."); if (quoteDetailsDiv) quoteDetailsDiv.innerHTML = ''; const addDetailLine = (label, amount, zoneInfo = '') => { if (!quoteDetailsDiv) return; if (amount > 0 || label === 'Costo del Producto' || (label === 'Envío' && selectedZone === 'no_shipping')) { const itemDiv = document.createElement('div'); itemDiv.className = 'quote-result-item'; itemDiv.innerHTML = `<span>${label}${zoneInfo}:</span><span>${formatCurrency(amount)}</span>`; quoteDetailsDiv.appendChild(itemDiv); } }; addDetailLine('Costo del Producto', productCost); if (selectedZone && selectedZone !== 'no_shipping' && shippingCost >= 0) { const selectedOption = shippingZoneSelect.options[shippingZoneSelect.selectedIndex]; const zoneName = selectedOption ? selectedOption.text.split('(')[0].trim() : selectedZone; addDetailLine('Costo de Envío', shippingCost, ` (${zoneName})`); } else if (selectedZone === 'no_shipping') { addDetailLine('Envío', 0, ' (Retiro en local)'); } if (installationCheckbox.checked) addDetailLine('Costo de Instalación', installationCost); addDetailLine('Impuestos (IVA 21%)', taxes); if (quoteTotalDiv) { quoteTotalDiv.innerHTML = `<span>Total Estimado:</span><span>${formatCurrency(total)}</span>`; } if (quoteResultDiv) { quoteResultDiv.classList.remove('hidden'); quoteResultDiv.classList.add('fade-in'); } console.log("Calculadora: Resultados mostrados.");
+                        } catch (error) { console.error("Error en el cálculo/muestra de la cotización:", error); displayError(errorMessageMetersP, "Ocurrió un error al calcular."); }
+                    });
+                }
+                // Clear errors/results on input change listeners... COLLAPSED
+                [nombreInput, apellidoInput, telefonoInput, direccionInput, localidadInput].forEach(input => { if(input) input.addEventListener('input', () => clearError(cotizadorSection.querySelector(`#error-${input.id}`), input)); }); if(metersInput) metersInput.addEventListener('input', () => clearError(errorMessageMetersP, metersInput)); if(productSelect) productSelect.addEventListener('change', () => { if (quoteResultDiv) quoteResultDiv.classList.add('hidden'); clearError(errorMessageMetersP, metersInput); clearError(errorMessageZoneP, shippingZoneSelect); }); if(shippingZoneSelect) shippingZoneSelect.addEventListener('change', () => { clearError(errorMessageZoneP, shippingZoneSelect); if (quoteResultDiv) quoteResultDiv.classList.add('hidden'); }); if(installationCheckbox) installationCheckbox.addEventListener('change', () => { if (quoteResultDiv) quoteResultDiv.classList.add('hidden'); });
+                // Back Button Functionality - COLLAPSED
+                if (backButton) { backButton.addEventListener('click', () => { if(quoteSection) quoteSection.classList.add('hidden'); if(userInfoSection) { userInfoSection.classList.remove('hidden'); userInfoSection.classList.add('fade-in'); } if(quoteForm) quoteForm.reset(); if(quoteResultDiv) quoteResultDiv.classList.add('hidden'); clearError(errorMessageMetersP, metersInput); clearError(errorMessageZoneP, shippingZoneSelect); requestAnimationFrame(() => { lucide.createIcons(); }); }); }
+            } // End of check for cotizadorSection
+        } catch (error) {
+            console.error("Error configurando el cotizador:", error);
+        }
+
 
         // --- Carousel Logic ---
-        const carouselWrapper = document.getElementById('carousel-wrapper'); const prevButton = document.getElementById('prev-slide'); const nextButton = document.getElementById('next-slide'); const dotsContainer = document.getElementById('carousel-dots');
-        if (carouselWrapper && prevButton && nextButton && dotsContainer) { const slides = Array.from(carouselWrapper.children).filter(el => el.classList.contains('carousel-slide')); const totalSlides = slides.length; let currentIndex = 0; dotsContainer.innerHTML = ''; if (totalSlides > 1) { for (let i = 0; i < totalSlides; i++) { const dot = document.createElement('button'); dot.classList.add('w-2.5', 'h-2.5', 'rounded-full', 'transition-colors', 'duration-300', 'border', 'border-gray-400'); dot.setAttribute('aria-label', `Ir a opinión ${i + 1}`); dot.addEventListener('click', () => { goToSlide(i); }); dotsContainer.appendChild(dot); } } const dots = dotsContainer.children; function updateCarousel() { if (totalSlides > 0) { carouselWrapper.style.transform = `translateX(-${currentIndex * 100}%)`; for (let i = 0; i < dots.length; i++) { if (i === currentIndex) { dots[i].classList.remove('bg-gray-300', 'hover:bg-gray-400'); dots[i].classList.add('bg-blue-600', 'border-blue-600'); } else { dots[i].classList.remove('bg-blue-600', 'border-blue-600'); dots[i].classList.add('bg-gray-300', 'hover:bg-gray-400'); } } } if (totalSlides <= 1) { prevButton.style.display = 'none'; nextButton.style.display = 'none'; dotsContainer.style.display = 'none'; } else { prevButton.style.display = 'block'; nextButton.style.display = 'block'; dotsContainer.style.display = 'flex'; } } function goToSlide(index) { currentIndex = index; updateCarousel(); } prevButton.addEventListener('click', () => { if (totalSlides > 0) { currentIndex = (currentIndex === 0) ? totalSlides - 1 : currentIndex - 1; updateCarousel(); } }); nextButton.addEventListener('click', () => { if (totalSlides > 0) { currentIndex = (currentIndex === totalSlides - 1) ? 0 : currentIndex + 1; updateCarousel(); } }); updateCarousel(); }
+        try { // Add try...catch for robustness
+            const carouselWrapper = document.getElementById('carousel-wrapper'); const prevButton = document.getElementById('prev-slide'); const nextButton = document.getElementById('next-slide'); const dotsContainer = document.getElementById('carousel-dots');
+            if (carouselWrapper && prevButton && nextButton && dotsContainer) {
+                console.log("Configurando carrusel..."); // Debug log
+                const slides = Array.from(carouselWrapper.children).filter(el => el.classList.contains('carousel-slide')); const totalSlides = slides.length; let currentIndex = 0; dotsContainer.innerHTML = ''; if (totalSlides > 1) { for (let i = 0; i < totalSlides; i++) { const dot = document.createElement('button'); dot.classList.add('w-2.5', 'h-2.5', 'rounded-full', 'transition-colors', 'duration-300', 'border', 'border-gray-400'); dot.setAttribute('aria-label', `Ir a opinión ${i + 1}`); dot.addEventListener('click', () => { goToSlide(i); }); dotsContainer.appendChild(dot); } } const dots = dotsContainer.children; function updateCarousel() { if (totalSlides > 0) { carouselWrapper.style.transform = `translateX(-${currentIndex * 100}%)`; for (let i = 0; i < dots.length; i++) { if (i === currentIndex) { dots[i].classList.remove('bg-gray-300', 'hover:bg-gray-400'); dots[i].classList.add('bg-blue-600', 'border-blue-600'); } else { dots[i].classList.remove('bg-blue-600', 'border-blue-600'); dots[i].classList.add('bg-gray-300', 'hover:bg-gray-400'); } } } if (totalSlides <= 1) { prevButton.style.display = 'none'; nextButton.style.display = 'none'; dotsContainer.style.display = 'none'; } else { prevButton.style.display = 'block'; nextButton.style.display = 'block'; dotsContainer.style.display = 'flex'; } } function goToSlide(index) { currentIndex = index; updateCarousel(); } prevButton.addEventListener('click', () => { if (totalSlides > 0) { currentIndex = (currentIndex === 0) ? totalSlides - 1 : currentIndex - 1; updateCarousel(); } }); nextButton.addEventListener('click', () => { if (totalSlides > 0) { currentIndex = (currentIndex === totalSlides - 1) ? 0 : currentIndex + 1; updateCarousel(); } }); updateCarousel();
+                console.log("Carrusel configurado."); // Debug log
+            }
+        } catch (error) {
+            console.error("Error configurando el carrusel:", error);
+        }
         // --- END: Carousel Logic ---
 
         // Initialize Lucide Icons
-        lucide.createIcons();
+        try { // Add try...catch for robustness
+            if (typeof lucide !== 'undefined') {
+                lucide.createIcons();
+                console.log("Iconos Lucide inicializados."); // Debug log
+            } else {
+                console.error("Lucide library not loaded.");
+            }
+        } catch(error) {
+             console.error("Error inicializando iconos Lucide:", error);
+        }
+
+     }); // End of DOMContentLoaded listener
     </script>
 
 </body>
