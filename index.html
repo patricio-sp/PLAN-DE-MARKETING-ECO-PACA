@@ -204,31 +204,7 @@
                  </div>
              </div>
 
-            <div class="bg-gray-100 py-16">
-                <div class="container mx-auto px-6">
-                    <h3 class="text-3xl font-semibold text-center mb-8 text-gray-800">Opiniones de Nuestros Clientes</h3>
-                    <div class="relative overflow-hidden bg-white p-4 rounded-lg shadow-xl max-w-4xl mx-auto">
-                        <div id="carousel-wrapper" class="flex transition-transform duration-500 ease-in-out">
-                            <div class="carousel-slide flex-shrink-0 w-full flex justify-center p-4">
-                                <img src="https://placehold.co/800x400/e0f2fe/0891b2?text=Opinión+Positiva+1" alt="Opinión de cliente 1" class="rounded-lg shadow-md object-contain max-h-[400px]" onerror="this.onerror=null;this.src='https://placehold.co/800x400/cccccc/ffffff?text=Error+Cargando+Imagen';">
-                            </div>
-                            <div class="carousel-slide flex-shrink-0 w-full flex justify-center p-4">
-                                <img src="https://placehold.co/800x400/dcfce7/16a34a?text=Opinión+Positiva+2" alt="Opinión de cliente 2" class="rounded-lg shadow-md object-contain max-h-[400px]" onerror="this.onerror=null;this.src='https://placehold.co/800x400/cccccc/ffffff?text=Error+Cargando+Imagen';">
-                            </div>
-                            <div class="carousel-slide flex-shrink-0 w-full flex justify-center p-4">
-                                <img src="https://placehold.co/800x400/f3e8ff/7e22ce?text=Opinión+Positiva+3" alt="Opinión de cliente 3" class="rounded-lg shadow-md object-contain max-h-[400px]" onerror="this.onerror=null;this.src='https://placehold.co/800x400/cccccc/ffffff?text=Error+Cargando+Imagen';">
-                            </div>
-                             <div class="carousel-slide flex-shrink-0 w-full flex justify-center p-4">
-                                 <img src="https://placehold.co/800x400/fef9c3/ca8a04?text=Opinión+Positiva+4" alt="Opinión de cliente 4" class="rounded-lg shadow-md object-contain max-h-[400px]" onerror="this.onerror=null;this.src='https://placehold.co/800x400/cccccc/ffffff?text=Error+Cargando+Imagen';">
-                             </div>
-                        </div>
-                        <button id="prev-slide" aria-label="Anterior opinión"><i data-lucide="chevron-left" class="w-6 h-6"></i></button>
-                        <button id="next-slide" aria-label="Siguiente opinión"><i data-lucide="chevron-right" class="w-6 h-6"></i></button>
-                    </div>
-                    <div id="carousel-dots" class="flex justify-center space-x-2 mt-4"></div>
-                </div>
-            </div>
-        </section>
+            </section>
 
         <section id="about" class="page-section container mx-auto px-6">
             <div class="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
@@ -390,7 +366,7 @@
     <footer class="bg-gray-800 text-gray-300 mt-16 py-8">
         <div class="container mx-auto px-6 text-center">
             <p>&copy; <span id="current-year"></span> Plakasec. Todos los derechos reservados.</p>
-            <p class="text-sm text-gray-400 mt-1">Sitio web de Trend In Media Marketing</p>
+            <p class="text-sm text-gray-400 mt-1">Sitio web desarrollado con asistencia de IA</p>
         </div>
     </footer>
 
@@ -759,6 +735,8 @@
 
 
         // --- Carousel Logic ---
+        // NOTE: This section is now removed from the home page, but the JS logic remains.
+        // It won't cause errors, but it won't do anything if the elements aren't found.
         try { // Add try...catch for robustness
             const carouselWrapper = document.getElementById('carousel-wrapper');
             const prevButton = document.getElementById('prev-slide');
@@ -839,6 +817,8 @@
                 // --- Initial Setup ---
                 updateCarousel();
                 console.log("Carrusel configurado."); // Debug log
+            } else {
+                 console.log("Elementos del carrusel no encontrados (puede ser normal si se eliminó la sección).");
             }
         } catch (error) {
             console.error("Error configurando el carrusel:", error);
