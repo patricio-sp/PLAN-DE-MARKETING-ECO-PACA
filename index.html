@@ -3,842 +3,637 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Plakasec - Revestimientos y Soluciones Antihumedad</title>
+    <title>Dashboard | PLAN DE MARKETING: ECO PLACA</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <!-- Chosen Palette: Eco-Corporate Neutral (Base: bg-gray-50, Cards: bg-white, Text: text-gray-800, Accent 1 (Eco): text-emerald-700, Accent 2 (Corp): text-blue-700) -->
     <style>
-        /* Lucide Font (for icons) */
-        @font-face {
-            font-family: 'LucideIcons';
-            src: url(https://cdn.jsdelivr.net/npm/lucide-static@latest/font/Lucide.ttf) format('truetype');
-        }
-        .lucide {
-            font-family: 'LucideIcons';
-            font-style: normal;
-            font-weight: normal;
-            font-variant: normal;
-            text-rendering: auto;
-            line-height: 1;
-            -webkit-font-smoothing: antialiased;
-            -moz-osx-font-smoothing: grayscale;
-        }
-
-        /* Custom Styles - Main Site */
         body {
             font-family: 'Inter', sans-serif;
-            @apply bg-gray-50 text-gray-800;
         }
-        /* Page Section Styling (for SPA-like navigation) */
-        .page-section {
-            display: none; /* Hide sections by default */
-            opacity: 0;
-            transition: opacity 0.5s ease-in-out;
-            @apply py-12 md:py-20; /* Vertical padding */
+        .tab-content {
+            display: none;
         }
-        .page-section.active {
-            display: block; /* Show active section */
-            opacity: 1; /* Fade in */
+        .tab-content.active {
+            display: block;
         }
-        /* Subtle Gradient Text for Headings */
-        .gradient-text-subtle {
-            background: linear-gradient(to right, #15803d, #1d4ed8, #7e22ce); /* Green to Blue to Purple */
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
+        .nav-link {
+            @apply px-4 py-2 rounded-md text-sm font-medium text-gray-500 hover:bg-gray-100 hover:text-gray-700 cursor-pointer;
         }
-        /* Main Button Style (Relief + Border) */
-        .btn-primary-relief {
-            @apply inline-block px-8 py-3 font-semibold text-white rounded-lg shadow-lg transition duration-200 ease-in-out transform border border-blue-700 border-opacity-50;
-            @apply bg-blue-600 hover:bg-blue-700 hover:shadow-xl active:bg-blue-800 active:shadow-md active:translate-y-px; /* States */
+        .nav-link.active {
+            @apply bg-emerald-100 text-emerald-700;
         }
-        /* Secondary Button Style */
-        .btn-secondary {
-            @apply inline-block px-6 py-2 font-medium text-blue-600 border border-blue-600 rounded-lg hover:bg-blue-50 transition duration-300;
+        .sub-nav-link {
+            @apply px-4 py-2 rounded-t-lg text-sm font-medium text-gray-600 hover:bg-gray-50 border-b-2 border-transparent hover:border-gray-300 cursor-pointer;
         }
-        /* Button inside product card */
-        .btn-card {
-             @apply mt-auto inline-block px-4 py-2 text-sm font-medium text-center text-blue-600 border border-blue-600 rounded-md hover:bg-blue-50 focus:ring-2 focus:ring-blue-300 focus:outline-none transition duration-150 ease-in-out;
+        .sub-nav-link.active {
+            @apply border-emerald-500 text-emerald-600;
         }
-
-        /* --- WhatsApp Floating Button --- */
-        /* Keyframes for blinking animation */
-        @keyframes blink {
-            0%, 100% { opacity: 1; }
-            50% { opacity: 0.6; } /* Adjust opacity for desired blink intensity */
+        .sub-tab-content {
+            display: none;
         }
-        .whatsapp-button {
-            /* Apply animation: name duration timing-function iteration-count */
-            animation: blink 1.5s infinite ease-in-out; /* Slower blink */
-            /* Tailwind classes are now applied directly on the <a> tag below */
+        .sub-tab-content.active {
+            display: block;
         }
-        .whatsapp-button svg {
-            /* Size increased via Tailwind class w-8 h-8 on the SVG element */
-            fill: white;
+        .chart-container {
+            position: relative;
+            width: 100%;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+            height: 350px;
+            max-height: 400px;
         }
-        /* --- End WhatsApp Button Styles --- */
-
-
-        /* Custom Styles - Cotizador (Quote Calculator) */
-        .quote-result-item { @apply flex justify-between py-2 border-b border-gray-200; }
-        .quote-result-item span:first-child { @apply text-gray-600; }
-        .quote-result-item span:last-child { @apply font-semibold text-gray-800; }
-        .quote-total { @apply flex justify-between py-3 mt-2 font-bold text-lg; }
-        /* Fade-in animation for results */
-        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
-        .fade-in { animation: fadeIn 0.5s ease-out forwards; }
-        /* Error message styling */
-        .error-message { @apply text-red-600 text-sm mt-1 font-medium h-5; } /* Fixed height to prevent layout shifts */
-        /* Input and Select Styling for Cotizador and Contact Form */
-        #cotizador input[type="text"],
-        #cotizador input[type="tel"],
-        #cotizador input[type="number"],
-        #cotizador select,
-        #contact input[type="text"],
-        #contact input[type="email"],
-        #contact textarea {
-             @apply block w-full px-4 py-3 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 transition duration-150 ease-in-out bg-white;
+        @media (min-width: 768px) {
+            .chart-container {
+                height: 400px;
+            }
         }
-        #cotizador input[type="checkbox"] {
-            @apply h-4 w-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500;
+        
+        /* Estilos para la Galería de Imágenes (Inicio) */
+        .image-card {
+            @apply overflow-hidden rounded-xl shadow-lg transform transition duration-300 ease-in-out hover:scale-[1.03] bg-gray-100;
         }
-        #cotizador label, #contact label {
-             @apply block text-sm font-medium text-gray-700 mb-1;
+        .image-card img {
+            @apply w-full h-48 object-cover transition duration-500 ease-in-out hover:opacity-90;
         }
-        /* Required field indicator */
-        #cotizador label abbr, #contact label abbr { color: red; text-decoration: none; margin-left: 2px; }
-        /* Back button in Cotizador */
-        #cotizador #back-to-user-info {
-             @apply mt-4 w-full text-sm text-blue-600 hover:text-blue-800 transition duration-150 ease-in-out flex items-center justify-center space-x-1;
+        .image-card-body {
+            @apply p-4;
         }
-
-        /* Carousel Styles */
-        .carousel-container { scroll-behavior: smooth; } /* Smooth scrolling for manual scroll */
-        .carousel-slide { scroll-snap-align: start; } /* Snap alignment */
-        #prev-slide, #next-slide {
-             @apply absolute top-1/2 transform -translate-y-1/2 bg-gray-800 bg-opacity-50 text-white p-2 rounded-full hover:bg-opacity-75 transition duration-300 focus:outline-none z-10;
+        .image-card-title {
+            @apply text-lg font-semibold text-gray-900;
         }
-        #prev-slide { @apply left-3 md:left-5; }
-        #next-slide { @apply right-3 md:right-5; }
-        #carousel-dots button {
-             @apply w-2.5 h-2.5 rounded-full transition-colors duration-300 border border-gray-400;
+        .image-card-description {
+            @apply text-sm text-gray-600 mt-1;
         }
-        #carousel-dots button.active {
-             @apply bg-blue-600 border-blue-600;
-        }
-        #carousel-dots button:not(.active) {
-             @apply bg-gray-300 hover:bg-gray-400;
-        }
-
-        /* Product Card Styles */
-        .product-card {
-             @apply bg-white border border-gray-300 rounded-lg overflow-hidden shadow-lg hover:shadow-xl transition-shadow duration-300 flex flex-col; /* Flex column for layout */
-        }
-        .product-card img {
-             @apply w-full h-52 object-cover; /* Fixed height, cover image */
-        }
-        .product-card-content {
-             @apply p-4 flex flex-col flex-grow; /* Padding, flex column, grow to fill space */
-        }
-        .product-card-title {
-             @apply font-semibold text-lg mb-1 text-gray-800;
-        }
-        .product-card-description {
-             @apply text-sm text-gray-600 flex-grow mb-3; /* Grow to push button down */
-        }
-
     </style>
 </head>
-<body class="bg-gray-50">
+<body class="bg-gray-50 text-gray-800">
 
-    <header class="bg-white shadow-md sticky top-0 z-50">
-        <nav class="container mx-auto px-6 py-3 flex justify-between items-center">
-            <a href="#" data-target="home" class="nav-button text-2xl font-bold gradient-text-subtle">
-                Plakasec
-            </a>
-            <div class="hidden md:flex space-x-2">
-                <button data-target="home" class="nav-button text-gray-600 hover:text-blue-600 px-4 py-2 rounded-md font-medium">Inicio</button>
-                <button data-target="about" class="nav-button text-gray-600 hover:text-blue-600 px-4 py-2 rounded-md font-medium">Quiénes Somos</button>
-                <button data-target="products" class="nav-button text-gray-600 hover:text-blue-600 px-4 py-2 rounded-md font-medium">Productos</button>
-                <button data-target="cotizador" class="nav-button text-gray-600 hover:text-blue-600 px-4 py-2 rounded-md font-medium">Cotizador Web</button>
-                <button data-target="contact" class="nav-button text-gray-600 hover:text-blue-600 px-4 py-2 rounded-md font-medium">Contacto</button>
-            </div>
-             <div class="md:hidden">
-                 <button id="mobile-menu-button" aria-label="Abrir menú" class="text-gray-600 focus:outline-none">
-                     <i data-lucide="menu" class="w-6 h-6"></i> </button>
-             </div>
-        </nav>
-        <div id="mobile-menu" class="md:hidden hidden bg-white py-2 absolute w-full shadow-lg">
-             <button data-target="home" class="nav-button block w-full text-left px-6 py-2 text-gray-600 hover:bg-gray-100">Inicio</button>
-             <button data-target="about" class="nav-button block w-full text-left px-6 py-2 text-gray-600 hover:bg-gray-100">Quiénes Somos</button>
-             <button data-target="products" class="nav-button block w-full text-left px-6 py-2 text-gray-600 hover:bg-gray-100">Productos</button>
-             <button data-target="cotizador" class="nav-button block w-full text-left px-6 py-2 text-gray-600 hover:bg-gray-100">Cotizador Web</button>
-             <button data-target="contact" class="nav-button block w-full text-left px-6 py-2 text-gray-600 hover:bg-gray-100">Contacto</button>
-         </div>
-    </header>
-
-    <main>
-        <section id="home" class="page-section active !pt-0"> <div class="relative pt-24 pb-16 md:pt-32 md:pb-24 text-center overflow-hidden bg-cover bg-center min-h-[400px] md:min-h-[500px] flex items-center justify-center"
-                 style="background-image: url('https://i.postimg.cc/rwtK0tNC/file-0000000016c86230b22ffd247d050af5-conversation-id-67f9768b-59b0-8002-8630-b4c6fd2200cc-message-i.png'); background-size: cover; background-position: center;">
-                 <div class="absolute inset-0 bg-gradient-to-t from-black/60 via-black/40 to-transparent"></div>
-                 <div class="container mx-auto px-6 relative z-10">
-                    </div>
-            </div>
-
-            <div class="container mx-auto px-6 pb-16 pt-16"> <div class="grid grid-cols-1 md:grid-cols-3 gap-8 text-center">
-                      <div class="bg-white p-8 rounded-lg shadow-lg border border-gray-100">
-                          <i data-lucide="shield-check" class="w-12 h-12 text-green-500 mx-auto mb-4"></i>
-                          <h3 class="text-xl font-semibold mb-2">Calidad Garantizada</h3>
-                          <p class="text-gray-600">Productos duraderos y efectivos para proteger y embellecer tus ambientes.</p>
-                      </div>
-                      <div class="bg-white p-8 rounded-lg shadow-lg border border-gray-100">
-                           <i data-lucide="settings-2" class="w-12 h-12 text-blue-500 mx-auto mb-4"></i>
-                          <h3 class="text-xl font-semibold mb-2">Instalación Profesional</h3>
-                          <p class="text-gray-600">Contamos con personal experto para una colocación perfecta.</p>
-                      </div>
-                      <div class="bg-white p-8 rounded-lg shadow-lg border border-gray-100">
-                           <i data-lucide="messages-square" class="w-12 h-12 text-violet-500 mx-auto mb-4"></i>
-                          <h3 class="text-xl font-semibold mb-2">Asesoramiento Personalizado</h3>
-                          <p class="text-gray-600">Te ayudamos a elegir la mejor solución para tus necesidades.</p>
-                      </div>
-                 </div>
-             </div>
-
-            </section>
-
-        <section id="about" class="page-section container mx-auto px-6">
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
-                 <div class="prose lg:prose-lg text-gray-700"> <h2 class="text-3xl font-bold mb-4 gradient-text-subtle">Quiénes Somos</h2>
-                    <p>Somos Plakasec, una empresa dedicada a ofrecer soluciones integrales en revestimientos y sistemas antihumedad. Nacimos con la misión de mejorar la calidad de vida de nuestros clientes a través de ambientes más sanos, confortables y estéticamente agradables.</p>
-                    <p>Nuestro equipo está formado por profesionales apasionados por la innovación y la calidad. Creemos en el trabajo bien hecho, en la atención personalizada y en la búsqueda constante de los mejores materiales y técnicas.</p>
-                    <p>Desde Adrogué, brindamos servicio en toda la zona, comprometidos con la satisfacción total de quienes confían en nosotros.</p>
-                     <button data-target="contact" class="nav-button btn-secondary mt-4">Contáctanos</button>
-                 </div>
-                 <div class="order-first md:order-last"> <img src="https://placehold.co/600x500/dbeafe/1e3a8a?text=Equipo+Plakasec" alt="Imagen representativa de la empresa Plakasec" class="rounded-lg shadow-xl w-full h-auto object-cover">
-                 </div>
-            </div>
-        </section>
-
-        <section id="products" class="page-section container mx-auto px-6">
-            <h2 class="text-3xl md:text-4xl font-bold mb-10 text-center gradient-text-subtle">Nuestros Productos</h2>
-
-            <div class="mb-16">
-                <h3 class="text-2xl font-semibold mb-6 text-green-700">Placas Antihumedad</h3>
-                <p class="text-gray-600 mb-8 max-w-3xl">La solución definitiva y estética para problemas de humedad. Fáciles de instalar y con diversos diseños para renovar tus paredes y techos.</p>
-                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-                    <div class="product-card"> <img src="https://i.postimg.cc/htm1S6ks/2.png" alt="Placa antihumedad Murete" onerror="this.onerror=null;this.src='https://placehold.co/300x200/cccccc/ffffff?text=Imagen+No+Disponible';"> <div class="product-card-content"> <h4 class="product-card-title">Murete</h4> <p class="product-card-description">Diseño moderno y texturizado.</p> </div> </div>
-                    <div class="product-card"> <img src="https://i.postimg.cc/hG6rcgj2/MARMOL.png" alt="Placa antihumedad Mármol" onerror="this.onerror=null;this.src='https://placehold.co/300x200/cccccc/ffffff?text=Imagen+No+Disponible';"> <div class="product-card-content"> <h4 class="product-card-title">Mármol</h4> <p class="product-card-description">Acabado sofisticado y elegante.</p> </div> </div>
-                    <div class="product-card"> <img src="https://i.postimg.cc/d1C90XZw/PIEDRA.png" alt="Placa antihumedad Piedra" onerror="this.onerror=null;this.src='https://placehold.co/300x200/cccccc/ffffff?text=Imagen+No+Disponible';"> <div class="product-card-content"> <h4 class="product-card-title">Piedra</h4> <p class="product-card-description">Textura natural y robusta.</p> </div> </div>
-                    <div class="product-card"> <img src="https://i.postimg.cc/vTdtxz59/TRAVERTINO.png" alt="Placa antihumedad Travertino" onerror="this.onerror=null;this.src='https://placehold.co/300x200/cccccc/ffffff?text=Imagen+No+Disponible';"> <div class="product-card-content"> <h4 class="product-card-title">Travertino</h4> <p class="product-card-description">Aspecto clásico y atemporal.</p> </div> </div>
+    <div class="min-h-screen flex flex-col">
+        
+        <!-- Header -->
+        <header class="bg-white shadow-sm border-b border-gray-200">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="flex justify-between items-center h-16">
+                    <h1 class="text-xl font-bold text-emerald-700">PLAN DE MARKETING: ECO PLACA</h1>
+                    <nav class="hidden md:flex space-x-4" id="main-nav">
+                        <!-- NAVEGACIÓN ACTUALIZADA -->
+                        <a class="nav-link active" data-tab="presentacion">Inicio</a>
+                        <a class="nav-link" data-tab="resumen">R.E.</a>
+                        <a class="nav-link" data-tab="diagnostico">Diagnóstico</a>
+                        <a class="nav-link" data-tab="plan">Plan Estratégico</a>
+                        <a class="nav-link" data-tab="inversion">Inversión y ROI</a>
+                    </nav>
                 </div>
             </div>
-
-            <div class="mb-16">
-                <h3 class="text-2xl font-semibold mb-6 text-blue-700">Revestimientos Símil Piedra</h3>
-                 <p class="text-gray-600 mb-8 max-w-3xl">Aporta la calidez y robustez de la piedra natural con una instalación más sencilla y económica, ideal para interiores y exteriores.</p>
-                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-                    <div class="product-card"> <img src="https://i.postimg.cc/gJs66mPF/SJ-ARENA.png" alt="Revestimiento Símil Piedra San Juan Arena" onerror="this.onerror=null;this.src='https://placehold.co/300x200/cccccc/ffffff?text=Imagen+No+Disponible';"> <div class="product-card-content"> <h4 class="product-card-title">San Juan Arena</h4> <p class="product-card-description">Tonalidad arena natural y luminosa.</p> </div> </div>
-                    <div class="product-card"> <img src="https://i.postimg.cc/N0wyJ5sv/SJ-BEIGH.png" alt="Revestimiento Símil Piedra San Juan Beige" onerror="this.onerror=null;this.src='https://placehold.co/300x200/cccccc/ffffff?text=Imagen+No+Disponible';"> <div class="product-card-content"> <h4 class="product-card-title">San Juan Beige</h4> <p class="product-card-description">Calidez, versatilidad y elegancia.</p> </div> </div>
-                    <div class="product-card"> <img src="https://i.postimg.cc/tTqsbwnr/SJ-GRIS.png" alt="Revestimiento Símil Piedra San Juan Gris" onerror="this.onerror=null;this.src='https://placehold.co/300x200/cccccc/ffffff?text=Imagen+No+Disponible';"> <div class="product-card-content"> <h4 class="product-card-title">San Juan Gris</h4> <p class="product-card-description">Estilo moderno y sofisticado.</p> </div> </div>
-                    <div class="border border-dashed border-gray-300 rounded-lg p-4 text-center text-gray-400 flex flex-col justify-center items-center min-h-[200px] bg-gray-50"> <i data-lucide="image-plus" class="w-10 h-10 text-gray-400 mb-2"></i> <p class="text-sm">Más diseños próximamente</p> </div>
-                 </div>
-            </div>
-
-            <div>
-                <h3 class="text-2xl font-semibold mb-6 text-violet-700">Pisos Flotantes</h3>
-                 <p class="text-gray-600 mb-8 max-w-3xl">Renueva tus suelos rápidamente y sin obras complicadas. Ofrecemos una amplia gama de acabados y colores para complementar tu estilo.</p>
-                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-                    <div class="product-card">
-                        <img src="https://i.postimg.cc/sgLhHPVN/Screenshot-2025-04-11-22-41-27-225-com-mercadolibre-edit.jpg" alt="Piso Flotante Diseño 1" onerror="this.onerror=null;this.src='https://placehold.co/300x200/cccccc/ffffff?text=Imagen+No+Disponible';">
-                        <div class="product-card-content">
-                            <h4 class="product-card-title">Piso Flotante - Diseño 1</h4>
-                            <p class="product-card-description">Acabado moderno y resistente.</p>
-                        </div>
-                    </div>
-                    <div class="product-card">
-                        <img src="https://i.postimg.cc/25BBsqy8/Screenshot-2025-04-11-22-42-04-966-com-mercadolibre-edit.jpg" alt="Piso Flotante Diseño 2" onerror="this.onerror=null;this.src='https://placehold.co/300x200/cccccc/ffffff?text=Imagen+No+Disponible';">
-                        <div class="product-card-content">
-                            <h4 class="product-card-title">Piso Flotante - Diseño 2</h4>
-                            <p class="product-card-description">Ideal para alto tránsito.</p>
-                        </div>
-                    </div>
-                    <div class="product-card">
-                        <img src="https://i.postimg.cc/JnNHh9jf/Screenshot-2025-04-11-22-42-24-620-com-mercadolibre-edit.jpg" alt="Piso Flotante Diseño 3" onerror="this.onerror=null;this.src='https://placehold.co/300x200/cccccc/ffffff?text=Imagen+No+Disponible';">
-                        <div class="product-card-content">
-                            <h4 class="product-card-title">Piso Flotante - Diseño 3</h4>
-                            <p class="product-card-description">Variedad de tonos madera.</p>
-                        </div>
-                    </div>
-                    <div class="product-card">
-                        <img src="https://i.postimg.cc/fyMtSBKJ/Screenshot-2025-04-11-22-42-49-707-com-mercadolibre-edit.jpg" alt="Piso Flotante Diseño 4" onerror="this.onerror=null;this.src='https://placehold.co/300x200/cccccc/ffffff?text=Imagen+No+Disponible';">
-                        <div class="product-card-content">
-                            <h4 class="product-card-title">Piso Flotante - Diseño 4</h4>
-                            <p class="product-card-description">Fácil instalación y mantenimiento.</p>
-                        </div>
-                    </div>
-                     <div class="product-card">
-                        <img src="https://i.postimg.cc/vBF6bQx7/Screenshot-2025-04-11-22-43-17-975-com-mercadolibre-edit.jpg" alt="Piso Flotante Diseño 5" onerror="this.onerror=null;this.src='https://placehold.co/300x200/cccccc/ffffff?text=Imagen+No+Disponible';">
-                        <div class="product-card-content">
-                            <h4 class="product-card-title">Piso Flotante - Diseño 5</h4>
-                            <p class="product-card-description">Excelente relación calidad-precio.</p>
-                        </div>
-                    </div>
-                    <div class="border border-dashed border-gray-300 rounded-lg p-4 text-center text-gray-400 flex flex-col justify-center items-center min-h-[200px] bg-gray-50"> <i data-lucide="ellipsis" class="w-10 h-10 text-gray-400 mb-2"></i> <p class="text-sm">Más diseños disponibles</p> </div>
+             <!-- Mobile Nav -->
+            <nav class="md:hidden p-2">
+                <div class="flex space-x-2" id="main-nav-mobile">
+                    <!-- NAVEGACIÓN MÓVIL ACTUALIZADA -->
+                    <a class="nav-link active flex-1 text-center" data-tab="presentacion">Inicio</a>
+                    <a class="nav-link flex-1 text-center" data-tab="resumen">R.E.</a>
+                    <a class="nav-link flex-1 text-center" data-tab="diagnostico">Diagnóstico</a>
+                    <a class="nav-link flex-1 text-center" data-tab="plan">Plan</a>
+                    <a class="nav-link flex-1 text-center" data-tab="inversion">ROI</a>
                 </div>
+            </nav>
+        </header>
+
+        <!-- Main Content -->
+        <main class="flex-1">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+
+                <!-- TAB: Inicio (Presentación) - GALERÍA DE IMÁGENES -->
+                <section id="presentacion" class="tab-content active">
+                    <div class="space-y-8">
+                        
+                        <!-- Bloque de Texto de Bienvenida -->
+                        <div class="bg-white p-8 rounded-xl shadow-2xl border border-gray-200">
+                            <h2 class="text-4xl font-extrabold tracking-tight text-gray-900 text-center">Bienvenido al Dashboard del Plan de Marketing</h2>
+                            <h3 class="text-xl font-medium text-emerald-700 text-center mt-1">ECO PLACA: De Residuo a Solución de Construcción Sostenible</h3>
+                            <div class="max-w-3xl mx-auto pt-4 text-center">
+                                <p class="text-lg text-gray-700 mb-4">
+                                    Este dashboard interactivo sintetiza la estrategia de mercado para el lanzamiento y posicionamiento de nuestras placas de plástico 100% reciclado en el segmento B2B. Nuestro enfoque se basa en la **durabilidad**, la **responsabilidad social** y el **alto rendimiento**.
+                                </p>
+                                <div class="mt-6">
+                                    <a href="#" class="inline-flex items-center justify-center px-6 py-3 border border-transparent text-base font-medium rounded-full shadow-lg text-white bg-emerald-600 hover:bg-emerald-700 transition transform hover:scale-[1.02] active:scale-[0.98]" 
+                                        onclick="document.querySelector('[data-tab=resumen]').click(); return false;">
+                                        Ver Resumen Ejecutivo (R.E.)
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Galería de Imágenes (Grid Elegante) -->
+                        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+                            
+                            <!-- Tarjeta 1: Producto -->
+                            <div class="image-card">
+                                <!-- USANDO EL ID DEL ARCHIVO SUBIDO: Gemini_Generated_Image_a6nnmea6nnmea6nn.jpg -->
+                                <img src="/files/Gemini_Generated_Image_a6nnmea6nnmea6nn.jpg-444fdf42-f95b-4e82-9b1b-6bc92d91b83d" 
+                                     alt="Producto Placas de Plástico Reciclado" 
+                                     onerror="this.onerror=null;this.src='https://placehold.co/600x400/10b981/ffffff?text=Producto'">
+                                <div class="image-card-body">
+                                    <p class="text-xs font-medium text-emerald-600 uppercase">Foco de Venta</p>
+                                    <h4 class="image-card-title">Placas 100% Recicladas</h4>
+                                    <p class="image-card-description">Larga vida útil, resistencia superior a la humedad y estética moderna.</p>
+                                </div>
+                            </div>
+                            
+                            <!-- Tarjeta 2: Reciclaje -->
+                            <div class="image-card">
+                                <!-- USANDO EL ID DEL ARCHIVO SUBIDO: Gemini_Generated_Image_jef1eyjef1eyjef1.jpg -->
+                                <img src="/files/Gemini_Generated_Image_jef1eyjef1eyjef1.jpg-23eb8827-2690-4403-91cf-e2f2e717e93a" 
+                                     alt="Proceso de Reciclaje y Materia Prima Plástica" 
+                                     onerror="this.onerror=null;this.src='https://placehold.co/600x400/2563eb/ffffff?text=Reciclaje'">
+                                <div class="image-card-body">
+                                    <p class="text-xs font-medium text-blue-600 uppercase">Impacto Ambiental</p>
+                                    <h4 class="image-card-title">De Residuo a Materia Prima</h4>
+                                    <p class="image-card-description">Compromiso con la economía circular: cada placa reduce la basura plástica.</p>
+                                </div>
+                            </div>
+                            
+                            <!-- Tarjeta 3: Aplicación / DIY -->
+                            <div class="image-card">
+                                <!-- USANDO EL ID DEL ARCHIVO SUBIDO: WhatsApp Image 2025-10-29 at 1.00.30 PM.jpeg -->
+                                <img src="/files/WhatsApp Image 2025-10-29 at 1.00.30 PM.jpeg-0fece4e6-7718-407c-964a-8f781a1a4c10" 
+                                     alt="Aplicación de las Placas de Plástico en una cocina" 
+                                     onerror="this.onerror=null;this.src='https://placehold.co/600x400/ca8a04/ffffff?text=Aplicacion'">
+                                <div class="image-card-body">
+                                    <p class="text-xs font-medium text-yellow-700 uppercase">Mercado B2B/B2C</p>
+                                    <h4 class="image-card-title">Versatilidad en Diseño</h4>
+                                    <p class="image-card-description">Ideales para interiores y exteriores. Fáciles de instalar para profesionales.</p>
+                                </div>
+                            </div>
+                            
+                            <!-- Tarjeta 4: Resultados / Plan -->
+                            <div class="image-card">
+                                <!-- USANDO EL ID DEL ARCHIVO SUBIDO: Captura de pantalla 2025-10-29 125331.png -->
+                                <img src="/files/Captura de pantalla 2025-10-29 125331.png-c4ed35ad-dda1-48a5-bd3a-6b7601550e69" 
+                                     alt="Gráfico del Punto de Equilibrio y Rentabilidad" 
+                                     onerror="this.onerror=null;this.src='https://placehold.co/600x400/dc2626/ffffff?text=Resultados'">
+                                <div class="image-card-body">
+                                    <p class="text-xs font-medium text-red-600 uppercase">Estrategia Financiera</p>
+                                    <h4 class="image-card-title">Ruta a la Rentabilidad</h4>
+                                    <p class="image-card-description">Visión clara del punto de equilibrio y la facturación proyectada.</p>
+                                </div>
+                            </div>
+                        </div> <!-- Fin de la Galería -->
+                    </div>
+                </section>
+
+
+                <!-- TAB RENOMBRADA: R.E. (Resumen Ejecutivo) -->
+                <section id="resumen" class="tab-content">
+                    <div class="space-y-6">
+                        <h2 class="text-3xl font-bold tracking-tight text-gray-900">R.E. | Resumen Ejecutivo y Métricas Clave</h2>
+                        <p class="text-lg text-gray-600">
+                            Esta sección presenta la Misión, Visión, los objetivos cuantificables y las métricas clave del plan de marketing.
+                        </p>
+                        
+                        <!-- Stat Cards -->
+                        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5">
+                            <div class="bg-white p-6 rounded-lg shadow-md border border-gray-200">
+                                <h3 class="text-sm font-medium text-gray-500">Objetivo de Ventas (12 meses)</h3>
+                                <p class="mt-1 text-3xl font-semibold text-emerald-600">5,000 Unidades</p>
+                                <p class="text-sm text-gray-500">($250,000 en facturación)</p>
+                            </div>
+                            <div class="bg-white p-6 rounded-lg shadow-md border border-gray-200">
+                                <h3 class="text-sm font-medium text-gray-500">Objetivo de Marketing (6 meses)</h3>
+                                <p class="mt-1 text-3xl font-semibold text-emerald-600">500 Leads Calificados</p>
+                                <p class="text-sm text-gray-500">Vía web</p>
+                            </div>
+                            <div class="bg-white p-6 rounded-lg shadow-md border border-gray-200">
+                                <h3 class="text-sm font-medium text-gray-500">Impacto Sostenible (12 meses)</h3>
+                                <p class="mt-1 text-3xl font-semibold text-emerald-600">50 Toneladas</p>
+                                <p class="text-sm text-gray-500">De plástico reciclado</p>
+                            </div>
+                            <div class="bg-white p-6 rounded-lg shadow-md border border-gray-200">
+                                <h3 class="text-sm font-medium text-gray-500">Presupuesto Total (Año 1)</h3>
+                                <p class="mt-1 text-3xl font-semibold text-emerald-600">$50,000 USD</p>
+                                <p class="text-sm text-gray-500">Inversión en Marketing</p>
+                            </div>
+                        </div>
+
+                        <!-- Misión y Visión -->
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <div class="bg-white p-6 rounded-lg shadow-md border border-gray-200">
+                                <h3 class="text-xl font-semibold text-blue-700">Misión</h3>
+                                <p class="mt-2 text-gray-600">Transformar residuos plásticos en soluciones de construcción duraderas y sostenibles, ofreciendo una alternativa ecológica y de alto rendimiento que impulse la economía circular.</p>
+                            </div>
+                            <div class="bg-white p-6 rounded-lg shadow-md border border-gray-200">
+                                <h3 class="text-xl font-semibold text-blue-700">Visión</h3>
+                                <p class="mt-2 text-gray-600">Ser el líder indiscutible en la provisión de materiales de construcción a partir de plásticos 100% reciclados, siendo el estándar de durabilidad y responsabilidad ambiental en el sector B2B.</p>
+                            </div>
+                        </div>
+
+                        <!-- ESTRATEGIA CLAVE (Contenido Reemplazado) -->
+                        <div class="bg-white p-6 rounded-lg shadow-md border border-gray-200">
+                            <h3 class="text-lg font-semibold text-gray-900">Estrategia Clave y Resumen del Producto</h3>
+                            <p class="mt-2 text-gray-600">
+                                Este plan de marketing busca posicionar las Placas de Plástico 100% Reciclado como la solución líder y sostenible en el mercado de materiales de construcción y diseño en los primeros 12 meses. La estrategia clave es enfatizar el valor ecológico, la calidad superior y la durabilidad, apuntando a un segmento B2B (Arquitectos y Constructoras) altamente consciente. Se proyecta alcanzar 5,000 unidades vendidas en el primer año y reciclar 50 toneladas de plástico.
+                            </p>
+                            <ul class="mt-4 space-y-2 text-gray-700 list-disc list-inside">
+                                <li><span class="font-bold">Producto:</span> Placas de plástico 100% reciclado, ecológicas, resistentes, duraderas y versátiles.</li>
+                                <li><span class="font-bold">Objetivo Principal:</span> Liderazgo en el nicho de materiales de construcción sostenibles.</li>
+                                <li><span class="font-bold">Estrategia Clave:</span> Marketing de Contenidos y Digital focalizado en leads B2B.</li>
+                            </ul>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Tab: Diagnóstico -->
+                <section id="diagnostico" class="tab-content">
+                    <div class="space-y-6">
+                        <h2 class="text-3xl font-bold tracking-tight text-gray-900">Diagnóstico del Mercado</h2>
+                        <p class="text-lg text-gray-600">
+                            Esta sección analiza el entorno en el que competimos. Explore la situación actual del mercado y nuestro Análisis FODA (Fortalezas, Oportunidades, Debilidades y Amenazas) para entender el contexto de nuestro plan estratégico.
+                        </p>
+
+                        <nav class="flex border-b border-gray-300" id="diagnostico-tabs">
+                            <a class="sub-nav-link" data-subtab="situacion">Análisis de la Situación</a>
+                            <a class="sub-nav-link active" data-subtab="foda">Análisis FODA</a>
+                        </nav>
+
+                        <!-- Sub-Tab: Situación -->
+                        <div id="situacion" class="sub-tab-content p-4 bg-white rounded-b-lg shadow-md border border-gray-200">
+                            <h3 class="text-xl font-semibold text-gray-800 mb-4">Contexto y Producto</h3>
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                <div>
+                                    <h4 class="font-semibold text-emerald-700">Contexto del Mercado</h4>
+                                    <ul class="list-disc list-outside pl-5 mt-2 space-y-1 text-gray-600">
+                                        <li>Fuerte crecimiento en la demanda de materiales de economía circular.</li>
+                                        <li>La competencia se basa en alternativas tradicionales (madera, aglomerado) más económicas.</li>
+                                        <li>Es vital diferenciarse por calidad, certificación e impacto ambiental positivo.</li>
+                                    </ul>
+                                </div>
+                                <div>
+                                    <h4 class="font-semibold text-emerald-700">Análisis del Producto</h4>
+                                    <ul class="list-disc list-outside pl-5 mt-2 space-y-1 text-gray-600">
+                                        <li><span class="font-medium text-gray-800">Ventajas:</span> Impermeable, resistente a plagas/hongos, larga vida útil, alta durabilidad.</li>
+                                        <li><span class="font-medium text-gray-800">Retos:</span> Precio inicial percibido como superior, necesidad de educar al mercado sobre su instalación.</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Sub-Tab: FODA -->
+                        <div id="foda" class="sub-tab-content active p-4 bg-white rounded-b-lg shadow-md border border-gray-200">
+                            <h3 class="text-xl font-semibold text-gray-800 mb-4">Matriz FODA</h3>
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                <div class="bg-emerald-50 p-4 rounded-lg border border-emerald-200">
+                                    <h4 class="font-bold text-lg text-emerald-800">Fortalezas (Internas)</h4>
+                                    <ul class="list-disc list-outside pl-5 mt-2 space-y-1 text-emerald-700">
+                                        <li>Producto 100% reciclado y reciclable.</li>
+                                        <li>Larga vida útil y resistencia superior (humedad/plagas).</li>
+                                    </ul>
+                                </div>
+                                <div class="bg-blue-50 p-4 rounded-lg border border-blue-200">
+                                    <h4 class="font-bold text-lg text-blue-800">Oportunidades (Externas)</h4>
+                                    <ul class="list-disc list-outside pl-5 mt-2 space-y-1 text-blue-700">
+                                        <li>Creciente legislación y subvenciones para construcción sostenible.</li>
+                                        <li>Demanda en aumento de arquitectos y constructoras con enfoque verde.</li>
+                                    </ul>
+                                </div>
+                                <div class="bg-yellow-50 p-4 rounded-lg border border-yellow-200">
+                                    <h4 class="font-bold text-lg text-yellow-800">Debilidades (Internas)</h4>
+                                    <ul class="list-disc list-outside pl-5 mt-2 space-y-1 text-yellow-700">
+                                        <li>Marca y producto nuevos o poco conocidos.</li>
+                                        <li>Percepción inicial de "baja calidad" del plástico reciclado.</li>
+                                    </ul>
+                                </div>
+                                <div class="bg-red-50 p-4 rounded-lg border border-red-200">
+                                    <h4 class="font-bold text-lg text-red-800">Amenazas (Externas)</h4>
+                                    <ul class="list-disc list-outside pl-5 mt-2 space-y-1 text-red-700">
+                                        <li>Competencia de materiales tradicionales más económicos.</li>
+                                        <li>Necesidad de una gran inversión en educación de mercado.</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Tab: Plan Estratégico -->
+                <section id="plan" class="tab-content">
+                    <div class="space-y-8">
+                        <h2 class="text-3xl font-bold tracking-tight text-gray-900">Plan Estratégico</h2>
+                        <p class="text-lg text-gray-600">
+                            Aquí se detalla el núcleo del plan: nuestros objetivos cuantificables, la estrategia de las 4 P's para abordar el mercado y los programas operativos que ejecutaremos para alcanzar nuestras metas.
+                        </p>
+
+                        <!-- Objetivos -->
+                        <div class="bg-white p-6 rounded-lg shadow-md border border-gray-200">
+                            <h3 class="text-xl font-semibold text-gray-800 mb-4">Objetivos SMART</h3>
+                            <p class="text-gray-600 mb-4">Visualización de los objetivos clave del plan. El gráfico muestra la magnitud de cada meta a alcanzar.</p>
+                            <div class="chart-container">
+                                <canvas id="goalsChart"></canvas>
+                            </div>
+                        </div>
+
+                        <!-- 4 P's -->
+                        <div class="bg-white p-6 rounded-lg shadow-md border border-gray-200">
+                            <h3 class="text-xl font-semibold text-gray-800 mb-4">Estrategia de las 4 P's</h3>
+                            <nav class="flex border-b border-gray-300 -mt-2 mb-4" id="strategy-tabs">
+                                <a class="sub-nav-link active" data-subtab="producto">Producto</a>
+                                <a class="sub-nav-link" data-subtab="precio">Precio</a>
+                                <a class="sub-nav-link" data-subtab="plaza">Plaza</a>
+                                <a class="sub-nav-link" data-subtab="promocion">Promoción</a>
+                            </nav>
+                            
+                            <div id="producto" class="sub-tab-content active text-gray-600 space-y-2">
+                                <p>Foco en la calidad, acabados uniformes y certificaciones de resistencia. Desarrollo de un manual claro de instalación y manipulación para profesionales.</p>
+                            </div>
+                            <div id="precio" class="sub-tab-content text-gray-600 space-y-2">
+                                <p>Estrategia de **Precio Premium Justificado**: Posicionado por encima del aglomerado tradicional, pero competitivo frente a maderas de alta calidad o compuestos de exterior. Se ofrecerán precios por volumen para constructoras (B2B).</p>
+                            </div>
+                            <div id="plaza" class="sub-tab-content text-gray-600 space-y-2">
+                                <p>Venta directa (online y showroom propio) para un mayor control del margen y la experiencia del cliente. Alianzas estratégicas con distribuidores de materiales de construcción "verdes" o especializados.</p>
+                            </div>
+                            <div id="promocion" class="sub-tab-content text-gray-600 space-y-2">
+                                <p>Marketing de Contenidos (casos de éxito, white papers) y Campañas Digitales (Ads B2B en Google y LinkedIn). Participación en ferias clave de construcción y diseño sostenible.</p>
+                            </div>
+                        </div>
+
+                        <!-- Programas -->
+                        <div class="bg-white p-6 rounded-lg shadow-md border border-gray-200">
+                            <h3 class="text-xl font-semibold text-gray-800 mb-4">Programas Operativos</h3>
+                            <div class="overflow-x-auto">
+                                <table class="min-w-full divide-y divide-gray-200">
+                                    <thead class="bg-gray-50">
+                                        <tr>
+                                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Programa</th>
+                                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Actividades Clave</th>
+                                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">KPI de Éxito</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody class="bg-white divide-y divide-gray-200">
+                                        <tr>
+                                            <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">Contenidos y SEO</td>
+                                            <td class="px-6 py-4 whitespace-normal text-sm text-gray-500">Creación de Blog técnico y fichas detalladas.</td>
+                                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">Tráfico orgánico (+30%)</td>
+                                        </tr>
+                                        <tr>
+                                            <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">Campañas Digitales (Ads)</td>
+                                            <td class="px-6 py-4 whitespace-normal text-sm text-gray-500">Google Ads y LinkedIn Ads con oferta de muestra o consultoría.</td>
+                                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">Costo por Lead (CPL)</td>
+                                        </tr>
+                                        <tr>
+                                            <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">Alianzas Estratégicas</td>
+                                            <td class="px-6 py-4 whitespace-normal text-sm text-gray-500">Presentación a 5 constructoras target y 3 distribuidores.</td>
+                                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">N° de acuerdos cerrados</td>
+                                        </tr>
+                                        <tr>
+                                            <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">Inbound Marketing</td>
+                                            <td class="px-6 py-4 whitespace-normal text-sm text-gray-500">Landing Page específica para descarga de catálogo.</td>
+                                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">Tasa de Conversión</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Tab: Inversión y ROI -->
+                <section id="inversion" class="tab-content">
+                    <div class="space-y-8">
+                        <h2 class="text-3xl font-bold tracking-tight text-gray-900">Inversión y Evaluación</h2>
+                        <p class="text-lg text-gray-600">
+                            Esta sección detalla la asignación del presupuesto de marketing y las métricas clave (KPIs) que usaremos para medir el éxito del plan, asegurando el control y la agilidad para optimizar la estrategia.
+                        </p>
+                        
+                        <!-- Presupuesto -->
+                        <div class="bg-white p-6 rounded-lg shadow-md border border-gray-200">
+                            <h3 class="text-xl font-semibold text-gray-800 mb-4">Desglose del Presupuesto (Total: $50,000 USD)</h3>
+                            <p class="text-gray-600 mb-4">Distribución porcentual de la inversión en las principales áreas de marketing.</p>
+                            <div class="chart-container">
+                                <canvas id="budgetChart"></canvas>
+                            </div>
+                        </div>
+
+                        <!-- Control y Evaluación -->
+                        <div class="bg-white p-6 rounded-lg shadow-md border border-gray-200">
+                            <h3 class="text-xl font-semibold text-gray-800 mb-4">Control y Evaluación (KPIs)</h3>
+                            <div class="overflow-x-auto">
+                                <table class="min-w-full divide-y divide-gray-200">
+                                    <thead class="bg-gray-50">
+                                        <tr>
+                                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Métrica (KPI)</th>
+                                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Frecuencia</th>
+                                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Responsable</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody class="bg-white divide-y divide-gray-200">
+                                        <tr>
+                                            <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">Generación de Leads Calificados</td>
+                                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">Semanal</td>
+                                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">Marketing Digital</td>
+                                        </tr>
+                                        <tr>
+                                            <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">Facturación de Placas</td>
+                                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">Mensual</td>
+                                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">Ventas</td>
+                                        </tr>
+                                        <tr>
+                                            <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">Tasa de Cierre (Lead a Venta)</td>
+                                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">Mensual</td>
+                                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">Ventas</td>
+                                        </tr>
+                                        <tr>
+                                            <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">Toneladas Recicladas</td>
+                                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">Mensual</td>
+                                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">Operaciones</td>
+                                        </tr>
+                                        <tr>
+                                            <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">Costo de Adquisición (CAC)</td>
+                                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">Trimestral</td>
+                                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">Marketing y Finanzas</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </section>
             </div>
-        </section>
+        </main>
 
-        <section id="cotizador" class="page-section bg-gradient-to-br from-blue-50 to-violet-50"> <div class="container mx-auto px-6">
-                 <div class="bg-white p-8 md:p-10 rounded-lg shadow-xl w-full max-w-lg mx-auto">
-                     <div id="user-info-section">
-                         <h2 class="text-2xl md:text-3xl font-bold text-center text-gray-800 mb-2">Datos de Contacto</h2>
-                         <p class="text-center text-gray-600 mb-6 text-sm">Completa tus datos para obtener tu presupuesto.</p>
-                         <form id="user-info-form" class="space-y-5">
-                             <div><label for="nombre">Nombre<abbr title="requerido">*</abbr></label><input type="text" id="nombre" name="nombre" placeholder="Tu nombre" required><p id="error-nombre" class="error-message"></p></div>
-                             <div><label for="apellido">Apellido<abbr title="requerido">*</abbr></label><input type="text" id="apellido" name="apellido" placeholder="Tu apellido" required><p id="error-apellido" class="error-message"></p></div>
-                             <div><label for="telefono">Teléfono<abbr title="requerido">*</abbr></label><input type="tel" id="telefono" name="telefono" placeholder="Ej: 11 5555 5555" required><p id="error-telefono" class="error-message"></p></div>
-                             <div><label for="direccion">Dirección<abbr title="requerido">*</abbr></label><input type="text" id="direccion" name="direccion" placeholder="Calle y número" required><p id="error-direccion" class="error-message"></p></div>
-                             <div><label for="localidad">Localidad<abbr title="requerido">*</abbr></label><input type="text" id="localidad" name="localidad" placeholder="Tu localidad" required><p id="error-localidad" class="error-message"></p></div>
-                             <p id="error-general-userinfo" class="error-message text-center"></p>
-                             <button type="submit" class="w-full py-3 px-4 font-bold text-white rounded-md shadow-md hover:bg-blue-700 hover:shadow-lg active:bg-blue-800 active:shadow-inner transition duration-150 ease-in-out transform active:translate-y-px flex items-center justify-center space-x-2 bg-blue-600">
-                                 <i data-lucide="arrow-right-circle" class="w-5 h-5"></i><span>Continuar al Cotizador</span>
-                             </button>
-                         </form>
-                     </div>
-                      <div id="quote-section" class="hidden">
-                          <h2 class="text-2xl md:text-3xl font-bold text-center text-gray-800 mb-6">Cotizador Online</h2>
-                          <form id="quote-form" class="space-y-5">
-                              <div><label for="product">Selecciona el Producto:</label><select id="product" name="product" required></select></div>
-                              <div><label for="meters">Metros Cuadrados (m²):</label><input type="number" id="meters" name="meters" min="0.1" step="0.1" placeholder="Ej: 25.5" required><p id="error-message-meters" class="error-message"></p></div>
-                              <div><label for="shipping-zone">Zona de Envío:</label><select id="shipping-zone" name="shipping-zone" required><option value="">-- Selecciona tu zona --</option><option value="caba">CABA</option><option value="gba">GBA</option><option value="bsas_interior">Bs.As. Interior</option><option value="otra_provincia">Otra Provincia</option><option value="no_shipping">Retiro / Sin envío</option></select><p id="error-message-zone" class="error-message"></p></div>
-                              <div class="flex items-center space-x-3 pt-2"><input type="checkbox" id="include-installation" name="include-installation"><label for="include-installation" class="mb-0 !font-normal text-gray-600">Incluir Instalación</label></div>
-                               <button type="submit" class="w-full py-3 px-4 font-bold text-white rounded-md shadow-md hover:bg-blue-700 hover:shadow-lg active:bg-blue-800 active:shadow-inner transition duration-150 ease-in-out transform active:translate-y-px flex items-center justify-center space-x-2 bg-blue-600">
-                                   <i data-lucide="calculator" class="w-5 h-5"></i><span>Calcular Presupuesto</span>
-                               </button>
-                          </form>
-                          <div id="quote-result" class="mt-8 hidden">
-                              <h3 class="text-xl font-semibold text-gray-800 mb-4 border-b pb-2">Detalle del Presupuesto:</h3>
-                              <div id="quote-details" class="space-y-1"></div>
-                              <div id="quote-total" class="quote-total border-t border-gray-300"></div>
-                          </div>
-                          <button id="back-to-user-info"><i data-lucide="arrow-left-circle" class="w-4 h-4"></i><span>Volver a Datos</span></button>
-                      </div>
-                 </div>
-             </div>
-        </section>
-
-        <section id="contact" class="page-section container mx-auto px-6">
-             <h2 class="text-3xl md:text-4xl font-bold mb-10 text-center gradient-text-subtle">Contacto</h2>
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-10 md:gap-16 items-start">
-                 <div class="space-y-6 text-gray-700">
-                     <div>
-                         <h3 class="text-xl font-semibold text-gray-800 mb-3">Información de Contacto</h3>
-                         <p class="flex items-start mb-3"> <i data-lucide="map-pin" class="w-5 h-5 mr-3 text-blue-600 mt-1 flex-shrink-0"></i> <span>Carmona 62, Adrogué,<br>Buenos Aires, Argentina.</span> </p>
-                         <p class="flex items-center mb-3"> <i data-lucide="phone" class="w-5 h-5 mr-3 text-blue-600 flex-shrink-0"></i> <a href="tel:1160479929" class="hover:text-blue-800">11 6047 9929</a> </p>
-                         <p class="flex items-center"> <i data-lucide="mail" class="w-5 h-5 mr-3 text-blue-600 flex-shrink-0"></i> <a href="mailto:info@plakasec.com" class="hover:text-blue-800">info@plakasec.com</a> </p>
-                     </div>
-                      <div class="pt-4 border-t border-gray-200">
-                          <h4 class="text-lg font-semibold text-gray-800 mb-2">Horario de Atención</h4>
-                          <p>Lunes a Viernes: 9:00 - 18:00 hs</p>
-                          <p>Sábados: 9:00 - 13:00 hs</p>
-                      </div>
-                      <div class="mt-6 border rounded-lg overflow-hidden shadow-md"> <img src="https://placehold.co/600x350/e0e7ff/374151?text=Mapa+(Ubicación+Aproximada)" alt="Mapa indicando la ubicación de Plakasec en Adrogué" class="w-full h-auto"> </div>
-                 </div>
-
-                 <div class="bg-white p-8 rounded-lg shadow-lg border border-gray-100">
-                     <h3 class="text-xl font-semibold text-gray-800 mb-5">Envíanos tu Consulta</h3>
-                     <form action="mailto:ventas@plakasec.com" method="POST" enctype="text/plain" class="space-y-5">
-                         <div><label for="contact-name">Nombre</label><input type="text" id="contact-name" name="Nombre" required></div>
-                         <div><label for="contact-email">Email</label><input type="email" id="contact-email" name="Email" required></div>
-                         <div><label for="contact-subject">Asunto</label><input type="text" id="contact-subject" name="Asunto"></div>
-                         <div><label for="contact-message">Mensaje</label><textarea id="contact-message" name="Mensaje" rows="4" required></textarea></div>
-                          <div><button type="submit" class="w-full py-3 px-4 font-bold text-white rounded-md shadow-md hover:bg-blue-700 hover:shadow-lg active:bg-blue-800 active:shadow-inner transition duration-150 ease-in-out transform active:translate-y-px flex items-center justify-center space-x-2 bg-blue-600">
-                              <i data-lucide="send" class="w-5 h-5"></i><span>Enviar Mensaje</span></button>
-                          </div>
-                     </form>
-                     <p class="mt-4 text-center text-xs text-gray-500"> Al hacer clic, se abrirá tu app de correo para enviar la consulta a <span class="font-medium">ventas@plakasec.com</span>. </p>
-                 </div>
+        <!-- Footer -->
+        <footer class="bg-white border-t border-gray-200 mt-8">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
+                <p class="text-center text-sm text-gray-500">Dashboard Interactivo | PLAN DE MARKETING: ECO PLACA</p>
             </div>
-        </section>
+        </footer>
+    </div>
 
-    </main>
-
-    <footer class="bg-gray-800 text-gray-300 mt-16 py-8">
-        <div class="container mx-auto px-6 text-center">
-            <p>&copy; <span id="current-year"></span> Plakasec. Todos los derechos reservados.</p>
-            <p class="text-sm text-gray-400 mt-1">Sitio web desarrollado con asistencia de IA</p>
-        </div>
-    </footer>
-
-    <a href="https://wa.me/5491160479929" target="_blank" rel="noopener noreferrer" aria-label="Contactar por WhatsApp" class="whatsapp-button fixed bottom-5 right-5 z-40 bg-green-500 hover:bg-green-600 text-white p-4 rounded-full shadow-lg transition duration-300 ease-in-out transform flex items-center justify-center">
-        <svg viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg" class="w-8 h-8"><path fill="currentColor" d=" M19.11 17.205c-.372 0-1.088 1.39-1.518 1.39a.63.63 0 0 1-.315-.1c-.802-.402-1.504-.817-2.163-1.447-.545-.516-1.146-1.29-1.46-1.963a.426.426 0 0 1-.073-.215c0-.33.99-.945.99-1.49 0-.143-.73-2.09-.832-2.335-.143-.372-.214-.487-.6-.487-.187 0-.36-.044-.53-.044-.315 0-.76.11-1.042.315-.315.2-.832.77-1.042 1.738-.213 1.028.072 1.958.144 2.163.072.215.213.402.315.57.072.114.143.24.214.372.072.143.11.27.18.402.143.27.315.57.487.87.172.3.372.6.6.91.24.315.516.645.802.975.315.345.645.645.975.91.3.24.6.44.91.615.3.172.615.315.945.44.288.114.576.187.87.215.3.044.57.073.792.073.24 0 .48-.03.688-.072.24-.044.44-.115.615-.215.172-.1.315-.187.44-.3.114-.114.21-.24.27-.372.114-.24.187-.545.215-.87.044-.315.044-.63 0-.945-.044-.315-.072-.6-.11-.87-.044-.27-.072-.487-.143-.73a11.1 11.1 0 0 0-1.187-2.605z M16 0 A16 16 0 0 0 0 16 A16 16 0 0 0 16 32 A16 16 0 0 0 32 16 A16 16 0 0 0 16 0 M16 4.8 A11.2 11.2 0 0 1 27.2 16 A11.2 11.2 0 0 1 16 27.2 A11.2 11.2 0 0 1 4.8 16 A11.2 11.2 0 0 1 16 4.8z"/></svg>
-    </a>
-
-    <script src="https://unpkg.com/lucide@latest"></script>
     <script>
-      // Wrap main script logic in DOMContentLoaded to ensure the DOM is ready
-      document.addEventListener('DOMContentLoaded', () => {
-        console.log("DOM Cargado, iniciando scripts..."); // Debug log
+        document.addEventListener('DOMContentLoaded', () => {
+            
+            function setupNavigation(navContainerId) {
+                const navContainer = document.getElementById(navContainerId);
+                if (!navContainer) return;
 
-        // --- Navigation Logic (SPA-like behavior) ---
-        try { // Add try...catch for robustness
-            const navButtons = document.querySelectorAll('.nav-button'); // All buttons that trigger section changes
-            const sections = document.querySelectorAll('.page-section'); // All content sections
-            const mobileMenuButton = document.getElementById('mobile-menu-button');
-            const mobileMenu = document.getElementById('mobile-menu');
-
-            // Set current year in footer
-            const currentYearElement = document.getElementById('current-year');
-            if (currentYearElement) {
-                currentYearElement.textContent = new Date().getFullYear();
-            }
-
-            // Function to show a specific section and hide others
-            function showSection(targetId, isMobile = false) {
-                 let sectionFound = false;
-                 sections.forEach(section => {
-                     if (section.id === targetId) {
-                         // Use requestAnimationFrame for smoother transition start
-                         requestAnimationFrame(() => { section.classList.add('active'); });
-                         sectionFound = true;
-                     } else {
-                         section.classList.remove('active');
-                     }
-                 });
-
-                 if (sectionFound) {
-                     // Scroll to top smoothly
-                     window.scrollTo({ top: 0, behavior: 'smooth' });
-
-                     // Update active state for navigation buttons
-                     navButtons.forEach(btn => {
-                         if (btn.getAttribute('data-target') === targetId) {
-                             btn.classList.add('text-blue-600', 'font-semibold'); // Highlight active link
-                         } else {
-                             btn.classList.remove('text-blue-600', 'font-semibold');
-                         }
-                     });
-
-                      // Close mobile menu if a link is clicked within it
-                      if (isMobile && mobileMenu && !mobileMenu.classList.contains('hidden')) {
-                          mobileMenu.classList.add('hidden');
-                      }
-
-                     // Re-initialize Lucide icons in the newly shown section if needed
-                     requestAnimationFrame(() => {
-                        if (typeof lucide !== 'undefined') { lucide.createIcons(); }
-                     });
-
-                 } else {
-                     console.warn("Target section not found:", targetId);
-                 }
-            }
-
-            console.log("Configurando botones de navegación...");
-            navButtons.forEach(button => {
-                 button.addEventListener('click', (e) => {
-                     console.log("Botón de navegación clickeado:", button.getAttribute('data-target'));
-                     const targetId = button.getAttribute('data-target');
-                     // Check if the click originated from within the mobile menu
-                     const isMobileClick = e.target.closest('#mobile-menu') !== null;
-                     showSection(targetId, isMobileClick);
-                 });
-            });
-            console.log("Botones de navegación configurados.");
-
-            // Mobile Menu Toggle
-            if (mobileMenuButton && mobileMenu) {
-                 mobileMenuButton.addEventListener('click', () => {
-                     mobileMenu.classList.toggle('hidden');
-                 });
-            }
-
-            // Initialize by showing the home section
-            showSection('home');
-
-        } catch (error) {
-            console.error("Error en la lógica de navegación:", error);
-        }
-
-
-        // --- Cotizador (Quote Calculator) Logic ---
-        try { // Add try...catch for robustness
-            const cotizadorSection = document.getElementById('cotizador');
-            if (cotizadorSection) {
-                console.log("Configurando lógica del cotizador...");
-
-                // --- Configuration ---
-                const productsConfig = [
-                    { id: 'placa-antihumedad', name: 'Placas Anti Humedad', pricePerMeter: 20000 },
-                    { id: 'simil-piedra', name: 'Símil Piedra', pricePerMeter: 25000 },
-                    { id: 'piso-flotante', name: 'Pisos Flotantes', pricePerMeter: 45000 } // Example price
-                ];
-                const shippingCostsByZoneConfig = {
-                    'caba': 3000,
-                    'gba': 5000,
-                    'bsas_interior': 8000,
-                    'otra_provincia': 12000, // Example cost, might need calculation
-                    'no_shipping': 0
-                };
-                const installationCostPerMeterConfig = 3000; // Example cost
-                const taxRateConfig = 0.21; // 21% IVA
-
-                // --- DOM Elements ---
-                const userInfoSection = cotizadorSection.querySelector('#user-info-section');
-                const userInfoForm = cotizadorSection.querySelector('#user-info-form');
-                const nombreInput = cotizadorSection.querySelector('#nombre');
-                const apellidoInput = cotizadorSection.querySelector('#apellido');
-                const telefonoInput = cotizadorSection.querySelector('#telefono');
-                const direccionInput = cotizadorSection.querySelector('#direccion');
-                const localidadInput = cotizadorSection.querySelector('#localidad');
-                const errorGeneralUserInfo = cotizadorSection.querySelector('#error-general-userinfo');
-                const errorNombre = cotizadorSection.querySelector('#error-nombre');
-                const errorApellido = cotizadorSection.querySelector('#error-apellido');
-                const errorTelefono = cotizadorSection.querySelector('#error-telefono');
-                const errorDireccion = cotizadorSection.querySelector('#error-direccion');
-                const errorLocalidad = cotizadorSection.querySelector('#error-localidad');
-
-                const quoteSection = cotizadorSection.querySelector('#quote-section');
-                const productSelect = cotizadorSection.querySelector('#product');
-                const metersInput = cotizadorSection.querySelector('#meters');
-                const shippingZoneSelect = cotizadorSection.querySelector('#shipping-zone');
-                const installationCheckbox = cotizadorSection.querySelector('#include-installation');
-                const quoteForm = cotizadorSection.querySelector('#quote-form');
-                const quoteResultDiv = cotizadorSection.querySelector('#quote-result');
-                const quoteDetailsDiv = cotizadorSection.querySelector('#quote-details');
-                const quoteTotalDiv = cotizadorSection.querySelector('#quote-total');
-                const errorMessageMetersP = cotizadorSection.querySelector('#error-message-meters');
-                const errorMessageZoneP = cotizadorSection.querySelector('#error-message-zone');
-                const backButton = cotizadorSection.querySelector('#back-to-user-info');
-
-                // --- Helper Functions ---
-                const formatCurrency = (amount) => {
-                    return amount.toLocaleString('es-AR', { style: 'currency', currency: 'ARS' });
-                };
-
-                const displayError = (element, message, inputElement = null) => {
-                    if (element) element.textContent = message;
-                    if (inputElement) inputElement.classList.add('border-red-500'); // Add red border to input
-                };
-
-                const clearError = (element, inputElement = null) => {
-                    if (element) element.textContent = '';
-                    if (inputElement) inputElement.classList.remove('border-red-500'); // Remove red border
-                };
-
-                const clearAllUserInfoErrors = () => {
-                    clearError(errorNombre, nombreInput);
-                    clearError(errorApellido, apellidoInput);
-                    clearError(errorTelefono, telefonoInput);
-                    clearError(errorDireccion, direccionInput);
-                    clearError(errorLocalidad, localidadInput);
-                    clearError(errorGeneralUserInfo);
-                };
-
-                // --- Populate Product Select ---
-                if (productSelect) {
-                    productSelect.innerHTML = '<option value="">-- Selecciona un producto --</option>'; // Default option
-                    productsConfig.forEach(product => {
-                        const option = document.createElement('option');
-                        option.value = product.id;
-                        option.textContent = product.name;
-                        productSelect.appendChild(option);
-                    });
-                }
-
-                // --- User Info Form Submission ---
-                if (userInfoForm) {
-                    userInfoForm.addEventListener('submit', (event) => {
-                        event.preventDefault(); // Prevent default form submission
-                        console.log("User Info: Submit event captured");
-                        clearAllUserInfoErrors(); // Clear previous errors
-
-                        // Basic Validation
-                        let isUserInfoValid = true;
-                        if (!nombreInput.value.trim()) { displayError(errorNombre, 'El nombre es requerido.', nombreInput); isUserInfoValid = false; }
-                        if (!apellidoInput.value.trim()) { displayError(errorApellido, 'El apellido es requerido.', apellidoInput); isUserInfoValid = false; }
-                        if (!telefonoInput.value.trim()) { displayError(errorTelefono, 'El teléfono es requerido.', telefonoInput); isUserInfoValid = false; }
-                        // Basic phone format check (example: numbers, spaces, maybe +) - adjust as needed
-                        else if (!/^[0-9\s+()-]*$/.test(telefonoInput.value)) { displayError(errorTelefono, 'Formato de teléfono inválido.', telefonoInput); isUserInfoValid = false; }
-                        if (!direccionInput.value.trim()) { displayError(errorDireccion, 'La dirección es requerida.', direccionInput); isUserInfoValid = false; }
-                        if (!localidadInput.value.trim()) { displayError(errorLocalidad, 'La localidad es requerida.', localidadInput); isUserInfoValid = false; }
-
-                        if (!isUserInfoValid) {
-                            displayError(errorGeneralUserInfo, 'Por favor, corrige los campos marcados.');
-                            console.log("User Info: Validation failed");
-                            return; // Stop if validation fails
-                        }
-
-                        console.log("User Info: Validation passed. Proceeding to quote section.");
-                        // Hide User Info, Show Quote Section
-                        if(userInfoSection) userInfoSection.classList.add('hidden');
-                        if(quoteSection) {
-                            quoteSection.classList.remove('hidden');
-                            quoteSection.classList.add('fade-in'); // Apply fade-in animation
-                        }
-                        // Re-init icons just in case
-                        requestAnimationFrame(() => { lucide.createIcons(); });
-                    });
-                }
-
-                // --- Quote Form Submission (Calculation) ---
-                if (quoteForm) {
-                    quoteForm.addEventListener('submit', (event) => {
-                        console.log("Calculadora: Evento submit capturado");
-                        event.preventDefault(); // Prevent page reload
-                        console.log("Calculadora: Default prevenido");
-
-                        try {
-                            // Clear previous errors and results
-                            clearError(errorMessageMetersP, metersInput);
-                            clearError(errorMessageZoneP, shippingZoneSelect);
-                            if (quoteResultDiv) quoteResultDiv.classList.add('hidden');
-                            console.log("Calculadora: Errores previos limpiados");
-
-                            // Get values
-                            const selectedProductId = productSelect.value;
-                            const meters = parseFloat(metersInput.value);
-                            const selectedZone = shippingZoneSelect.value;
-                            console.log("Calculadora: Valores obtenidos:", { selectedProductId, meters, selectedZone });
-
-                            // Validation
-                            let isQuoteValid = true;
-                            if (!selectedProductId) {
-                                displayError(errorMessageMetersP, 'Selecciona un producto.', productSelect); // Error near product/meters
-                                isQuoteValid = false;
-                            }
-                            if (isNaN(meters) || meters <= 0) {
-                                displayError(errorMessageMetersP, 'Ingresa una cantidad válida de m².', metersInput);
-                                isQuoteValid = false;
-                            }
-                            if (!selectedZone) {
-                                displayError(errorMessageZoneP, 'Selecciona una zona de envío.', shippingZoneSelect);
-                                isQuoteValid = false;
-                            }
-
-                            if (!isQuoteValid) {
-                                console.log("Calculadora: Validación fallida");
-                                return; // Stop if validation fails
-                            }
-                            console.log("Calculadora: Validación pasada");
-
-                            // Find selected product details
-                            const selectedProduct = productsConfig.find(p => p.id === selectedProductId);
-                            if (!selectedProduct) {
-                                console.error("Calculadora: Producto no encontrado:", selectedProductId);
-                                displayError(errorMessageMetersP, 'Error: Producto no encontrado.', productSelect);
-                                return;
-                            }
-                            console.log("Calculadora: Producto encontrado:", selectedProduct);
-
-                            // Calculations
-                            console.log("Calculadora: Calculando costos...");
-                            const productCost = selectedProduct.pricePerMeter * meters;
-                            const shippingCost = shippingCostsByZoneConfig[selectedZone] ?? 0; // Default to 0 if zone not found
-                            const installationCost = installationCheckbox.checked ? installationCostPerMeterConfig * meters : 0;
-                            const subtotal = productCost + shippingCost + installationCost;
-                            const taxes = subtotal * taxRateConfig;
-                            const total = subtotal + taxes;
-                            console.log("Calculadora: Costos calculados:", { productCost, shippingCost, installationCost, subtotal, taxes, total });
-
-                            // Display Results
-                            console.log("Calculadora: Mostrando resultados...");
-                            if (quoteDetailsDiv) quoteDetailsDiv.innerHTML = ''; // Clear previous details
-
-                            const addDetailLine = (label, amount, zoneInfo = '') => {
-                                if (!quoteDetailsDiv) return;
-                                // Only add line if amount > 0, OR it's the product cost, OR it's shipping and zone is 'no_shipping'
-                                if (amount > 0 || label === 'Costo del Producto' || (label === 'Costo de Envío' && selectedZone === 'no_shipping')) {
-                                    const itemDiv = document.createElement('div');
-                                    itemDiv.className = 'quote-result-item';
-                                    itemDiv.innerHTML = `<span>${label}${zoneInfo}:</span><span>${formatCurrency(amount)}</span>`;
-                                    quoteDetailsDiv.appendChild(itemDiv);
-                                }
-                            };
-
-                            addDetailLine('Costo del Producto', productCost);
-                            if (selectedZone && selectedZone !== 'no_shipping' && shippingCost >= 0) {
-                                const selectedOption = shippingZoneSelect.options[shippingZoneSelect.selectedIndex];
-                                const zoneName = selectedOption ? selectedOption.text.split('(')[0].trim() : selectedZone; // Get text before parenthesis
-                                addDetailLine('Costo de Envío', shippingCost, ` (${zoneName})`);
-                            } else if (selectedZone === 'no_shipping') {
-                                addDetailLine('Costo de Envío', 0, ' (Retiro en local)');
-                            }
-                            if (installationCheckbox.checked) {
-                                addDetailLine('Costo de Instalación', installationCost);
-                            }
-                            addDetailLine('Impuestos (IVA 21%)', taxes); // Always show tax line if calculated
-
-                            // Display Total
-                            if (quoteTotalDiv) {
-                                quoteTotalDiv.innerHTML = `<span>Total Estimado:</span><span>${formatCurrency(total)}</span>`;
-                            }
-
-                            // Show the results section with animation
-                            if (quoteResultDiv) {
-                                quoteResultDiv.classList.remove('hidden');
-                                quoteResultDiv.classList.add('fade-in');
-                            }
-                            console.log("Calculadora: Resultados mostrados.");
-
-                        } catch (error) {
-                            console.error("Error en el cálculo/muestra de la cotización:", error);
-                            displayError(errorMessageMetersP, "Ocurrió un error al calcular."); // General error message
-                        }
-                    });
-                }
-
-                // --- Input Change Listeners (Clear errors/results) ---
-                [nombreInput, apellidoInput, telefonoInput, direccionInput, localidadInput].forEach(input => {
-                    if(input) input.addEventListener('input', () => clearError(cotizadorSection.querySelector(`#error-${input.id}`), input));
-                });
-                if(metersInput) metersInput.addEventListener('input', () => {
-                    clearError(errorMessageMetersP, metersInput);
-                    if (quoteResultDiv) quoteResultDiv.classList.add('hidden'); // Hide results on input change
-                });
-                if(productSelect) productSelect.addEventListener('change', () => {
-                    if (quoteResultDiv) quoteResultDiv.classList.add('hidden'); // Hide results on select change
-                     clearError(errorMessageMetersP, metersInput); // Clear potential product-related errors
-                     clearError(errorMessageZoneP, shippingZoneSelect); // Clear zone errors too
-                });
-                if(shippingZoneSelect) shippingZoneSelect.addEventListener('change', () => {
-                    clearError(errorMessageZoneP, shippingZoneSelect);
-                    if (quoteResultDiv) quoteResultDiv.classList.add('hidden'); // Hide results on select change
-                });
-                if(installationCheckbox) installationCheckbox.addEventListener('change', () => {
-                    if (quoteResultDiv) quoteResultDiv.classList.add('hidden'); // Hide results on checkbox change
-                });
-
-                // --- Back Button Functionality ---
-                if (backButton) {
-                    backButton.addEventListener('click', () => {
-                        if(quoteSection) quoteSection.classList.add('hidden');
-                        if(userInfoSection) {
-                            userInfoSection.classList.remove('hidden');
-                            userInfoSection.classList.add('fade-in'); // Fade in user info section
-                        }
-                        // Reset quote form and hide results
-                        if(quoteForm) quoteForm.reset();
-                        if(quoteResultDiv) quoteResultDiv.classList.add('hidden');
-                        // Clear quote errors
-                        clearError(errorMessageMetersP, metersInput);
-                        clearError(errorMessageZoneP, shippingZoneSelect);
-                        // Re-init icons
-                         requestAnimationFrame(() => { lucide.createIcons(); });
-                    });
-                }
-
-            } // End of check for cotizadorSection
-        } catch (error) {
-            console.error("Error configurando el cotizador:", error);
-        }
-
-
-        // --- Carousel Logic ---
-        // NOTE: This section is now removed from the home page, but the JS logic remains.
-        // It won't cause errors, but it won't do anything if the elements aren't found.
-        try { // Add try...catch for robustness
-            const carouselWrapper = document.getElementById('carousel-wrapper');
-            const prevButton = document.getElementById('prev-slide');
-            const nextButton = document.getElementById('next-slide');
-            const dotsContainer = document.getElementById('carousel-dots');
-
-            if (carouselWrapper && prevButton && nextButton && dotsContainer) {
-                console.log("Configurando carrusel..."); // Debug log
-                // Filter out any non-slide elements (like text nodes)
-                const slides = Array.from(carouselWrapper.children).filter(el => el.classList.contains('carousel-slide'));
-                const totalSlides = slides.length;
-                let currentIndex = 0;
-
-                // --- Create Dots ---
-                dotsContainer.innerHTML = ''; // Clear existing dots
-                if (totalSlides > 1) { // Only show dots if more than one slide
-                    for (let i = 0; i < totalSlides; i++) {
-                        const dot = document.createElement('button');
-                        // Basic styling (Tailwind classes defined in CSS)
-                        dot.setAttribute('aria-label', `Ir a opinión ${i + 1}`);
-                        dot.addEventListener('click', () => {
-                            goToSlide(i);
+                const navLinks = navContainer.querySelectorAll('.nav-link');
+                
+                navLinks.forEach(link => {
+                    link.addEventListener('click', (e) => {
+                        e.preventDefault();
+                        const tabId = link.getAttribute('data-tab');
+                        
+                        document.querySelectorAll('.tab-content').forEach(content => {
+                            content.classList.remove('active');
                         });
-                        dotsContainer.appendChild(dot);
-                    }
-                }
-                const dots = dotsContainer.children; // Get the created dot elements
+                        
+                        document.querySelectorAll('.nav-link').forEach(nav => {
+                            nav.classList.remove('active');
+                        });
+                        
+                        document.getElementById(tabId).classList.add('active');
+                        
+                        document.querySelectorAll(`.nav-link[data-tab="${tabId}"]`).forEach(activeLink => {
+                            activeLink.classList.add('active');
+                        });
+                    });
+                });
+            }
 
-                // --- Update Carousel Function ---
-                function updateCarousel() {
-                    if (totalSlides > 0) {
-                        // Move the wrapper element
-                        carouselWrapper.style.transform = `translateX(-${currentIndex * 100}%)`;
+            function setupSubTabs(tabsContainerId) {
+                const tabsContainer = document.getElementById(tabsContainerId);
+                if (!tabsContainer) return;
 
-                        // Update dot styles
-                        for (let i = 0; i < dots.length; i++) {
-                            if (i === currentIndex) {
-                                dots[i].classList.add('active'); // Active class defined in CSS
-                            } else {
-                                dots[i].classList.remove('active');
+                const tabLinks = tabsContainer.querySelectorAll('.sub-nav-link');
+                
+                tabLinks.forEach(link => {
+                    link.addEventListener('click', (e) => {
+                        e.preventDefault();
+                        const subTabId = link.getAttribute('data-subtab');
+                        
+                        tabLinks.forEach(nav => nav.classList.remove('active'));
+                        link.classList.add('active');
+                        
+                        const parent = link.closest('.tab-content, .sub-tab-content, section'); // Amplié la búsqueda al contenedor de la sección
+                        
+                        parent.querySelectorAll('.sub-tab-content').forEach(content => {
+                            content.classList.remove('active');
+                        });
+
+                        const activeContent = parent.querySelector(`#${subTabId}`);
+                        if(activeContent) {
+                             activeContent.classList.add('active');
+                        } else {
+                            // Intenta encontrar el contenido a un nivel superior si es necesario (e.g., para la sección FODA)
+                            document.getElementById(subTabId).classList.add('active');
+                        }
+                    });
+                });
+            }
+
+
+            setupNavigation('main-nav');
+            setupNavigation('main-nav-mobile');
+            setupSubTabs('diagnostico-tabs');
+            setupSubTabs('strategy-tabs');
+            
+            function renderCharts() {
+                const chartColors = {
+                    emerald: 'rgb(5, 150, 105)',
+                    blue: 'rgb(29, 78, 216)',
+                    yellow: 'rgb(202, 138, 4)',
+                    red: 'rgb(220, 38, 38)',
+                    emerald_bg: 'rgba(5, 150, 105, 0.2)',
+                    blue_bg: 'rgba(29, 78, 216, 0.2)',
+                    yellow_bg: 'rgba(202, 138, 4, 0.2)',
+                    red_bg: 'rgba(220, 38, 38, 0.2)',
+                };
+                
+                const budgetCtx = document.getElementById('budgetChart');
+                if (budgetCtx) {
+                    new Chart(budgetCtx, {
+                        type: 'doughnut',
+                        data: {
+                            labels: ['Marketing Digital (40%)', 'Creación de Contenidos (30%)', 'Muestras y Ferias (20%)', 'Relaciones Públicas (10%)'],
+                            datasets: [{
+                                label: 'Desglose de Presupuesto',
+                                data: [20000, 15000, 10000, 5000],
+                                backgroundColor: [chartColors.emerald, chartColors.blue, chartColors.yellow, chartColors.red],
+                                hoverOffset: 4
+                            }]
+                        },
+                        options: {
+                            responsive: true,
+                            maintainAspectRatio: false,
+                            plugins: {
+                                legend: {
+                                    position: 'bottom',
+                                },
+                                tooltip: {
+                                    callbacks: {
+                                        label: function(context) {
+                                            let label = context.label || '';
+                                            if (label) {
+                                                label += ': ';
+                                            }
+                                            if (context.parsed !== null) {
+                                                label += new Intl.NumberFormat('es-ES', { style: 'currency', currency: 'USD' }).format(context.parsed);
+                                            }
+                                            return label;
+                                        }
+                                    }
+                                }
                             }
                         }
-                    }
-
-                    // Hide controls if only one slide
-                    if (totalSlides <= 1) {
-                        prevButton.style.display = 'none';
-                        nextButton.style.display = 'none';
-                        dotsContainer.style.display = 'none';
-                    } else {
-                        prevButton.style.display = 'block';
-                        nextButton.style.display = 'block';
-                        dotsContainer.style.display = 'flex'; // Use flex for dots layout
-                    }
+                    });
                 }
-
-                // --- Go To Specific Slide ---
-                function goToSlide(index) {
-                    currentIndex = index;
-                    updateCarousel();
+                
+                const goalsCtx = document.getElementById('goalsChart');
+                if (goalsCtx) {
+                    new Chart(goalsCtx, {
+                        type: 'bar',
+                        data: {
+                            labels: ['Ventas (Unidades)', 'Leads Calificados', 'Sostenibilidad (Ton.)', 'Posicionamiento (%)'],
+                            datasets: [{
+                                label: 'Valor del Objetivo',
+                                data: [5000, 500, 50, 30],
+                                backgroundColor: [chartColors.emerald_bg, chartColors.blue_bg, chartColors.yellow_bg, chartColors.red_bg],
+                                borderColor: [chartColors.emerald, chartColors.blue, chartColors.yellow, chartColors.red],
+                                borderWidth: 1
+                            }]
+                        },
+                        options: {
+                            indexAxis: 'y',
+                            responsive: true,
+                            maintainAspectRatio: false,
+                            scales: {
+                                x: {
+                                    beginAtZero: true,
+                                    type: 'logarithmic',
+                                    ticks: {
+                                        callback: function(value, index, values) {
+                                            if (value === 10000 || value === 5000 || value === 1000 || value === 500 || value === 100 || value === 50 || value === 30 || value === 10) {
+                                                return value.toLocaleString('es-ES');
+                                            }
+                                        }
+                                    }
+                                }
+                            },
+                            plugins: {
+                                legend: {
+                                    display: false
+                                },
+                                title: {
+                                    display: true,
+                                    text: 'Metas (Escala Logarítmica para visualización)'
+                                }
+                            }
+                        }
+                    });
                 }
-
-                // --- Event Listeners for Buttons ---
-                prevButton.addEventListener('click', () => {
-                    if (totalSlides > 0) {
-                        currentIndex = (currentIndex === 0) ? totalSlides - 1 : currentIndex - 1;
-                        updateCarousel();
-                    }
-                });
-
-                nextButton.addEventListener('click', () => {
-                     if (totalSlides > 0) {
-                        currentIndex = (currentIndex === totalSlides - 1) ? 0 : currentIndex + 1;
-                        updateCarousel();
-                    }
-                });
-
-                // --- Initial Setup ---
-                updateCarousel();
-                console.log("Carrusel configurado."); // Debug log
-            } else {
-                 console.log("Elementos del carrusel no encontrados (puede ser normal si se eliminó la sección).");
             }
-        } catch (error) {
-            console.error("Error configurando el carrusel:", error);
-        }
-        // --- END: Carousel Logic ---
 
-        // --- Initialize Lucide Icons ---
-        try { // Add try...catch for robustness
-            if (typeof lucide !== 'undefined') {
-                lucide.createIcons();
-                console.log("Iconos Lucide inicializados."); // Debug log
-            } else {
-                console.error("Lucide library not loaded.");
-            }
-        } catch(error) {
-             console.error("Error inicializando iconos Lucide:", error);
-        }
-
-      }); // End of DOMContentLoaded listener
+            renderCharts();
+        });
     </script>
-
 </body>
 </html>
