@@ -3,31 +3,61 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dashboard | PLAN DE MARKETING: ECO PLACA</title>
+    <title>Dashboard Placca: EcoPlaca Revestir - Plan de Marketing</title>
+    <!-- Incluye Tailwind CSS para estilos -->
     <script src="https://cdn.tailwindcss.com"></script>
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <!-- Chosen Palette: Eco-Corporate Neutral (Base: bg-gray-50, Cards: bg-white, Text: text-gray-800, Accent 1 (Eco): text-emerald-700, Accent 2 (Corp): text-blue-700) -->
+    <!-- Incluye Chart.js para gráficos -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@3.7.1/dist/chart.min.js"></script>
     <style>
+        /* Estilos generales */
         body {
             font-family: 'Inter', sans-serif;
-        }
-        .tab-content {
-            display: none;
-        }
-        .tab-content.active {
-            display: block;
+            background-color: #f7f7f7;
+            color: #333;
         }
         .nav-link {
-            @apply px-4 py-2 rounded-md text-sm font-medium text-gray-500 hover:bg-gray-100 hover:text-gray-700 cursor-pointer;
+            padding: 0.75rem 1.25rem;
+            border-radius: 0.5rem;
+            font-weight: 500;
+            color: #6b7280;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            text-decoration: none;
+        }
+        .nav-link:hover {
+            background-color: #f0fdf4; /* emerald-50 */
+            color: #059669; /* emerald-600 */
         }
         .nav-link.active {
-            @apply bg-emerald-100 text-emerald-700;
+            background-color: #10b981; /* emerald-500 */
+            color: white;
+            box-shadow: 0 4px 6px -1px rgba(16, 185, 129, 0.5), 0 2px 4px -2px rgba(16, 185, 129, 0.5);
         }
+
+        /* Estilos para sub-navegación (Diagnóstico y Plan) */
         .sub-nav-link {
-            @apply px-4 py-2 rounded-t-lg text-sm font-medium text-gray-600 hover:bg-gray-50 border-b-2 border-transparent hover:border-gray-300 cursor-pointer;
+            padding: 0.5rem 1rem;
+            border-top-left-radius: 0.5rem;
+            border-top-right-radius: 0.5rem;
+            font-weight: 500;
+            color: #6b7280;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            text-decoration: none;
+            margin-right: 0.25rem;
+            border: 1px solid transparent;
+            border-bottom: none;
+            white-space: nowrap; /* Evita que los nombres largos se rompan en móvil */
+        }
+        .sub-nav-link:hover {
+            color: #059669; /* emerald-600 */
         }
         .sub-nav-link.active {
-            @apply border-emerald-500 text-emerald-600;
+            color: #10b981;
+            border-color: #d1d5db; /* gray-300 */
+            background-color: white;
+            border-bottom-color: white;
+            margin-bottom: -1px; /* Para que el borde quede justo en la línea */
         }
         .sub-tab-content {
             display: none;
@@ -35,604 +65,880 @@
         .sub-tab-content.active {
             display: block;
         }
-        .chart-container {
-            position: relative;
-            width: 100%;
-            max-width: 600px;
-            margin-left: auto;
-            margin-right: auto;
-            height: 350px;
-            max-height: 400px;
-        }
-        @media (min-width: 768px) {
-            .chart-container {
-                height: 400px;
-            }
-        }
         
-        /* Estilos para la Galería de Imágenes (Inicio) */
+        /* Estilo de Tarjetas de Imagen */
         .image-card {
-            @apply overflow-hidden rounded-xl shadow-lg transform transition duration-300 ease-in-out hover:scale-[1.03] bg-gray-100;
+            background-color: white;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+            transition: transform 0.3s ease;
+            border: 1px solid #e5e7eb;
+        }
+        .image-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
         }
         .image-card img {
-            @apply w-full h-48 object-cover transition duration-500 ease-in-out hover:opacity-90;
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
         }
         .image-card-body {
-            @apply p-4;
+            padding: 1rem;
+            height: 120px; /* Altura fija para consistencia */
         }
         .image-card-title {
-            @apply text-lg font-semibold text-gray-900;
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: #1f2937;
+            margin-top: 0.25rem;
         }
         .image-card-description {
-            @apply text-sm text-gray-600 mt-1;
+            font-size: 0.875rem;
+            color: #4b5563;
+            margin-top: 0.5rem;
         }
+
+        /* Ocultar pestañas no activas */
+        .tab-content {
+            display: none;
+        }
+        .tab-content.active {
+            display: block;
+        }
+
+        /* Estilo para tablas */
+        .min-w-full {
+            min-width: 100%;
+        }
+        
+        .chart-container {
+            position: relative;
+            height: 300px;
+        }
+        
+        /* Estilo para Porter */
+        .porter-force {
+            display: flex;
+            align-items: center;
+            padding: 1rem;
+            border-radius: 0.5rem;
+            margin-bottom: 0.75rem;
+            border-left-width: 4px;
+        }
+        .porter-force h4 {
+            font-weight: 600;
+            margin-bottom: 0.25rem;
+        }
+        .porter-force p {
+            font-size: 0.875rem;
+        }
+
+        /* Ajuste de scroll en móvil para sub-navegación */
+        .sub-nav-scroll {
+            overflow-x: auto;
+            -webkit-overflow-scrolling: touch;
+        }
+        
+        /* Ajuste de color para la fila de Producto en Programas Operativos */
+        .program-product {
+            background-color: #f0fdf4; /* emerald-50 */
+            border-left: 4px solid #10b981; /* emerald-500 */
+        }
+         /* Ajuste de color para la fila de Logística en Programas Operativos */
+        .program-logistics {
+            background-color: #eff6ff; /* blue-50 */
+            border-left: 4px solid #3b82f6; /* blue-500 */
+        }
+        
+        /* Estilo para la tabla de Precios */
+        .price-table th, .price-table td {
+            padding: 0.75rem;
+            text-align: left;
+        }
+        .price-table th {
+            background-color: #e0f2f1; /* teal-50 */
+            color: #0d9488; /* teal-700 */
+            font-weight: 600;
+        }
+        .price-table tr:nth-child(even) {
+            background-color: #f8fafc; /* slate-50 */
+        }
+
     </style>
 </head>
-<body class="bg-gray-50 text-gray-800">
+<body class="min-h-screen flex flex-col">
 
-    <div class="min-h-screen flex flex-col">
-        
-        <!-- Header -->
-        <header class="bg-white shadow-sm border-b border-gray-200">
-            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                <div class="flex justify-between items-center h-16">
-                    <h1 class="text-xl font-bold text-emerald-700">PLAN DE MARKETING: ECO PLACA</h1>
-                    <nav class="hidden md:flex space-x-4" id="main-nav">
-                        <!-- NAVEGACIÓN ACTUALIZADA -->
-                        <a class="nav-link active" data-tab="presentacion">Inicio</a>
-                        <a class="nav-link" data-tab="resumen">R.E.</a>
-                        <a class="nav-link" data-tab="diagnostico">Diagnóstico</a>
-                        <a class="nav-link" data-tab="plan">Plan Estratégico</a>
-                        <a class="nav-link" data-tab="inversion">Inversión y ROI</a>
-                    </nav>
-                </div>
+    <header class="bg-white sticky top-0 z-10 shadow-lg">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="hidden md:flex justify-between items-center py-4">
+                <h1 class="text-2xl font-bold text-gray-900">Placca Marketing Plan (EcoPlaca Revestir)</h1>
+                <!-- Desktop Nav -->
+                <nav class="flex space-x-2" id="main-nav-desktop">
+                    <a class="nav-link active" data-tab="presentacion">Inicio</a>
+                    <a class="nav-link" data-tab="resumen">R.E.</a>
+                    <a class="nav-link" data-tab="diagnostico">Diagnóstico</a>
+                    <a class="nav-link" data-tab="plan">Plan Estratégico</a>
+                    <a class="nav-link" data-tab="inversion">Inversión y ROI</a>
+                </nav>
             </div>
-             <!-- Mobile Nav -->
-            <nav class="md:hidden p-2">
-                <div class="flex space-x-2" id="main-nav-mobile">
-                    <!-- NAVEGACIÓN MÓVIL ACTUALIZADA -->
-                    <a class="nav-link active flex-1 text-center" data-tab="presentacion">Inicio</a>
-                    <a class="nav-link flex-1 text-center" data-tab="resumen">R.E.</a>
-                    <a class="nav-link flex-1 text-center" data-tab="diagnostico">Diagnóstico</a>
-                    <a class="nav-link flex-1 text-center" data-tab="plan">Plan</a>
-                    <a class="nav-link flex-1 text-center" data-tab="inversion">ROI</a>
-                </div>
-            </nav>
-        </header>
+        </div>
+        <!-- Mobile Nav -->
+        <nav class="md:hidden p-2 bg-white border-b border-gray-200">
+            <div class="flex space-x-2" id="main-nav-mobile">
+                <!-- NAVEGACIÓN MÓVIL ACTUALIZADA -->
+                <a class="nav-link active flex-1 text-center" data-tab="presentacion">Inicio</a>
+                <a class="nav-link flex-1 text-center" data-tab="resumen">R.E.</a>
+                <a class="nav-link flex-1 text-center" data-tab="diagnostico">Diagnóstico</a>
+                <a class="nav-link flex-1 text-center" data-tab="plan">Plan</a>
+                <a class="nav-link flex-1 text-center" data-tab="inversion">ROI</a>
+            </div>
+        </nav>
+    </header>
 
-        <!-- Main Content -->
-        <main class="flex-1">
-            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+    <!-- Main Content -->
+    <main class="flex-1">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
 
-                <!-- TAB: Inicio (Presentación) - GALERÍA DE IMÁGENES -->
-                <section id="presentacion" class="tab-content active">
-                    <div class="space-y-8">
-                        
-                        <!-- Bloque de Texto de Bienvenida -->
-                        <div class="bg-white p-8 rounded-xl shadow-2xl border border-gray-200">
-                            <h2 class="text-4xl font-extrabold tracking-tight text-gray-900 text-center">Bienvenido al Dashboard del Plan de Marketing</h2>
-                            <h3 class="text-xl font-medium text-emerald-700 text-center mt-1">ECO PLACA: De Residuo a Solución de Construcción Sostenible</h3>
-                            <div class="max-w-3xl mx-auto pt-4 text-center">
-                                <p class="text-lg text-gray-700 mb-4">
-                                    Este dashboard interactivo sintetiza la estrategia de mercado para el lanzamiento y posicionamiento de nuestras placas de plástico 100% reciclado en el segmento B2B. Nuestro enfoque se basa en la **durabilidad**, la **responsabilidad social** y el **alto rendimiento**.
-                                </p>
-                                <div class="mt-6">
-                                    <a href="#" class="inline-flex items-center justify-center px-6 py-3 border border-transparent text-base font-medium rounded-full shadow-lg text-white bg-emerald-600 hover:bg-emerald-700 transition transform hover:scale-[1.02] active:scale-[0.98]" 
-                                        onclick="document.querySelector('[data-tab=resumen]').click(); return false;">
-                                        Ver Resumen Ejecutivo (R.E.)
-                                    </a>
-                                </div>
+            <!-- TAB: Inicio (Presentación) - GALERÍA DE IMÁGENES -->
+            <section id="presentacion" class="tab-content active">
+                <div class="space-y-8">
+                    
+                    <!-- Bloque de Texto de Bienvenida Y PILARES -->
+                    <div class="bg-white p-8 rounded-xl shadow-2xl border border-gray-200">
+                        <h2 class="text-4xl font-extrabold tracking-tight text-gray-900 text-center">Bienvenido al Dashboard del Plan de Marketing</h2>
+                        <h3 class="text-xl font-medium text-emerald-700 text-center mt-1">Placca: "Renueva tus espacios" - EcoPlaca Revestir</h3>
+                        <div class="max-w-3xl mx-auto pt-4 text-center">
+                            <p class="text-lg text-gray-700 mb-6">
+                                Este dashboard sintetiza la estrategia de mercado para el lanzamiento y posicionamiento de nuestra **EcoPlaca Revestir**, un panel de revestimiento sostenible y duradero. Nuestro plan se sustenta en tres pilares de valor:
+                            </p>
+                            <div class="flex flex-wrap justify-center gap-4 mb-8">
+                                <span class="px-4 py-2 bg-blue-100 text-blue-700 font-semibold rounded-full text-sm shadow-md">100% Sostenibilidad Tangible</span>
+                                <span class="px-4 py-2 bg-yellow-100 text-yellow-700 font-semibold rounded-full text-sm shadow-md">Estética de lo Reciclado</span>
+                                <span class="px-4 py-2 bg-emerald-100 text-emerald-700 font-semibold rounded-full text-sm shadow-md">Renovación DIY de Alta Gama</span>
+                            </div>
+
+                            <div class="mt-6">
+                                <a href="#" class="inline-flex items-center justify-center px-6 py-3 border border-transparent text-base font-medium rounded-full shadow-lg text-white bg-emerald-600 hover:bg-emerald-700 transition transform hover:scale-[1.02] active:scale-[0.98]" 
+                                    onclick="document.querySelector('[data-tab=resumen]').click(); return false;">
+                                    Ver Resumen Ejecutivo (R.E.)
+                                </a>
                             </div>
                         </div>
-
-                        <!-- Galería de Imágenes (Grid Elegante) -->
-                        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-                            
-                            <!-- Tarjeta 1: Producto -->
-                            <div class="image-card">
-                                <!-- USANDO EL ID DEL ARCHIVO SUBIDO: Gemini_Generated_Image_a6nnmea6nnmea6nn.jpg -->
-                                <img src="/files/Gemini_Generated_Image_a6nnmea6nnmea6nn.jpg-444fdf42-f95b-4e82-9b1b-6bc92d91b83d" 
-                                     alt="Producto Placas de Plástico Reciclado" 
-                                     onerror="this.onerror=null;this.src='https://placehold.co/600x400/10b981/ffffff?text=Producto'">
-                                <div class="image-card-body">
-                                    <p class="text-xs font-medium text-emerald-600 uppercase">Foco de Venta</p>
-                                    <h4 class="image-card-title">Placas 100% Recicladas</h4>
-                                    <p class="image-card-description">Larga vida útil, resistencia superior a la humedad y estética moderna.</p>
-                                </div>
-                            </div>
-                            
-                            <!-- Tarjeta 2: Reciclaje -->
-                            <div class="image-card">
-                                <!-- USANDO EL ID DEL ARCHIVO SUBIDO: Gemini_Generated_Image_jef1eyjef1eyjef1.jpg -->
-                                <img src="/files/Gemini_Generated_Image_jef1eyjef1eyjef1.jpg-23eb8827-2690-4403-91cf-e2f2e717e93a" 
-                                     alt="Proceso de Reciclaje y Materia Prima Plástica" 
-                                     onerror="this.onerror=null;this.src='https://placehold.co/600x400/2563eb/ffffff?text=Reciclaje'">
-                                <div class="image-card-body">
-                                    <p class="text-xs font-medium text-blue-600 uppercase">Impacto Ambiental</p>
-                                    <h4 class="image-card-title">De Residuo a Materia Prima</h4>
-                                    <p class="image-card-description">Compromiso con la economía circular: cada placa reduce la basura plástica.</p>
-                                </div>
-                            </div>
-                            
-                            <!-- Tarjeta 3: Aplicación / DIY -->
-                            <div class="image-card">
-                                <!-- USANDO EL ID DEL ARCHIVO SUBIDO: WhatsApp Image 2025-10-29 at 1.00.30 PM.jpeg -->
-                                <img src="/files/WhatsApp Image 2025-10-29 at 1.00.30 PM.jpeg-0fece4e6-7718-407c-964a-8f781a1a4c10" 
-                                     alt="Aplicación de las Placas de Plástico en una cocina" 
-                                     onerror="this.onerror=null;this.src='https://placehold.co/600x400/ca8a04/ffffff?text=Aplicacion'">
-                                <div class="image-card-body">
-                                    <p class="text-xs font-medium text-yellow-700 uppercase">Mercado B2B/B2C</p>
-                                    <h4 class="image-card-title">Versatilidad en Diseño</h4>
-                                    <p class="image-card-description">Ideales para interiores y exteriores. Fáciles de instalar para profesionales.</p>
-                                </div>
-                            </div>
-                            
-                            <!-- Tarjeta 4: Resultados / Plan -->
-                            <div class="image-card">
-                                <!-- USANDO EL ID DEL ARCHIVO SUBIDO: Captura de pantalla 2025-10-29 125331.png -->
-                                <img src="/files/Captura de pantalla 2025-10-29 125331.png-c4ed35ad-dda1-48a5-bd3a-6b7601550e69" 
-                                     alt="Gráfico del Punto de Equilibrio y Rentabilidad" 
-                                     onerror="this.onerror=null;this.src='https://placehold.co/600x400/dc2626/ffffff?text=Resultados'">
-                                <div class="image-card-body">
-                                    <p class="text-xs font-medium text-red-600 uppercase">Estrategia Financiera</p>
-                                    <h4 class="image-card-title">Ruta a la Rentabilidad</h4>
-                                    <p class="image-card-description">Visión clara del punto de equilibrio y la facturación proyectada.</p>
-                                </div>
-                            </div>
-                        </div> <!-- Fin de la Galería -->
                     </div>
-                </section>
+
+                    <!-- Galería de Imágenes (Grid Elegante) -->
+                    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+                        
+                        <!-- Tarjeta 1: Producto -->
+                        <div class="image-card">
+                            <img src="/files/Gemini_Generated_Image_a6nnmea6nnmea6nn.jpg-444fdf42-f95b-4e82-9b1b-6bc92d91b83d" 
+                                alt="Producto EcoPlaca Revestir" 
+                                onerror="this.onerror=null;this.src='https://placehold.co/600x400/10b981/ffffff?text=EcoPlaca+Revestir'">
+                            <div class="image-card-body">
+                                <p class="text-xs font-medium text-emerald-600 uppercase">Foco de Venta</p>
+                                <h4 class="image-card-title">EcoPlaca Revestir</h4>
+                                <p class="image-card-description">Placa de 35x50cm. Estética moderna con motas de color sutiles.</p>
+                            </div>
+                        </div>
+                        
+                        <!-- Tarjeta 2: Reciclaje -->
+                        <div class="image-card">
+                            <img src="/files/Gemini_Generated_Image_jef1eyjef1eyjef1.jpg-23eb8827-2690-4403-91cf-e2f2e717e93a" 
+                                alt="Proceso de Reciclaje y Materia Prima Plástica" 
+                                onerror="this.onerror=null;this.src='https://placehold.co/600x400/2563eb/ffffff?text=Sostenibilidad'">
+                            <div class="image-card-body">
+                                <p class="text-xs font-medium text-blue-600 uppercase">Impacto Ambiental</p>
+                                <h4 class="image-card-title">100% HDPE Reciclado</h4>
+                                <p class="image-card-description">Transformamos residuos post-consumo en diseño funcional y duradero.</p>
+                            </div>
+                        </div>
+                        
+                        <!-- Tarjeta 3: Aplicación / DIY -->
+                        <div class="image-card">
+                            <img src="/files/WhatsApp Image 2025-10-29 at 1.00.30 PM.jpeg-0fece4e6-7718-407c-964a-8f781a1a4c10" 
+                                alt="Aplicación de las Placas de Plástico en una cocina" 
+                                onerror="this.onerror=null;this.src='https://placehold.co/600x400/ca8a04/ffffff?text=DIY+Facil'">
+                            <div class="image-card-body">
+                                <p class="text-xs font-medium text-yellow-700 uppercase">Foco de Mercado</p>
+                                <h4 class="image-card-title">Renovación DIY de Alta Gama</h4>
+                                <p class="image-card-description">Fácil de cortar y de instalar. Ideal para cocinas, baños y exteriores.</p>
+                            </div>
+                        </div>
+                        
+                        <!-- Tarjeta 4: Resultados / Plan -->
+                        <div class="image-card">
+                            <img src="/files/Captura de pantalla 2025-10-29 125331.png-c4ed35ad-dda1-48a5-bd3a-6b7601550e69" 
+                                alt="Gráfico del Punto de Equilibrio y Rentabilidad" 
+                                onerror="this.onerror=null;this.src='https://placehold.co/600x400/dc2626/ffffff?text=Resultados'">
+                            <div class="image-card-body">
+                                <p class="text-xs font-medium text-red-600 uppercase">Estrategia Financiera</p>
+                                <h4 class="image-card-title">Ruta a la Rentabilidad</h4>
+                            <p class="image-card-description">Visión clara del punto de equilibrio y la facturación proyectada.</p>
+                            </div>
+                        </div>
+                    </div> <!-- Fin de la Galería -->
+                </div>
+            </section>
 
 
-                <!-- TAB RENOMBRADA: R.E. (Resumen Ejecutivo) -->
-                <section id="resumen" class="tab-content">
-                    <div class="space-y-6">
-                        <h2 class="text-3xl font-bold tracking-tight text-gray-900">R.E. | Resumen Ejecutivo y Métricas Clave</h2>
-                        <p class="text-lg text-gray-600">
-                            Esta sección presenta la Misión, Visión, los objetivos cuantificables y las métricas clave del plan de marketing.
+            <!-- TAB RENOMBRADA: R.E. (Resumen Ejecutivo) -->
+            <section id="resumen" class="tab-content">
+                <div class="space-y-6">
+                    <h2 class="text-3xl font-bold tracking-tight text-gray-900">R.E. | Resumen Ejecutivo y Métricas Clave (Placca)</h2>
+                    <p class="text-lg text-gray-600">
+                        Esta sección presenta la Misión, Visión, los objetivos cuantificables y las métricas clave del plan de marketing de Placca.
+                    </p>
+                    
+                    <!-- Stat Cards -->
+                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5">
+                        <div class="bg-white p-6 rounded-lg shadow-md border border-gray-200">
+                            <h3 class="text-sm font-medium text-gray-500">Objetivo de Ventas (12 meses)</h3>
+                            <!-- UNIDADES ACTUALIZADAS A 50,000 -->
+                            <p class="mt-1 text-3xl font-semibold text-emerald-600">50,000 Unidades</p>
+                            <p class="text-sm text-gray-500">EcoPlaca Revestir</p>
+                        </div>
+                        <div class="bg-white p-6 rounded-lg shadow-md border border-gray-200">
+                            <h3 class="text-sm font-medium text-gray-500">Objetivo de Marketing (6 meses)</h3>
+                            <p class="mt-1 text-3xl font-semibold text-emerald-600">2,500 Leads (B2C/B2B)</p>
+                            <p class="text-sm text-gray-500">Vía tutoriales y catálogos</p>
+                        </div>
+                        <div class="bg-white p-6 rounded-lg shadow-md border border-gray-200">
+                            <h3 class="text-sm font-medium text-gray-500">Impacto Sostenible (12 meses)</h3>
+                            <!-- TONELADAS ACTUALIZADAS POR VOLUMEN -->
+                            <p class="mt-1 text-3xl font-semibold text-emerald-600">83 Toneladas</p>
+                            <p class="text-sm text-gray-500">De plástico HDPE reciclado</p>
+                        </div>
+                        <div class="bg-white p-6 rounded-lg shadow-md border border-gray-200">
+                            <h3 class="text-sm font-medium text-gray-500">Costo Total de Inversión (Año 1)</h3>
+                            <p class="mt-1 text-3xl font-semibold text-red-600">$65,000 USD</p>
+                            <p class="text-sm text-gray-500">Marketing + Costos Fijos</p>
+                        </div>
+                    </div>
+
+                    <!-- Misión y Visión -->
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div class="bg-white p-6 rounded-lg shadow-md border border-gray-200">
+                            <h3 class="text-xl font-semibold text-blue-700">Misión</h3>
+                            <p class="mt-2 text-gray-600">Transformar los residuos plásticos en diseño y soluciones de revestimiento de alta calidad, permitiendo la renovación de espacios con conciencia, diseño único y durabilidad garantizada.</p>
+                        </div>
+                        <div class="bg-white p-6 rounded-lg shadow-md border border-gray-200">
+                            <h3 class="text-xl font-semibold text-blue-700">Visión</h3>
+                            <p class="mt-2 text-gray-600">Ser la marca de referencia global que democratiza la renovación sostenible ("Renueva tus espacios"), liderando la fusión de la estética del diseño moderno con los materiales de economía circular.</p>
+                        </div>
+                    </div>
+
+                    <!-- ESTRATEGIA CLAVE (Actualizada con los 3 Pilares) -->
+                    <div class="bg-white p-6 rounded-lg shadow-md border border-gray-200">
+                        <h3 class="text-xl font-bold text-gray-900 border-b pb-2 mb-3">Los 3 Pilares de Originalidad (Propuesta de Valor)</h3>
+                        <p class="mt-2 text-gray-600">
+                            La EcoPlaca Revestir se diferencia de la competencia tradicional (cerámica, madera) y de los sustitutos de plástico virgen mediante la combinación estratégica de estos tres conceptos:
                         </p>
                         
-                        <!-- Stat Cards -->
-                        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5">
-                            <div class="bg-white p-6 rounded-lg shadow-md border border-gray-200">
-                                <h3 class="text-sm font-medium text-gray-500">Objetivo de Ventas (12 meses)</h3>
-                                <p class="mt-1 text-3xl font-semibold text-emerald-600">5,000 Unidades</p>
-                                <p class="text-sm text-gray-500">($250,000 en facturación)</p>
+                        <div class="mt-4 grid grid-cols-1 md:grid-cols-3 gap-4">
+                            <!-- Pilar 1: Sostenibilidad Tangible -->
+                            <div class="p-3 bg-emerald-50 rounded-lg border border-emerald-200">
+                                <h4 class="font-bold text-emerald-800">1. Sostenibilidad Tangible</h4>
+                                <p class="text-sm text-emerald-700 mt-1">El producto celebra su origen. El cliente no solo compra un revestimiento, sino una solución directa para el residuo plástico (100% HDPE reciclado).</p>
                             </div>
-                            <div class="bg-white p-6 rounded-lg shadow-md border border-gray-200">
-                                <h3 class="text-sm font-medium text-gray-500">Objetivo de Marketing (6 meses)</h3>
-                                <p class="mt-1 text-3xl font-semibold text-emerald-600">500 Leads Calificados</p>
-                                <p class="text-sm text-gray-500">Vía web</p>
+                            <!-- Pilar 2: Estética de lo Reciclado -->
+                            <div class="p-3 bg-yellow-50 rounded-lg border border-yellow-200">
+                                <h4 class="font-bold text-yellow-800">2. Estética de lo Reciclado</h4>
+                                <p class="text-sm text-yellow-700 mt-1">Diseño único con texturas y motas de color sutiles. No imita; ofrece una estética auténtica y moderna ideal para la decoración consciente.</p>
                             </div>
-                            <div class="bg-white p-6 rounded-lg shadow-md border border-gray-200">
-                                <h3 class="text-sm font-medium text-gray-500">Impacto Sostenible (12 meses)</h3>
-                                <p class="mt-1 text-3xl font-semibold text-emerald-600">50 Toneladas</p>
-                                <p class="text-sm text-gray-500">De plástico reciclado</p>
-                            </div>
-                            <div class="bg-white p-6 rounded-lg shadow-md border border-gray-200">
-                                <h3 class="text-sm font-medium text-gray-500">Presupuesto Total (Año 1)</h3>
-                                <p class="mt-1 text-3xl font-semibold text-emerald-600">$50,000 USD</p>
-                                <p class="text-sm text-gray-500">Inversión en Marketing</p>
+                            <!-- Pilar 3: Renovación DIY de Alta Gama -->
+                            <div class="p-3 bg-blue-50 rounded-lg border border-blue-200">
+                                <h4 class="font-bold text-blue-800">3. DIY de Alta Gama</h4>
+                                <p class="text-sm text-blue-700 mt-1">Fácil instalación gracias a su bajo peso y facilidad de corte. Permite una transformación rápida y sin esfuerzo (DIY) con resultados profesionales.</p>
                             </div>
                         </div>
+                    </div>
+                </div>
+            </section>
 
-                        <!-- Misión y Visión -->
+            <!-- Tab: Diagnóstico -->
+            <section id="diagnostico" class="tab-content">
+                <div class="space-y-6">
+                    <h2 class="text-3xl font-bold tracking-tight text-gray-900">Diagnóstico del Mercado</h2>
+                    <p class="text-lg text-gray-600">
+                        Análisis del entorno, segmentación, la Ficha Técnica actualizada y las fuerzas competitivas.
+                    </p>
+
+                    <nav class="flex border-b border-gray-300 sub-nav-scroll" id="diagnostico-tabs">
+                        <a class="sub-nav-link active" data-subtab="ficha">Ficha Técnica</a>
+                        <a class="sub-nav-link" data-subtab="situacion">Análisis de la Situación</a>
+                        <a class="sub-nav-link" data-subtab="foda">Análisis FODA</a>
+                        <a class="sub-nav-link" data-subtab="porter">Porter (5 Fuerzas)</a>
+                    </nav>
+
+                    <!-- Sub-Tab: FICHA TÉCNICA (Actualizada) -->
+                    <div id="ficha" class="sub-tab-content active p-6 bg-white rounded-b-lg shadow-xl border border-emerald-300">
+                        <h3 class="text-2xl font-bold text-emerald-700 mb-4 border-b pb-2">Placca: Ficha Técnica de EcoPlaca Revestir y Propuesta de Valor</h3>
+                        <p class="text-gray-600 mb-6">Detalle de las características clave del producto que sustentan la estrategia de venta B2C (DIY) y B2B.</p>
+
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                            <!-- Características Técnicas -->
+                            <div>
+                                <h4 class="font-extrabold text-xl text-gray-900 mb-3 flex items-center">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 mr-2 text-blue-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37a1.724 1.724 0 002.572-1.065z" />
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                                    </svg>
+                                    Atributos Físicos y Composición
+                                </h4>
+                                <ul class="list-disc list-outside pl-5 space-y-2 text-gray-700">
+                                    <li><span class="font-semibold">Material:</span> 100% Polietileno de Alta Densidad (HDPE) reciclado.</li>
+                                    <li><span class="font-semibold">Dimensiones:</span> $35 cm \times 50 cm \times 1.5 cm$ (formato panel de revestimiento).</li>
+                                    <li><span class="font-semibold">Peso:</span> Aproximadamente $1.5 kg$ por placa.</li>
+                                    <li><span class="font-semibold">Instalación:</span> Fácil adhesión con pegamentos de montaje o fijación mecánica.</li>
+                                    <li><span class="font-semibold">Cobertura:</span> $0.175 m^{2}$ por placa. (Necesita $5.7$ placas por $\text{m}^2$)</li>
+                                </ul>
+                            </div>
+
+                            <!-- Propuesta de Valor B2B/B2C (Énfasis en Originalidad) -->
+                            <div>
+                                <h4 class="font-extrabold text-xl text-gray-900 mb-3 flex items-center">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 mr-2 text-emerald-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.231 9 11.622 5.176-1.39 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
+                                    </svg>
+                                    Ventajas Competitivas Clave
+                                </h4>
+                                <ul class="list-disc list-outside pl-5 space-y-2 text-gray-700">
+                                    <li class="font-bold text-gray-900">Estética de lo Reciclado: Textura propia, moderna y auténtica, no imita la madera.</li>
+                                    <li class="font-bold text-gray-900">DIY de Alta Gama: Ligero y cortable con herramientas estándar para una instalación rápida.</li>
+                                    <li><span class="font-semibold">Durabilidad Extrema:</span> 100% Impermeable, resistente a químicos, impactos y corrosión.</li>
+                                    <li><span class="font-semibold">Sostenibilidad Tangible:</span> Cumplimiento de metas ESG y reducción directa de residuos plásticos.</li>
+                                    <li><span class="font-semibold">Bajo Mantenimiento:</span> Superficie no porosa, fácil de limpiar sin tratamientos especiales.</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Sub-Tab: Situación (Segmentación Clara) -->
+                    <div id="situacion" class="sub-tab-content p-4 bg-white rounded-b-lg shadow-md border border-gray-200">
+                        <h3 class="text-xl font-semibold text-gray-800 mb-4">Contexto y Segmentación de Mercado</h3>
                         <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                            <div class="bg-white p-6 rounded-lg shadow-md border border-gray-200">
-                                <h3 class="text-xl font-semibold text-blue-700">Misión</h3>
-                                <p class="mt-2 text-gray-600">Transformar residuos plásticos en soluciones de construcción duraderas y sostenibles, ofreciendo una alternativa ecológica y de alto rendimiento que impulse la economía circular.</p>
+                            <div>
+                                <h4 class="font-semibold text-emerald-700">Contexto del Mercado y Tendencias</h4>
+                                <ul class="list-disc list-outside pl-5 mt-2 space-y-1 text-gray-600">
+                                    <li>Crecimiento acelerado en la demanda de soluciones DIY y de rápida renovación.</li>
+                                    <li>El factor sostenibilidad ya no es un extra, es un requisito clave en la toma de decisiones.</li>
+                                    <li>Necesidad de diferenciación en diseño frente a los revestimientos tradicionales (cerámica, madera).</li>
+                                </ul>
                             </div>
-                            <div class="bg-white p-6 rounded-lg shadow-md border border-gray-200">
-                                <h3 class="text-xl font-semibold text-blue-700">Visión</h3>
-                                <p class="mt-2 text-gray-600">Ser el líder indiscutible en la provisión de materiales de construcción a partir de plásticos 100% reciclados, siendo el estándar de durabilidad y responsabilidad ambiental en el sector B2B.</p>
+                            <div>
+                                <h4 class="font-semibold text-emerald-700">Segmentación de Placca (B2C y B2B)</h4>
+                                <ul class="list-disc list-outside pl-5 mt-2 space-y-1 text-gray-600">
+                                    <li><span class="font-medium text-gray-800">B2C: Los Consciencia Verde / Bricolaje Creativo.</span> Buscan transformar sus espacios de manera eficiente, estilizada y responsable con el medio ambiente, valorando el **DIY de Alta Gama**.</li>
+                                    <li><span class="font-medium text-gray-800">B2B: Arquitectos y Diseñadores de Interiores.</span> Buscan materiales certificados, estéticamente únicos y con una fuerte narrativa de **Sostenibilidad Tangible** para diferenciar sus proyectos.</li>
+                                </ul>
                             </div>
                         </div>
+                    </div>
 
-                        <!-- ESTRATEGIA CLAVE (Contenido Reemplazado) -->
-                        <div class="bg-white p-6 rounded-lg shadow-md border border-gray-200">
-                            <h3 class="text-lg font-semibold text-gray-900">Estrategia Clave y Resumen del Producto</h3>
-                            <p class="mt-2 text-gray-600">
-                                Este plan de marketing busca posicionar las Placas de Plástico 100% Reciclado como la solución líder y sostenible en el mercado de materiales de construcción y diseño en los primeros 12 meses. La estrategia clave es enfatizar el valor ecológico, la calidad superior y la durabilidad, apuntando a un segmento B2B (Arquitectos y Constructoras) altamente consciente. Se proyecta alcanzar 5,000 unidades vendidas en el primer año y reciclar 50 toneladas de plástico.
-                            </p>
-                            <ul class="mt-4 space-y-2 text-gray-700 list-disc list-inside">
-                                <li><span class="font-bold">Producto:</span> Placas de plástico 100% reciclado, ecológicas, resistentes, duraderas y versátiles.</li>
-                                <li><span class="font-bold">Objetivo Principal:</span> Liderazgo en el nicho de materiales de construcción sostenibles.</li>
-                                <li><span class="font-bold">Estrategia Clave:</span> Marketing de Contenidos y Digital focalizado en leads B2B.</li>
+                    <!-- Sub-Tab: FODA -->
+                    <div id="foda" class="sub-tab-content p-4 bg-white rounded-b-lg shadow-md border border-gray-200">
+                        <h3 class="text-xl font-semibold text-gray-800 mb-4">Matriz FODA</h3>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            <div class="bg-emerald-50 p-4 rounded-lg border border-emerald-200">
+                                <h4 class="font-bold text-lg text-emerald-800">Fortalezas (Internas)</h4>
+                                <ul class="list-disc list-outside pl-5 mt-2 space-y-1 text-emerald-700">
+                                    <li>Producto 100% reciclado y reciclable con una estética propia.</li>
+                                    <li>Fácil Instalación (DIY) que amplía el mercado a B2C.</li>
+                                    <li>Durabilidad superior a revestimientos tradicionales.</li>
+                                </ul>
+                            </div>
+                            <div class="bg-blue-50 p-4 rounded-lg border border-blue-200">
+                                <h4 class="font-bold text-lg text-blue-800">Oportunidades (Externas)</h4>
+                                <ul class="list-disc list-outside pl-5 mt-2 space-y-1 text-blue-700">
+                                    <li>Creciente movimiento DIY y de renovación en el hogar.</li>
+                                    <li>Demanda B2B de materiales que contribuyan a la certificación LEED o BREEAM.</li>
+                                </ul>
+                            </div>
+                            <div class="bg-yellow-50 p-4 rounded-lg border border-yellow-200">
+                                <h4 class="font-bold text-lg text-yellow-800">Debilidades (Internas)</h4>
+                                <ul class="list-disc list-outside pl-5 mt-2 space-y-1 text-yellow-700">
+                                    <li>Marca Placca nueva y poco conocida en ambos segmentos.</li>
+                                    <li>Precio inicial percibido como alto comparado con cerámica estándar.</li>
+                                </ul>
+                            </div>
+                            <div class="bg-red-50 p-4 rounded-lg border border-red-200">
+                                <h4 class="font-bold text-lg text-red-800">Amenazas (Externas)</h4>
+                                <ul class="list-disc list-outside pl-5 mt-2 space-y-1 text-red-700">
+                                    <li>Competencia de revestimientos de plástico virgen más baratos.</li>
+                                    <li>Curva de aprendizaje necesaria para la instalación en el segmento DIY.</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Sub-Tab: Porter -->
+                    <div id="porter" class="sub-tab-content p-4 bg-white rounded-b-lg shadow-md border border-gray-200">
+                        <h3 class="text-xl font-semibold text-gray-800 mb-4">Análisis de las 5 Fuerzas de Porter</h3>
+                        <p class="text-gray-600 mb-6">Evaluación de la intensidad competitiva de la industria de revestimientos para Placca, enfocada en diferenciación.</p>
+                        
+                        <div class="space-y-4">
+                            <!-- Fuerza 1: Rivalidad entre competidores existentes -->
+                            <div class="porter-force bg-red-50 border-red-500">
+                                <div>
+                                    <h4 class="text-red-700">Rivalidad (Media-Alta)</h4>
+                                    <p class="text-red-600">Existe alta rivalidad con sustitutos tradicionales (cerámica, madera) y otros revestimientos vinílicos o plásticos. La diferenciación por diseño y DIY reduce la presión.</p>
+                                </div>
+                            </div>
+                            
+                            <!-- Fuerza 2: Amenaza de productos sustitutos -->
+                            <div class="porter-force bg-red-50 border-red-500">
+                                <div>
+                                    <h4 class="text-red-700">Sustitutos (Alta)</h4>
+                                    <p class="text-red-600">Los sustitutos son muchos y maduros. Placca debe enfocar su marketing en el valor único: durabilidad extrema + fácil instalación + impacto ambiental positivo, superando el costo inicial.</p>
+                                </div>
+                            </div>
+                            
+                            <!-- Fuerza 3: Amenaza de nuevos entrantes -->
+                            <div class="porter-force bg-yellow-50 border-yellow-500">
+                                <div>
+                                    <h4 class="text-yellow-700">Nuevos Entrantes (Media)</h4>
+                                    <p class="text-yellow-600">La tecnología de reciclaje y la certificación B2B son barreras. Sin embargo, el nicho DIY puede atraer a competidores con productos más sencillos a menor costo.</p>
+                                </div>
+                            </div>
+                            
+                            <!-- Fuerza 4: Poder de negociación de los proveedores -->
+                            <div class="porter-force bg-emerald-50 border-emerald-500">
+                                <div>
+                                    <h4 class="text-emerald-700">Proveedores (Baja)</h4>
+                                    <p class="text-emerald-600">El principal proveedor es el residuo plástico (HDPE), abundante y de bajo costo. Esto da a Placca una sólida ventaja en el control de costos de la materia prima.</p>
+                                </div>
+                            </div>
+                            
+                            <!-- Fuerza 5: Poder de negociación de los clientes -->
+                            <div class="porter-force bg-yellow-50 border-yellow-500">
+                                <div>
+                                    <h4 class="text-yellow-700">Clientes (Media)</h4>
+                                    <p class="text-yellow-600">Los clientes B2C buscan facilidad y precio, y los B2B buscan especificación técnica. Placca debe fidelizar con una excelente experiencia de compra y contenido educativo.</p>
+                                </div>
+                            </div>
+                            
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Tab: Plan Estratégico -->
+            <section id="plan" class="tab-content">
+                <div class="space-y-8">
+                    <h2 class="text-3xl font-bold tracking-tight text-gray-900">Plan Estratégico (4 P's y Programas Operativos)</h2>
+                    <p class="text-lg text-gray-600">
+                        Detalle de la estrategia de las 4 P's y el plan de acción (Programas Operativos) que incluye la descripción del producto, precio y logística.
+                    </p>
+
+                    <!-- 4 P's -->
+                    <div class="bg-white p-6 rounded-lg shadow-md border border-gray-200">
+                        <h3 class="text-xl font-semibold text-gray-800 mb-4">Estrategia de las 4 P's</h3>
+                        <nav class="flex border-b border-gray-300 -mt-2 mb-4 sub-nav-scroll" id="strategy-tabs">
+                            <a class="sub-nav-link active" data-subtab="producto-estrategia">Producto</a>
+                            <a class="sub-nav-link" data-subtab="precio-estrategia">Precio</a>
+                            <a class="sub-nav-link" data-subtab="plaza-estrategia">Plaza</a>
+                            <a class="sub-nav-link" data-subtab="promocion-estrategia">Promoción</a>
+                        </nav>
+                        
+                        <!-- PRODUCTO (P1) - ESTRATEGIA (ACTUALIZADA) -->
+                        <div id="producto-estrategia" class="sub-tab-content active text-gray-600 space-y-4">
+                            <h4 class="font-bold text-lg text-emerald-700">Estrategia Basada en los 3 Pilares de Originalidad</h4>
+                            <p>La estrategia del producto se centra en validar las tres ventajas competitivas únicas de la EcoPlaca Revestir para ambos segmentos de mercado:</p>
+                            
+                            <ul class="list-disc list-outside pl-5 mt-1 space-y-2 text-gray-700">
+                                <li><span class="font-bold text-emerald-800">Foco 1: Sostenibilidad Tangible (100% HDPE):</span> Obtención de certificaciones de ciclo de vida (LCA) y cumplimiento de estándares para proyectos de especificación B2B.</li>
+                                <li><span class="font-bold text-emerald-800">Foco 2: Estética Única:</span> Lanzamiento de colecciones de diseño limitadas que celebren las texturas del reciclado, posicionando el producto como una opción de diseño consciente y no como un sustituto barato.</li>
+                                <li><span class="font-bold text-emerald-800">Foco 3: Funcionalidad DIY:</span> Desarrollo de material educativo (tutoriales) y estandarización del proceso de instalación para garantizar el éxito del cliente B2C.</li>
+                            </ul>
+                            
+                            <p class="mt-2 font-semibold">Desarrollo Futuro (Línea Placca):</p>
+                            <ul class="list-disc list-outside pl-5 mt-1 space-y-1 text-gray-700 text-sm">
+                                <li>**EcoPlaca Piso (Terrazas):** Paneles de mayor grosor y resistencia.</li>
+                                <li>**Accesorios de Instalación:** Clips de fijación ocultos y adhesivos Eco-Friendly.</li>
                             </ul>
                         </div>
-                    </div>
-                </section>
-
-                <!-- Tab: Diagnóstico -->
-                <section id="diagnostico" class="tab-content">
-                    <div class="space-y-6">
-                        <h2 class="text-3xl font-bold tracking-tight text-gray-900">Diagnóstico del Mercado</h2>
-                        <p class="text-lg text-gray-600">
-                            Esta sección analiza el entorno en el que competimos. Explore la situación actual del mercado y nuestro Análisis FODA (Fortalezas, Oportunidades, Debilidades y Amenazas) para entender el contexto de nuestro plan estratégico.
-                        </p>
-
-                        <nav class="flex border-b border-gray-300" id="diagnostico-tabs">
-                            <a class="sub-nav-link" data-subtab="situacion">Análisis de la Situación</a>
-                            <a class="sub-nav-link active" data-subtab="foda">Análisis FODA</a>
-                        </nav>
-
-                        <!-- Sub-Tab: Situación -->
-                        <div id="situacion" class="sub-tab-content p-4 bg-white rounded-b-lg shadow-md border border-gray-200">
-                            <h3 class="text-xl font-semibold text-gray-800 mb-4">Contexto y Producto</h3>
-                            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                                <div>
-                                    <h4 class="font-semibold text-emerald-700">Contexto del Mercado</h4>
-                                    <ul class="list-disc list-outside pl-5 mt-2 space-y-1 text-gray-600">
-                                        <li>Fuerte crecimiento en la demanda de materiales de economía circular.</li>
-                                        <li>La competencia se basa en alternativas tradicionales (madera, aglomerado) más económicas.</li>
-                                        <li>Es vital diferenciarse por calidad, certificación e impacto ambiental positivo.</li>
-                                    </ul>
-                                </div>
-                                <div>
-                                    <h4 class="font-semibold text-emerald-700">Análisis del Producto</h4>
-                                    <ul class="list-disc list-outside pl-5 mt-2 space-y-1 text-gray-600">
-                                        <li><span class="font-medium text-gray-800">Ventajas:</span> Impermeable, resistente a plagas/hongos, larga vida útil, alta durabilidad.</li>
-                                        <li><span class="font-medium text-gray-800">Retos:</span> Precio inicial percibido como superior, necesidad de educar al mercado sobre su instalación.</li>
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- Sub-Tab: FODA -->
-                        <div id="foda" class="sub-tab-content active p-4 bg-white rounded-b-lg shadow-md border border-gray-200">
-                            <h3 class="text-xl font-semibold text-gray-800 mb-4">Matriz FODA</h3>
-                            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                                <div class="bg-emerald-50 p-4 rounded-lg border border-emerald-200">
-                                    <h4 class="font-bold text-lg text-emerald-800">Fortalezas (Internas)</h4>
-                                    <ul class="list-disc list-outside pl-5 mt-2 space-y-1 text-emerald-700">
-                                        <li>Producto 100% reciclado y reciclable.</li>
-                                        <li>Larga vida útil y resistencia superior (humedad/plagas).</li>
-                                    </ul>
-                                </div>
-                                <div class="bg-blue-50 p-4 rounded-lg border border-blue-200">
-                                    <h4 class="font-bold text-lg text-blue-800">Oportunidades (Externas)</h4>
-                                    <ul class="list-disc list-outside pl-5 mt-2 space-y-1 text-blue-700">
-                                        <li>Creciente legislación y subvenciones para construcción sostenible.</li>
-                                        <li>Demanda en aumento de arquitectos y constructoras con enfoque verde.</li>
-                                    </ul>
-                                </div>
-                                <div class="bg-yellow-50 p-4 rounded-lg border border-yellow-200">
-                                    <h4 class="font-bold text-lg text-yellow-800">Debilidades (Internas)</h4>
-                                    <ul class="list-disc list-outside pl-5 mt-2 space-y-1 text-yellow-700">
-                                        <li>Marca y producto nuevos o poco conocidos.</li>
-                                        <li>Percepción inicial de "baja calidad" del plástico reciclado.</li>
-                                    </ul>
-                                </div>
-                                <div class="bg-red-50 p-4 rounded-lg border border-red-200">
-                                    <h4 class="font-bold text-lg text-red-800">Amenazas (Externas)</h4>
-                                    <ul class="list-disc list-outside pl-5 mt-2 space-y-1 text-red-700">
-                                        <li>Competencia de materiales tradicionales más económicos.</li>
-                                        <li>Necesidad de una gran inversión en educación de mercado.</li>
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </section>
-
-                <!-- Tab: Plan Estratégico -->
-                <section id="plan" class="tab-content">
-                    <div class="space-y-8">
-                        <h2 class="text-3xl font-bold tracking-tight text-gray-900">Plan Estratégico</h2>
-                        <p class="text-lg text-gray-600">
-                            Aquí se detalla el núcleo del plan: nuestros objetivos cuantificables, la estrategia de las 4 P's para abordar el mercado y los programas operativos que ejecutaremos para alcanzar nuestras metas.
-                        </p>
-
-                        <!-- Objetivos -->
-                        <div class="bg-white p-6 rounded-lg shadow-md border border-gray-200">
-                            <h3 class="text-xl font-semibold text-gray-800 mb-4">Objetivos SMART</h3>
-                            <p class="text-gray-600 mb-4">Visualización de los objetivos clave del plan. El gráfico muestra la magnitud de cada meta a alcanzar.</p>
-                            <div class="chart-container">
-                                <canvas id="goalsChart"></canvas>
-                            </div>
-                        </div>
-
-                        <!-- 4 P's -->
-                        <div class="bg-white p-6 rounded-lg shadow-md border border-gray-200">
-                            <h3 class="text-xl font-semibold text-gray-800 mb-4">Estrategia de las 4 P's</h3>
-                            <nav class="flex border-b border-gray-300 -mt-2 mb-4" id="strategy-tabs">
-                                <a class="sub-nav-link active" data-subtab="producto">Producto</a>
-                                <a class="sub-nav-link" data-subtab="precio">Precio</a>
-                                <a class="sub-nav-link" data-subtab="plaza">Plaza</a>
-                                <a class="sub-nav-link" data-subtab="promocion">Promoción</a>
-                            </nav>
-                            
-                            <div id="producto" class="sub-tab-content active text-gray-600 space-y-2">
-                                <p>Foco en la calidad, acabados uniformes y certificaciones de resistencia. Desarrollo de un manual claro de instalación y manipulación para profesionales.</p>
-                            </div>
-                            <div id="precio" class="sub-tab-content text-gray-600 space-y-2">
-                                <p>Estrategia de **Precio Premium Justificado**: Posicionado por encima del aglomerado tradicional, pero competitivo frente a maderas de alta calidad o compuestos de exterior. Se ofrecerán precios por volumen para constructoras (B2B).</p>
-                            </div>
-                            <div id="plaza" class="sub-tab-content text-gray-600 space-y-2">
-                                <p>Venta directa (online y showroom propio) para un mayor control del margen y la experiencia del cliente. Alianzas estratégicas con distribuidores de materiales de construcción "verdes" o especializados.</p>
-                            </div>
-                            <div id="promocion" class="sub-tab-content text-gray-600 space-y-2">
-                                <p>Marketing de Contenidos (casos de éxito, white papers) y Campañas Digitales (Ads B2B en Google y LinkedIn). Participación en ferias clave de construcción y diseño sostenible.</p>
-                            </div>
-                        </div>
-
-                        <!-- Programas -->
-                        <div class="bg-white p-6 rounded-lg shadow-md border border-gray-200">
-                            <h3 class="text-xl font-semibold text-gray-800 mb-4">Programas Operativos</h3>
-                            <div class="overflow-x-auto">
-                                <table class="min-w-full divide-y divide-gray-200">
-                                    <thead class="bg-gray-50">
-                                        <tr>
-                                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Programa</th>
-                                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Actividades Clave</th>
-                                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">KPI de Éxito</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody class="bg-white divide-y divide-gray-200">
-                                        <tr>
-                                            <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">Contenidos y SEO</td>
-                                            <td class="px-6 py-4 whitespace-normal text-sm text-gray-500">Creación de Blog técnico y fichas detalladas.</td>
-                                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">Tráfico orgánico (+30%)</td>
-                                        </tr>
-                                        <tr>
-                                            <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">Campañas Digitales (Ads)</td>
-                                            <td class="px-6 py-4 whitespace-normal text-sm text-gray-500">Google Ads y LinkedIn Ads con oferta de muestra o consultoría.</td>
-                                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">Costo por Lead (CPL)</td>
-                                        </tr>
-                                        <tr>
-                                            <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">Alianzas Estratégicas</td>
-                                            <td class="px-6 py-4 whitespace-normal text-sm text-gray-500">Presentación a 5 constructoras target y 3 distribuidores.</td>
-                                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">N° de acuerdos cerrados</td>
-                                        </tr>
-                                        <tr>
-                                            <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">Inbound Marketing</td>
-                                            <td class="px-6 py-4 whitespace-normal text-sm text-gray-500">Landing Page específica para descarga de catálogo.</td>
-                                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">Tasa de Conversión</td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                            </div>
-                        </div>
-                    </div>
-                </section>
-
-                <!-- Tab: Inversión y ROI -->
-                <section id="inversion" class="tab-content">
-                    <div class="space-y-8">
-                        <h2 class="text-3xl font-bold tracking-tight text-gray-900">Inversión y Evaluación</h2>
-                        <p class="text-lg text-gray-600">
-                            Esta sección detalla la asignación del presupuesto de marketing y las métricas clave (KPIs) que usaremos para medir el éxito del plan, asegurando el control y la agilidad para optimizar la estrategia.
-                        </p>
                         
-                        <!-- Presupuesto -->
-                        <div class="bg-white p-6 rounded-lg shadow-md border border-gray-200">
-                            <h3 class="text-xl font-semibold text-gray-800 mb-4">Desglose del Presupuesto (Total: $50,000 USD)</h3>
-                            <p class="text-gray-600 mb-4">Distribución porcentual de la inversión en las principales áreas de marketing.</p>
-                            <div class="chart-container">
-                                <canvas id="budgetChart"></canvas>
-                            </div>
+                        <!-- PRECIO (P2) - ESTRATEGIA -->
+                        <div id="precio-estrategia" class="sub-tab-content text-gray-600 space-y-2">
+                            <h4 class="font-bold text-lg text-emerald-700">Estrategia de Valor Superior</h4>
+                            <p>Precio inicial posicionado en el rango medio-alto, justificado por la durabilidad, el bajo mantenimiento (TCO) y el valor de sostenibilidad. El marketing de contenido debe educar al cliente sobre este valor superior. Los descuentos por volumen son clave para fidelizar al segmento B2B (constructoras y arquitectos).</p>
                         </div>
-
-                        <!-- Control y Evaluación -->
-                        <div class="bg-white p-6 rounded-lg shadow-md border border-gray-200">
-                            <h3 class="text-xl font-semibold text-gray-800 mb-4">Control y Evaluación (KPIs)</h3>
-                            <div class="overflow-x-auto">
-                                <table class="min-w-full divide-y divide-gray-200">
-                                    <thead class="bg-gray-50">
-                                        <tr>
-                                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Métrica (KPI)</th>
-                                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Frecuencia</th>
-                                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Responsable</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody class="bg-white divide-y divide-gray-200">
-                                        <tr>
-                                            <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">Generación de Leads Calificados</td>
-                                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">Semanal</td>
-                                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">Marketing Digital</td>
-                                        </tr>
-                                        <tr>
-                                            <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">Facturación de Placas</td>
-                                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">Mensual</td>
-                                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">Ventas</td>
-                                        </tr>
-                                        <tr>
-                                            <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">Tasa de Cierre (Lead a Venta)</td>
-                                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">Mensual</td>
-                                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">Ventas</td>
-                                        </tr>
-                                        <tr>
-                                            <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">Toneladas Recicladas</td>
-                                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">Mensual</td>
-                                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">Operaciones</td>
-                                        </tr>
-                                        <tr>
-                                            <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">Costo de Adquisición (CAC)</td>
-                                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">Trimestral</td>
-                                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">Marketing y Finanzas</td>
-                                        </tr>
-                                    </tbody>
-                                </table>
+                        
+                        <!-- PLAZA (P3) - ESTRATEGIA -->
+                        <div id="plaza-estrategia" class="sub-tab-content text-gray-600 space-y-4">
+                            <h4 class="font-bold text-lg text-emerald-700">Estrategia de Distribución y Alcance</h4>
+                            <p>**Doble Canal**: Para el B2C, la distribución será a través de **tiendas de bricolaje y retail** de materiales de construcción, complementado con una robusta **plataforma de e-commerce** propia (para el control de la marca y datos). Para el B2B, se mantendrá la **venta directa** y la colaboración con **especificadores de diseño y arquitectura**.</p>
+                        </div>
+                        
+                        <!-- PROMOCIÓN (P4) - ESTRATEGIA -->
+                        <div id="promocion-estrategia" class="sub-tab-content text-gray-600 space-y-4">
+                            <h4 class="font-bold text-lg text-emerald-700">Tácticas de Impulsión y Atracción (Push & Pull)</h4>
+                            <p>El plan combina tácticas de **Push** (empujar el producto a través de los canales de distribución) y **Pull** (generar demanda directa del consumidor final). El 70% del presupuesto se destina a Pull (Contenido Digital y Redes) y el 30% a Push (Capacitación y Display en Retail).</p>
+                            
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                
+                                <!-- Tácticas PUSH (Impulsión / Distribución) -->
+                                <div class="bg-emerald-50 p-4 rounded-lg border border-emerald-200">
+                                    <h5 class="font-bold text-md text-emerald-800 flex items-center mb-2">Tácticas PUSH</h5>
+                                    <ul class="list-disc list-outside pl-5 text-emerald-700 space-y-1 text-sm">
+                                        <li>Capacitación de Retailers y Negociación de Display Preferencial.</li>
+                                        <li>Incentivos y Condiciones de Crédito B2B.</li>
+                                    </ul>
+                                </div>
+                                
+                                <!-- Tácticas PULL (Atracción / Consumidor) -->
+                                <div class="bg-blue-50 p-4 rounded-lg border border-blue-200">
+                                    <h5 class="font-bold text-md text-blue-800 flex items-center mb-2">Tácticas PULL</h5>
+                                    <ul class="list-disc list-outside pl-5 text-blue-700 space-y-1 text-sm">
+                                        <li>Fuerte inversión en Contenido DIY y Tutoriales.</li>
+                                        <li>Marketing de Influencia y Campañas de Impacto Ambiental.</li>
+                                    </ul>
+                                </div>
                             </div>
                         </div>
                     </div>
-                </section>
-            </div>
-        </main>
 
-        <!-- Footer -->
-        <footer class="bg-white border-t border-gray-200 mt-8">
-            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
-                <p class="text-center text-sm text-gray-500">Dashboard Interactivo | PLAN DE MARKETING: ECO PLACA</p>
-            </div>
-        </footer>
-    </div>
+                    <!-- Programas Operativos (Actualizado con Producto, Precio y Logística) -->
+                    <div class="bg-white p-6 rounded-lg shadow-md border border-gray-200">
+                        <h3 class="text-xl font-semibold text-gray-800 mb-4">Programas Operativos de Ejecución (P-Operativo)</h3>
+                        <p class="text-gray-600 mb-4">Acciones concretas que aterrizan la estrategia, incluyendo los aspectos operativos clave del producto, precio y distribución.</p>
+                        <div class="overflow-x-auto">
+                            <table class="min-w-full divide-y divide-gray-200">
+                                <thead class="bg-gray-50">
+                                    <tr>
+                                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Área Operativa</th>
+                                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Actividades Clave (Táctica)</th>
+                                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">KPI de Éxito</th>
+                                    </tr>
+                                </thead>
+                                <tbody class="bg-white divide-y divide-gray-200">
+                                    <!-- Logística y Cadena de Suministro (Logística Operativa) -->
+                                    <tr class="program-logistics">
+                                        <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-blue-900">Logística Operativa</td>
+                                        <td class="px-6 py-4 whitespace-normal text-sm text-gray-700">Definir rutas de entrega B2C (couriers) y B2B (carga paletizada). Establecer acuerdo con 5 centros de acopio HDPE.</td>
+                                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-700">Tiempos de entrega; Acuerdos de suministro cerrados.</td>
+                                    </tr>
+                                    <!-- Gestión del Producto (Descripción) -->
+                                    <tr class="program-product">
+                                        <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-emerald-900">Gestión del Producto</td>
+                                        <td class="px-6 py-4 whitespace-normal text-sm text-gray-700">Finalizar ficha técnica B2B con certificaciones de resistencia al fuego/agua. Probar kits de instalación DIY.</td>
+                                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-700">Certificaciones obtenidas; Retorno de prueba de kits.</td>
+                                    </tr>
+                                    <!-- Estrategia de Precio -->
+                                    <tr>
+                                        <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">Estrategia de Precios</td>
+                                        <td class="px-6 py-4 whitespace-normal text-sm text-gray-500">Diseñar tabla de descuentos progresivos por volumen (B2B) y paquete de $m^{2}$ con ligero descuento (B2C).</td>
+                                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">Adopción de paquetes B2C; Volumen de venta B2B.</td>
+                                    </tr>
+                                    <!-- Marketing DIY/B2C -->
+                                    <tr>
+                                        <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">Marketing DIY/B2C</td>
+                                        <td class="px-6 py-4 whitespace-normal text-sm text-gray-500">Producción de 20 tutoriales de instalación en YouTube y campañas en redes (Táctica PULL).</td>
+                                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">Tráfico web B2C (+50%)</td>
+                                    </tr>
+                                    <!-- Captación B2B -->
+                                    <tr>
+                                        <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">Captación B2B</td>
+                                        <td class="px-6 py-4 whitespace-normal text-sm text-gray-500">Creación de **Certificado de Impacto Ambiental** y fichas técnicas descargables.</td>
+                                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">Leads B2B Calificados</td>
+                                    </tr>
+                                    <!-- Alianzas Estratégicas -->
+                                    <tr>
+                                        <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">Alianzas (PUSH)</td>
+                                        <td class="px-6 py-4 whitespace-normal text-sm text-gray-500">Acuerdos con 3 grandes cadenas de retail DIY en la región y capacitación a sus vendedores.</td>
+                                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">N° de acuerdos cerrados</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            
+            <!-- Tab: Inversión y ROI -->
+            <section id="inversion" class="tab-content">
+                <div class="space-y-6">
+                    <h2 class="text-3xl font-bold tracking-tight text-gray-900">Inversión y Retorno (ROI)</h2>
+                    <p class="text-lg text-gray-600">
+                        Detalle del presupuesto de marketing, costos unitarios y la proyección de rentabilidad, incluyendo la estimación de precios.
+                    </p>
+
+                    <!-- Presupuesto General (Actualizado con Costos Fijos de Operación) -->
+                    <div class="bg-white p-6 rounded-lg shadow-md border border-gray-200">
+                        <h3 class="text-xl font-semibold text-gray-800 mb-4">Presupuesto y Costos Fijos (Año 1)</h3>
+                        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 text-center">
+                            <div class="p-3 bg-red-50 rounded-lg">
+                                <p class="text-sm font-medium text-red-700">Costos Fijos Operacionales</p>
+                                <p class="text-lg font-bold text-red-900">$15,000</p>
+                                <p class="text-xs text-gray-500">(Salarios, alquiler, servicios)</p>
+                            </div>
+                            <div class="p-3 bg-gray-50 rounded-lg">
+                                <p class="text-sm font-medium text-gray-500">Costo de Marketing (PULL/PUSH)</p>
+                                <p class="text-lg font-bold text-gray-900">$50,000</p>
+                                <p class="text-xs text-gray-500">(Contenido, Ads, Alianzas)</p>
+                            </div>
+                            <div class="p-3 bg-red-100 rounded-lg border border-red-300">
+                                <p class="text-sm font-medium text-red-700">Costos Fijos Totales (CFT)</p>
+                                <p class="text-2xl font-extrabold text-red-800">$65,000</p>
+                                <p class="text-xs text-gray-500">(Operación + Marketing)</p>
+                            </div>
+                            <div class="p-3 bg-blue-100 rounded-lg border border-blue-300">
+                                <p class="text-sm font-medium text-blue-700">Objetivo de Venta (Unidades)</p>
+                                <!-- UNIDADES ACTUALIZADAS A 50,000 -->
+                                <p class="mt-1 text-3xl font-extrabold text-blue-800">50,000</p>
+                                <p class="text-xs text-gray-500">EcoPlacas Revestir</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- ESTRUCTURA DE PRECIOS Y COSTOS -->
+                    <div class="bg-white p-6 rounded-lg shadow-xl border border-teal-300">
+                        <h3 class="text-2xl font-bold text-teal-700 mb-4 flex items-center">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8V9m0 3v2m0 3.5c-1.037 0-1.875-.5-1.875-1.5s.838-1.5 1.875-1.5 1.875-.5 1.875-1.5-.838-1.5-1.875-1.5" />
+                            </svg>
+                            Estructura de Precios y Costos (EcoPlaca Revestir)
+                        </h3>
+                        <p class="text-gray-600 mb-4">Esta tabla muestra el desglose del costo de producción y la estructura de precios para la venta al público (PVP) y distribuidores.</p>
+                        
+                        <div class="overflow-x-auto">
+                            <table class="min-w-full divide-y divide-gray-200 price-table">
+                                <thead class="bg-teal-50">
+                                    <tr>
+                                        <th class="px-6 py-3 text-xs uppercase tracking-wider">Concepto</th>
+                                        <th class="px-6 py-3 text-xs uppercase tracking-wider">Valor Unitario (USD)</th>
+                                        <th class="px-6 py-3 text-xs uppercase tracking-wider">Detalle de Medida</th>
+                                    </tr>
+                                </thead>
+                                <tbody class="bg-white divide-y divide-gray-200">
+                                    <!-- Costos de Producción -->
+                                    <tr>
+                                        <td class="px-6 py-4 whitespace-nowrap font-medium text-gray-900">Costo de Producción por Placa (CP)</td>
+                                        <!-- CP INCLUYE MATERIA PRIMA -->
+                                        <td class="px-6 py-4 whitespace-nowrap text-red-700 font-bold">$1.80</td>
+                                        <td class="px-6 py-4 text-sm text-gray-500">Incluye Materia Prima (HDPE reciclado) + Mano de Obra + Gastos Indirectos de Fábrica.</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="px-6 py-4 whitespace-nowrap font-medium text-gray-900">Costo de Producción por $\text{m}^2$</td>
+                                        <td class="px-6 py-4 whitespace-nowrap text-red-700 font-bold">$10.26</td>
+                                        <td class="px-6 py-4 text-sm text-gray-500">Basado en $5.7$ placas necesarias para cubrir un $\text{m}^2$ ($1.80 \times 5.7$).</td>
+                                    </tr>
+                                    
+                                    <!-- Precios de Venta -->
+                                    <tr>
+                                        <td class="px-6 py-4 whitespace-nowrap font-medium text-gray-900">Precio de Venta al Público (PVP) por Placa</td>
+                                        <td class="px-6 py-4 whitespace-nowrap text-emerald-700 font-bold">$4.00</td>
+                                        <td class="px-6 py-4 text-sm text-gray-500">Precio de Retail sugerido (B2C), antes de IVA.</td>
+                                    </tr>
+                                    <tr class="bg-emerald-50">
+                                        <td class="px-6 py-4 whitespace-nowrap font-extrabold text-emerald-900">Precio de Venta por $\text{m}^2$ (PVP)</td>
+                                        <td class="px-6 py-4 whitespace-nowrap text-emerald-700 font-extrabold">$22.80</td>
+                                        <td class="px-6 py-4 text-sm text-gray-500">Costo total para renovar un metro cuadrado ($4.00 \times 5.7$).</td>
+                                    </tr>
+                                    
+                                    <!-- Margen -->
+                                    <tr>
+                                        <td class="px-6 py-4 whitespace-nowrap font-medium text-gray-900">Margen de Contribución Unitario (MCU)</td>
+                                        <td class="px-6 py-4 whitespace-nowrap text-blue-700 font-bold">$2.20</td>
+                                        <td class="px-6 py-4 text-sm text-gray-500">Margen bruto unitario ($4.00 - \$1.80$).</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <!-- FIN DE NUEVA SECCIÓN -->
+
+                    <!-- Métricas de Rentabilidad y Proyección (ACTUALIZADAS CON NUEVO VOLUMEN) -->
+                    <div class="bg-white p-6 rounded-lg shadow-md border border-gray-200">
+                        <h3 class="text-xl font-semibold text-gray-800 mb-4">Métricas de Rentabilidad y Proyección (Volumen Anual: 50,000 Unidades)</h3>
+                        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                            <div>
+                                <h4 class="font-semibold text-emerald-700">Punto de Equilibrio (PE)</h4>
+                                <p class="mt-1 text-4xl font-extrabold text-red-600">29,545 Unidades</p>
+                                <p class="text-gray-500">Unidades mínimas a vender para cubrir los CFT de $65,000 USD. ($\approx 5,183 m^2$)</p>
+                            </div>
+                            <div>
+                                <h4 class="font-semibold text-emerald-700">Facturación Proyectada (Año 1)</h4>
+                                <p class="mt-1 text-4xl font-extrabold text-emerald-600">$200,000</p>
+                                <p class="text-gray-500">Ingreso Bruto si se venden 50,000 unidades. (50,000 x $4.00)</p>
+                            </div>
+                             <div>
+                                <h4 class="font-semibold text-emerald-700">Beneficio Neto (Proyectado)</h4>
+                                <p class="mt-1 text-4xl font-extrabold text-emerald-600">$45,000</p>
+                                <p class="text-gray-500">Beneficio Neto estimado si se alcanzan las 50,000 unidades. ($\text{Ingresos} - \text{CV} - \text{CF}$)</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+        </div>
+    </main>
+    
+    <!-- Footer - Simple -->
+    <footer class="bg-gray-800 text-white text-center p-4 mt-8">
+        <p class="text-sm">Placca | Plan Estratégico de Marketing | "Renueva tus espacios"</p>
+    </footer>
 
     <script>
         document.addEventListener('DOMContentLoaded', () => {
-            
-            function setupNavigation(navContainerId) {
-                const navContainer = document.getElementById(navContainerId);
-                if (!navContainer) return;
+            // --- Lógica de Navegación Principal ---
+            const mainTabs = document.querySelectorAll('#main-nav-desktop .nav-link, #main-nav-mobile .nav-link');
+            const sections = document.querySelectorAll('.tab-content');
 
-                const navLinks = navContainer.querySelectorAll('.nav-link');
-                
-                navLinks.forEach(link => {
-                    link.addEventListener('click', (e) => {
-                        e.preventDefault();
-                        const tabId = link.getAttribute('data-tab');
-                        
-                        document.querySelectorAll('.tab-content').forEach(content => {
-                            content.classList.remove('active');
-                        });
-                        
-                        document.querySelectorAll('.nav-link').forEach(nav => {
-                            nav.classList.remove('active');
-                        });
-                        
-                        document.getElementById(tabId).classList.add('active');
-                        
-                        document.querySelectorAll(`.nav-link[data-tab="${tabId}"]`).forEach(activeLink => {
-                            activeLink.classList.add('active');
-                        });
-                    });
+            function changeTab(tabId) {
+                // Actualiza enlaces de escritorio y móvil
+                mainTabs.forEach(tab => {
+                    tab.classList.remove('active');
+                    if (tab.getAttribute('data-tab') === tabId) {
+                        tab.classList.add('active');
+                    }
                 });
-            }
 
-            function setupSubTabs(tabsContainerId) {
-                const tabsContainer = document.getElementById(tabsContainerId);
-                if (!tabsContainer) return;
-
-                const tabLinks = tabsContainer.querySelectorAll('.sub-nav-link');
-                
-                tabLinks.forEach(link => {
-                    link.addEventListener('click', (e) => {
-                        e.preventDefault();
-                        const subTabId = link.getAttribute('data-subtab');
-                        
-                        tabLinks.forEach(nav => nav.classList.remove('active'));
-                        link.classList.add('active');
-                        
-                        const parent = link.closest('.tab-content, .sub-tab-content, section'); // Amplié la búsqueda al contenedor de la sección
-                        
-                        parent.querySelectorAll('.sub-tab-content').forEach(content => {
-                            content.classList.remove('active');
-                        });
-
-                        const activeContent = parent.querySelector(`#${subTabId}`);
-                        if(activeContent) {
-                             activeContent.classList.add('active');
-                        } else {
-                            // Intenta encontrar el contenido a un nivel superior si es necesario (e.g., para la sección FODA)
-                            document.getElementById(subTabId).classList.add('active');
-                        }
-                    });
+                // Muestra la sección correcta
+                sections.forEach(section => {
+                    section.classList.remove('active');
+                    if (section.id === tabId) {
+                        section.classList.add('active');
+                    }
                 });
-            }
-
-
-            setupNavigation('main-nav');
-            setupNavigation('main-nav-mobile');
-            setupSubTabs('diagnostico-tabs');
-            setupSubTabs('strategy-tabs');
-            
-            function renderCharts() {
-                const chartColors = {
-                    emerald: 'rgb(5, 150, 105)',
-                    blue: 'rgb(29, 78, 216)',
-                    yellow: 'rgb(202, 138, 4)',
-                    red: 'rgb(220, 38, 38)',
-                    emerald_bg: 'rgba(5, 150, 105, 0.2)',
-                    blue_bg: 'rgba(29, 78, 216, 0.2)',
-                    yellow_bg: 'rgba(202, 138, 4, 0.2)',
-                    red_bg: 'rgba(220, 38, 38, 0.2)',
-                };
                 
-                const budgetCtx = document.getElementById('budgetChart');
-                if (budgetCtx) {
-                    new Chart(budgetCtx, {
-                        type: 'doughnut',
-                        data: {
-                            labels: ['Marketing Digital (40%)', 'Creación de Contenidos (30%)', 'Muestras y Ferias (20%)', 'Relaciones Públicas (10%)'],
-                            datasets: [{
-                                label: 'Desglose de Presupuesto',
-                                data: [20000, 15000, 10000, 5000],
-                                backgroundColor: [chartColors.emerald, chartColors.blue, chartColors.yellow, chartColors.red],
-                                hoverOffset: 4
-                            }]
-                        },
-                        options: {
-                            responsive: true,
-                            maintainAspectRatio: false,
-                            plugins: {
-                                legend: {
-                                    position: 'bottom',
-                                },
-                                tooltip: {
-                                    callbacks: {
-                                        label: function(context) {
-                                            let label = context.label || '';
-                                            if (label) {
-                                                label += ': ';
-                                            }
-                                            if (context.parsed !== null) {
-                                                label += new Intl.NumberFormat('es-ES', { style: 'currency', currency: 'USD' }).format(context.parsed);
-                                            }
-                                            return label;
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                    });
+                // Si la pestaña es Diagnóstico o Plan, activamos la sub-pestaña por defecto
+                if (tabId === 'diagnostico') {
+                    const fichaLink = document.querySelector('#diagnostico-tabs [data-subtab="ficha"]');
+                    if (fichaLink) {
+                        fichaLink.click(); 
+                    }
+                } else if (tabId === 'plan') {
+                    const productoLink = document.querySelector('#strategy-tabs [data-subtab="producto-estrategia"]');
+                    if (productoLink) {
+                        productoLink.click(); 
+                    }
                 }
+            }
+
+            mainTabs.forEach(tab => {
+                tab.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    changeTab(tab.getAttribute('data-tab'));
+                });
+            });
+
+            // Al cargar la página, se asegura de que la pestaña "Inicio" esté activa
+            if (!document.querySelector('.tab-content.active')) {
+                changeTab('presentacion');
+            }
+
+
+            // --- Lógica de Sub-Navegación (Diagnóstico y Plan) ---
+            function setupSubTabs(navId, contentSelector) {
+                const subNav = document.getElementById(navId);
+                if (!subNav) return;
                 
-                const goalsCtx = document.getElementById('goalsChart');
-                if (goalsCtx) {
-                    new Chart(goalsCtx, {
-                        type: 'bar',
-                        data: {
-                            labels: ['Ventas (Unidades)', 'Leads Calificados', 'Sostenibilidad (Ton.)', 'Posicionamiento (%)'],
-                            datasets: [{
-                                label: 'Valor del Objetivo',
-                                data: [5000, 500, 50, 30],
-                                backgroundColor: [chartColors.emerald_bg, chartColors.blue_bg, chartColors.yellow_bg, chartColors.red_bg],
-                                borderColor: [chartColors.emerald, chartColors.blue, chartColors.yellow, chartColors.red],
-                                borderWidth: 1
-                            }]
+                const subLinks = subNav.querySelectorAll('.sub-nav-link');
+                // Usamos el selector de clase general para encontrar todos los contenidos dentro del mismo padre
+                const subContents = subNav.parentElement.querySelectorAll(contentSelector);
+
+                subLinks.forEach(link => {
+                    link.addEventListener('click', (e) => {
+                        e.preventDefault();
+                        const targetId = link.getAttribute('data-subtab');
+
+                        subLinks.forEach(l => l.classList.remove('active'));
+                        link.classList.add('active');
+
+                        subContents.forEach(content => {
+                            content.classList.remove('active');
+                            // Si el id del contenido coincide con el targetId
+                            if (content.id === targetId) {
+                                content.classList.add('active');
+                            }
+                        });
+                    });
+                });
+
+                // Inicializar la pestaña activa por defecto
+                let activeSubTabId = subNav.querySelector('.sub-nav-link.active')?.getAttribute('data-subtab');
+                if (activeSubTabId) {
+                     subContents.forEach(content => {
+                        content.classList.remove('active');
+                        if (content.id === activeSubTabId) {
+                            content.classList.add('active');
+                        }
+                    });
+                } else if (subLinks.length > 0) {
+                     // Si no hay activa, activar la primera (Ficha o Producto Estrategia)
+                    subLinks[0].click(); 
+                }
+            }
+            
+            // Inicializar sub-pestañas para Diagnóstico
+            setupSubTabs('diagnostico-tabs', '.sub-tab-content');
+            
+            // Inicializar sub-pestañas para Plan Estratégico (4 P's)
+            setupSubTabs('strategy-tabs', '.sub-tab-content');
+
+
+            // --- Lógica del Gráfico Chart.js ---
+            function renderGoalsChart() {
+                const ctx = document.getElementById('goalsChart');
+                if (!ctx) return; // Salir si el elemento no existe
+
+                new Chart(ctx, {
+                    type: 'bar',
+                    data: {
+                        // Labels actualizadas
+                        labels: ['Ventas (Unidades)', 'Leads Calificados', 'Plástico Reciclado (Ton)'],
+                        datasets: [{
+                            label: 'Objetivos Anuales (Metas)',
+                            // Datos actualizados: 50,000 unidades y 83 toneladas de plástico reciclado
+                            data: [50000, 2500, 83], 
+                            backgroundColor: [
+                                'rgba(16, 185, 129, 0.8)', // emerald-500
+                                'rgba(59, 130, 246, 0.8)', // blue-500
+                                'rgba(234, 179, 8, 0.8)' // yellow-500
+                            ],
+                            borderColor: [
+                                'rgba(16, 185, 129, 1)',
+                                'rgba(59, 130, 246, 1)',
+                                'rgba(234, 179, 8, 1)'
+                            ],
+                            borderWidth: 1,
+                            borderRadius: 6
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        plugins: {
+                            legend: {
+                                display: false,
+                            },
+                            title: {
+                                display: false,
+                            }
                         },
-                        options: {
-                            indexAxis: 'y',
-                            responsive: true,
-                            maintainAspectRatio: false,
-                            scales: {
-                                x: {
-                                    beginAtZero: true,
-                                    type: 'logarithmic',
-                                    ticks: {
-                                        callback: function(value, index, values) {
-                                            if (value === 10000 || value === 5000 || value === 1000 || value === 500 || value === 100 || value === 50 || value === 30 || value === 10) {
-                                                return value.toLocaleString('es-ES');
-                                            }
-                                        }
-                                    }
+                        scales: {
+                            y: {
+                                beginAtZero: true,
+                                grid: {
+                                    color: 'rgba(0, 0, 0, 0.05)'
                                 }
                             },
-                            plugins: {
-                                legend: {
+                            x: {
+                                grid: {
                                     display: false
-                                },
-                                title: {
-                                    display: true,
-                                    text: 'Metas (Escala Logarítmica para visualización)'
                                 }
                             }
                         }
-                    });
-                }
+                    }
+                });
             }
-
-            renderCharts();
+            
+            // Renderizar el gráfico (aunque esté oculto, Chart.js lo necesita al inicio)
+            renderGoalsChart();
         });
     </script>
 </body>
